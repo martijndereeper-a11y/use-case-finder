@@ -15,7 +15,7 @@ module.exports = function handler(req, res) {
     var password = req.body && req.body.password;
     var envPw = ADMIN_PASSWORD;
     if (password === envPw) return res.json({ ok: true, token: envPw });
-    return res.status(401).json({ error: 'Wrong password', debug: { hasBody: !!req.body, url: url, path: path, envSet: !!process.env.ADMIN_PASSWORD } });
+    return res.status(401).json({ error: 'Wrong password', debug: { hasBody: !!req.body, url: url, path: path, envSet: !!process.env.ADMIN_PASSWORD, pwLen: (password||'').length, envLen: envPw.length, match: password === envPw, pwType: typeof password } });
   }
 
   var auth = (req.headers.authorization || '').replace('Bearer ', '');
