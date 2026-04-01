@@ -1,14 +1,6 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "admin.html", "use": "@vercel/static" },
-    { "src": "api/admin.ts", "use": "@vercel/node" },
-    { "src": "api/chat.ts", "use": "@vercel/node" }
-  ],
   "rewrites": [
     { "source": "/api/admin/:path*", "destination": "/api/admin" },
-    { "source": "/api/chat/:path*", "destination": "/api/chat" },
-    { "source": "/admin", "destination": "/admin.html" }
+    { "source": "/api/chat/:path*", "destination": "/api/chat" }
   ]
 }

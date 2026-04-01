@@ -60,13 +60,7 @@ html = html.replace(
 }`
 );
 
-// 4. Rewrite PDF URLs to GitHub raw
-html = html.replaceAll(
-  "${apiUrl('/use-cases/pdf/')}${encodeURIComponent(c.pdfFile)}",
-  `${PDF_BASE}/\${encodeURIComponent(c.pdfFile)}`
-);
-
-// 5. Clean up apiUrl (not needed for static, chat uses absolute /api/chat)
+// 4. Clean up apiUrl (not needed for static, chat uses absolute /api/chat)
 html = html.replace(`function apiUrl(path) { return path; }\n`, '');
 
 writeFileSync(join(OUT, 'index.html'), html);

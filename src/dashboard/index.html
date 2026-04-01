@@ -412,8 +412,10 @@ function renderResults(cases) {
     header.textContent = `All ${cases.length} success cases`;
   }
 
+  const GH_RAW = 'https://raw.githubusercontent.com/martijndereeper-a11y/use-case-finder/main/use-cases';
   el.innerHTML = cases.map(c => {
-    const pdfUrl = `${apiUrl('/use-cases/pdf/')}${encodeURIComponent(c.pdfFile)}`;
+    const pdfRaw = `${GH_RAW}/${encodeURIComponent(c.pdfFile)}`;
+    const pdfView = `https://docs.google.com/viewer?url=${encodeURIComponent(pdfRaw)}&embedded=true`;
     return `
     <div class="case-card">
       <div class="case-top">
@@ -434,8 +436,8 @@ function renderResults(cases) {
         ${c.objections.map(o => `<span class="case-tag objection">${escapeHtml(o)}</span>`).join('')}
       </div>
       <div class="case-actions">
-        <a class="pdf-btn view" href="${pdfUrl}" target="_blank">${svgPdf} View PDF</a>
-        <a class="pdf-btn download" href="${pdfUrl}?download=1" download>${svgDown} Download slides</a>
+        <a class="pdf-btn view" href="${pdfView}" target="_blank">${svgPdf} View PDF</a>
+        <a class="pdf-btn download" href="${pdfRaw}" download>${svgDown} Download slides</a>
       </div>
     </div>`;
   }).join('');
@@ -471,8 +473,10 @@ document.getElementById('search').addEventListener('input', (e) => {
 
 // ─── Chat widget logic ──────────────────────────────────────────────────────
 
+const CHAT_GH_RAW = 'https://raw.githubusercontent.com/martijndereeper-a11y/use-case-finder/main/use-cases';
 function buildChatCard(c) {
-  const pdfUrl = `${apiUrl('/use-cases/pdf/')}${encodeURIComponent(c.pdfFile)}`;
+  const pdfRaw = `${CHAT_GH_RAW}/${encodeURIComponent(c.pdfFile)}`;
+  const pdfView = `https://docs.google.com/viewer?url=${encodeURIComponent(pdfRaw)}&embedded=true`;
   const reason = c.matchReason ? `<div class="cc-reason">${escapeHtml(c.matchReason)}</div>` : '';
   return `<div class="chat-case">
     <span class="cc-name">${escapeHtml(c.company)}</span>
@@ -484,7 +488,8 @@ function buildChatCard(c) {
       <span class="cc-tag pain">${escapeHtml(c.painPattern)}</span>
       <span class="cc-tag btype">${escapeHtml(c.businessType)}</span>
     </div>
-    <a class="cc-dl" href="${pdfUrl}?download=1" download>${svgDown} Download slides</a>
+    <a class="cc-dl" href="${pdfView}" target="_blank">${svgPdf} View</a>
+    <a class="cc-dl" href="${pdfRaw}" download>${svgDown} Download</a>
   </div>`;
 }
 
