@@ -8,7 +8,7 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev": "npx tsx src/server.ts",
+    "dev": "npx tsx src/dev.ts",
     "build": "echo 'No build step needed'"
   },
   "dependencies": {
