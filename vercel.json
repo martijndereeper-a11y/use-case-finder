@@ -1,8 +1,6 @@
 {
   "rewrites": [
     { "source": "/api/admin/:path*", "destination": "/api/admin" },
-    { "source": "/api/chat/:path*", "destination": "/api/chat" },
-    { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/api/chat/:path*", "destination": "/api/chat" }
   ]
 }
