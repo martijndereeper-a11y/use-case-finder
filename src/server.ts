@@ -54,11 +54,21 @@ function getDerived() {
   return { cases, painPatterns, industries, objectionCounts };
 }
 
+// ─── Health check ────────────────────────────────────────────────────────────
+
+app.get('/health', (c) => {
+  return c.json({ ok: true, root: ROOT, vercel: !!process.env.VERCEL });
+});
+
 // ─── Public API ──────────────────────────────────────────────────────────────
 
 app.get('/api/use-cases', (c) => {
-  const { cases, painPatterns, industries, objectionCounts } = getDerived();
-  return c.json({ cases, painPatterns, industries, objections: OBJECTIONS, objectionCounts });
+  try {
+    const { cases, painPatterns, industries, objectionCounts } = getDerived();
+    return c.json({ cases, painPatterns, industries, objections: OBJECTIONS, objectionCounts });
+  } catch (err: any) {
+    return c.json({ error: err.message, stack: err.stack }, 500);
+  }
 });
 
 app.get('/api/use-cases/search', (c) => {
