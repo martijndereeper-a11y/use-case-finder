@@ -1,5 +1,5 @@
 import { serve } from '@hono/node-server';
-import app from './server.js';
+import app from './server';
 
 const port = parseInt(process.env.PORT || '3001');
 console.log(`Use Case Finder running at http://localhost:${port}`);

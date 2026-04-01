@@ -6,7 +6,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { handle } from 'hono/vercel';
-import { useCases } from '../src/data.js';
+import { useCases } from '../src/data';
 
 export const config = { runtime: 'nodejs', maxDuration: 30 };
 

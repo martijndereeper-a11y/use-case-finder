@@ -5,9 +5,9 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { handle } from 'hono/vercel';
-import { OBJECTIONS } from '../src/data.js';
-import { detectObjectionsFromText } from '../src/storage.js';
-import type { Objection } from '../src/data.js';
+import { OBJECTIONS } from '../src/data';
+import { detectObjectionsFromText } from '../src/storage';
+import type { Objection } from '../src/data';
 
 export const config = { runtime: 'nodejs', maxDuration: 60 };
 

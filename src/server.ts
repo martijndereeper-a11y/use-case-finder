@@ -8,9 +8,9 @@ import { cors } from 'hono/cors';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { OBJECTIONS, OBJECTIONS_NL, painPatterns as seedPainPatterns } from './data.js';
-import { loadAllCases, saveCase, deleteCase, generateId, pdfDir, detectObjectionsFromText } from './storage.js';
-import type { UseCase, Objection } from './data.js';
+import { OBJECTIONS, OBJECTIONS_NL, painPatterns as seedPainPatterns } from './data';
+import { loadAllCases, saveCase, deleteCase, generateId, pdfDir, detectObjectionsFromText } from './storage';
+import type { UseCase, Objection } from './data';
 import { config } from 'dotenv';
 config();
 
