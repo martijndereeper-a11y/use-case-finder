@@ -2,9 +2,5 @@
   "framework": null,
   "buildCommand": "",
   "outputDirectory": "",
-  "installCommand": "npm install",
-  "rewrites": [
-    { "source": "/api/admin/:path*", "destination": "/api/admin" },
-    { "source": "/api/chat/:path*", "destination": "/api/chat" }
-  ]
+  "installCommand": "npm install"
 }
