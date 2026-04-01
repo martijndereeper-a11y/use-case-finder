@@ -1,4 +1,13 @@
 {
   "buildCommand": "npx tsx scripts/build-static.ts",
-  "outputDirectory": "public"
+  "outputDirectory": "public",
+  "functions": {
+    "api/admin.ts": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    { "source": "/api/admin/:path*", "destination": "/api/admin" },
+    { "source": "/admin", "destination": "/admin.html" }
+  ]
 }

@@ -1,7 +1,7 @@
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { useCases, painPatterns, industries, OBJECTIONS, objectionCounts } from '../src/data.ts';
+import { useCases as seedCases, OBJECTIONS, type UseCase } from '../src/data.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -10,7 +10,27 @@ const PDF_BASE = 'https://raw.githubusercontent.com/martijndereeper-a11y/use-cas
 
 mkdirSync(OUT, { recursive: true });
 
-const data = { cases: useCases, painPatterns, industries, objections: OBJECTIONS, objectionCounts };
+// Merge seed cases + admin-added cases
+let addedCases: UseCase[] = [];
+const addedPath = join(ROOT, 'data', 'added-cases.json');
+try {
+  if (existsSync(addedPath)) {
+    addedCases = JSON.parse(readFileSync(addedPath, 'utf-8'));
+    console.log(`Loaded ${addedCases.length} admin-added cases`);
+  }
+} catch {}
+
+const addedIds = new Set(addedCases.map(c => c.id));
+const allCases = [...seedCases.filter(c => !addedIds.has(c.id)), ...addedCases];
+
+const painPatterns = [...new Set(allCases.map(c => c.painPattern))];
+const industries = [...new Set(allCases.map(c => c.industry))];
+const objectionCounts = OBJECTIONS.map(obj => ({
+  objection: obj,
+  count: allCases.filter(c => c.objections.includes(obj)).length,
+}));
+
+const data = { cases: allCases, painPatterns, industries, objections: OBJECTIONS, objectionCounts };
 
 let html = readFileSync(join(ROOT, 'src', 'dashboard', 'index.html'), 'utf-8');
 
@@ -61,4 +81,10 @@ html = html.replaceAll(
 html = html.replace(`function apiUrl(path) { return path; }\n`, '');
 
 writeFileSync(join(OUT, 'index.html'), html);
+
+// Copy admin page as-is (it talks to the serverless function)
+const adminHtml = readFileSync(join(ROOT, 'src', 'dashboard', 'admin.html'), 'utf-8');
+writeFileSync(join(OUT, 'admin.html'), adminHtml);
+
 console.log(`Built public/index.html (${(html.length/1024).toFixed(0)} KB, ${data.cases.length} cases embedded)`);
+console.log(`Built public/admin.html`);
