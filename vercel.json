@@ -1,9 +1,8 @@
 {
-  "buildCommand": "npx tsx scripts/build-static.ts",
-  "outputDirectory": "public",
   "rewrites": [
     { "source": "/api/admin/:path*", "destination": "/api/admin" },
     { "source": "/api/chat/:path*", "destination": "/api/chat" },
-    { "source": "/admin", "destination": "/admin.html" }
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
