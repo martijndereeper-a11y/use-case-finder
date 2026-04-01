@@ -11,7 +11,6 @@ import { fileURLToPath } from 'node:url';
 import { OBJECTIONS, OBJECTIONS_NL, painPatterns as seedPainPatterns } from './data.js';
 import { loadAllCases, saveCase, deleteCase, generateId, pdfDir, detectObjectionsFromText } from './storage.js';
 import type { UseCase, Objection } from './data.js';
-import Anthropic from '@anthropic-ai/sdk';
 import { config } from 'dotenv';
 config();
 
@@ -131,6 +130,7 @@ app.post('/api/admin/analyze-pdf', async (c) => {
     // Claude-based structured extraction
     let extracted: Record<string, any> = {};
     try {
+      const { default: Anthropic } = await import('@anthropic-ai/sdk');
       const anthropic = new Anthropic();
       const objList = OBJECTIONS.map((o, i) => `${i + 1}. ${o}`).join('\n');
 
