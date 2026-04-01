@@ -1,4 +1,5 @@
 {
+  "framework": null,
   "buildCommand": "npx tsx scripts/build-static.ts",
   "outputDirectory": "public",
   "functions": {
