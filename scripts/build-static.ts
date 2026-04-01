@@ -60,24 +60,13 @@ html = html.replace(
 }`
 );
 
-// 4. Replace chat search fetch
-html = html.replace(
-  /const res = await fetch\(`\$\{apiUrl.*?search.*?\n\s*const data = await res\.json\(\);\n\s*const results = data\.results;/,
-  `const _terms = text.toLowerCase().split(/\\s+/);
-  const results = allCases.map(uc => {
-    const s = [uc.company,uc.industry,uc.painPattern,uc.headline,uc.outcome,uc.result,uc.summary,uc.businessType,uc.marketPosition,...uc.keywords,...uc.objections,...(uc.countries||[])].join(' ').toLowerCase();
-    let sc = 0; for (const t of _terms) { if (s.includes(t)) sc++; if (uc.keywords.some(k=>k.includes(t))) sc++; if (uc.company.toLowerCase().includes(t)) sc+=2; if (uc.industry.toLowerCase().includes(t)) sc+=2; }
-    return { ...uc, score: sc };
-  }).filter(r => r.score > 0).sort((a, b) => b.score - a.score);`
-);
-
-// 5. Rewrite PDF URLs to GitHub raw
+// 4. Rewrite PDF URLs to GitHub raw
 html = html.replaceAll(
   "${apiUrl('/use-cases/pdf/')}${encodeURIComponent(c.pdfFile)}",
   `${PDF_BASE}/\${encodeURIComponent(c.pdfFile)}`
 );
 
-// 6. Clean up apiUrl
+// 5. Clean up apiUrl (not needed for static, chat uses absolute /api/chat)
 html = html.replace(`function apiUrl(path) { return path; }\n`, '');
 
 writeFileSync(join(OUT, 'index.html'), html);

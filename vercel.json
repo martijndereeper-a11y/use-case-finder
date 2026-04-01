@@ -5,10 +5,14 @@
   "functions": {
     "api/admin.ts": {
       "maxDuration": 60
+    },
+    "api/chat.ts": {
+      "maxDuration": 30
     }
   },
   "rewrites": [
     { "source": "/api/admin/:path*", "destination": "/api/admin" },
+    { "source": "/api/chat/:path*", "destination": "/api/chat" },
     { "source": "/admin", "destination": "/admin.html" }
   ]
 }

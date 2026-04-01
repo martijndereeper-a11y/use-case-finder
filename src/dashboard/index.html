@@ -163,7 +163,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .chat-input-bar input::placeholder{color:var(--text2)}
 .chat-send{padding:10px 14px;border-radius:10px;border:none;background:var(--purple2);color:white;cursor:pointer;transition:background .15s;display:flex;align-items:center}
 .chat-send:hover{background:var(--purple)}
+.chat-send:disabled{opacity:.5;cursor:default}
 .chat-send svg{width:16px;height:16px}
+.chat-case .cc-reason{font-size:12px;color:var(--purple);font-style:italic;margin:4px 0 6px;line-height:1.4;padding:4px 8px;background:rgba(168,85,247,.08);border-radius:4px}
+.chat-case .cc-summary{font-size:11px;color:var(--text2);margin:4px 0;line-height:1.4}
 </style>
 </head>
 <body>
@@ -470,9 +473,12 @@ document.getElementById('search').addEventListener('input', (e) => {
 
 function buildChatCard(c) {
   const pdfUrl = `${apiUrl('/use-cases/pdf/')}${encodeURIComponent(c.pdfFile)}`;
+  const reason = c.matchReason ? `<div class="cc-reason">${escapeHtml(c.matchReason)}</div>` : '';
   return `<div class="chat-case">
     <span class="cc-name">${escapeHtml(c.company)}</span>
     <span class="cc-meta">${escapeHtml(c.industry)} &middot; ${escapeHtml(c.businessType)} &middot; ${(c.countries||[]).join(', ')}</span>
+    ${reason}
+    <div class="cc-summary">${escapeHtml(c.summary)}</div>
     <div class="cc-result">${escapeHtml(c.result)}</div>
     <div class="cc-tags">
       <span class="cc-tag pain">${escapeHtml(c.painPattern)}</span>
@@ -510,22 +516,45 @@ async function handleChat(text) {
   if (!text) return;
   addChatUser(text);
   document.getElementById('chatInput').value = '';
+  document.getElementById('chatSend').disabled = true;
 
-  const res = await fetch(`${apiUrl('/api/use-cases/search')}?q=${encodeURIComponent(text)}`);
-  const data = await res.json();
-  const results = data.results;
+  // Show typing indicator
+  addChatBot('<em style="color:var(--text2)">Thinking...</em>');
+  const thinkingMsg = document.getElementById('chatMessages').lastElementChild;
+
+  let results = [];
+  try {
+    const res = await fetch('/api/chat/match', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: text }),
+    });
+    const data = await res.json();
+    results = data.results || [];
+  } catch {
+    // Fallback to client-side keyword search if API fails
+    const terms = text.toLowerCase().split(/\s+/);
+    results = allCases.map(uc => {
+      const s = [uc.company,uc.industry,uc.painPattern,uc.headline,uc.outcome,uc.result,uc.summary,uc.businessType,uc.marketPosition,...uc.keywords,...uc.objections,...(uc.countries||[])].join(' ').toLowerCase();
+      let score = 0;
+      for (const t of terms) { if (s.includes(t)) score++; if (uc.keywords.some(k=>k.includes(t))) score++; if (uc.company.toLowerCase().includes(t)) score+=2; }
+      return { ...uc, score };
+    }).filter(r => r.score > 0).sort((a, b) => b.score - a.score).slice(0, 3);
+  }
+
+  // Remove typing indicator
+  if (thinkingMsg) thinkingMsg.remove();
+  document.getElementById('chatSend').disabled = false;
 
   if (results.length === 0) {
-    addChatBot("I couldn't find a matching case. Try describing the pain point differently — e.g. <em>\"B2B niche, doubts online marketing\"</em>, <em>\"agency not delivering\"</em>, or mention an industry.");
+    addChatBot("I couldn't find a matching case for that prospect. Try describing their industry, size, or main objection — e.g. <em>\"B2B installation company that thinks online marketing won't work\"</em>.");
     return;
   }
 
-  const top = results.slice(0, 3);
   const count = results.length;
   let intro;
-  if (count === 1) intro = 'I found <strong>1 case</strong> that matches:';
-  else if (count <= 3) intro = `I found <strong>${count} cases</strong> that match:`;
-  else intro = `I found <strong>${count} cases</strong> — here are the top ${top.length}:`;
+  if (count === 1) intro = 'I found <strong>1 case</strong> that fits:';
+  else intro = `I found <strong>${count} cases</strong> that fit:`;
 
   const cards = top.map(buildChatCard).join('');
   let extra = '';
