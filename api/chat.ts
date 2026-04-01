@@ -1,4 +1,4 @@
-import useCases from '../use-cases-data.json';
+import { cases as useCases } from './_cases';
 
 export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Origin', '*');
