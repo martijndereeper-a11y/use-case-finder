@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "npx tsx src/server.ts",
-    "build": "tsc"
+    "build": "echo 'No build step needed'"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",
