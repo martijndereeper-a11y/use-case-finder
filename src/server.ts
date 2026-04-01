@@ -17,6 +17,7 @@ import { config } from 'dotenv';
 config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = process.env.VERCEL ? process.cwd() : join(__dirname, '..');
 const app = new Hono();
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'wpseoai2026';
@@ -258,12 +259,12 @@ app.get('/use-cases/pdf/:filename', (c) => {
 // ─── Frontend ────────────────────────────────────────────────────────────────
 
 app.get('/', (c) => {
-  const html = readFileSync(join(__dirname, 'dashboard', 'index.html'), 'utf-8');
+  const html = readFileSync(join(ROOT, 'src', 'dashboard', 'index.html'), 'utf-8');
   return c.html(html);
 });
 
 app.get('/admin', (c) => {
-  const html = readFileSync(join(__dirname, 'dashboard', 'admin.html'), 'utf-8');
+  const html = readFileSync(join(ROOT, 'src', 'dashboard', 'admin.html'), 'utf-8');
   return c.html(html);
 });
 

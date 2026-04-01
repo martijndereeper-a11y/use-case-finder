@@ -9,9 +9,10 @@ import { fileURLToPath } from 'node:url';
 import { useCases as seedCases, type UseCase, OBJECTIONS, type Objection } from './data.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = join(__dirname, '..', 'data');
+const ROOT = process.env.VERCEL ? process.cwd() : join(__dirname, '..');
+const DATA_DIR = join(ROOT, 'data');
 const CASES_FILE = join(DATA_DIR, 'use-cases.json');
-const PDF_DIR = join(__dirname, '..', 'use-cases');
+const PDF_DIR = join(ROOT, 'use-cases');
 
 function ensureDataDir() {
   if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
