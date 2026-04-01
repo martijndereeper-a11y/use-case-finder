@@ -1,10 +1,4 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api" }
-  ],
-  "functions": {
-    "api/index.ts": {
-      "includeFiles": "use-cases/**,src/dashboard/**,data/**"
-    }
-  }
+  "buildCommand": "npx tsx scripts/build-static.ts",
+  "outputDirectory": "public"
 }
