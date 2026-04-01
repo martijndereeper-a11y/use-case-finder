@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { useCases as seedCases, type UseCase, OBJECTIONS, type Objection } from './data.ts';
+import { useCases as seedCases, type UseCase, OBJECTIONS, type Objection } from './data.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = process.env.VERCEL ? process.cwd() : join(__dirname, '..');
