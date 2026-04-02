@@ -152,7 +152,7 @@ export const useCases: UseCase[] = [
       'Our sector is too technical or complex for AI content',
     ],
     countries: ['Netherlands'],
-    keywords: ['no time', 'capacity', 'agency', 'marketing agency', 'seo agency', 'white label'],
+    keywords: ['recruitment', 'staffing', 'werving', 'selectie', 'it recruitment', 'tech recruitment', 'ai recruitment', 'engineering recruitment', 'renewable energy', 'no time', 'capacity'],
     pdfFile: 'Too little time for SEO - SearchX - Success case.pdf',
   },
   {
@@ -263,7 +263,7 @@ export const useCases: UseCase[] = [
   {
     id: 'wijzijntop',
     company: 'Wijzijntop',
-    industry: 'Staffing / HR',
+    industry: 'Recruitment / Staffing',
     painPattern: 'AI / LLM search opportunity',
     headline: 'AI curiosity but no strategy',
     outcome: 'AI strategy implemented',
@@ -276,7 +276,7 @@ export const useCases: UseCase[] = [
       'It takes too long before you see results',
     ],
     countries: ['Netherlands'],
-    keywords: ['ai', 'llm', 'chatgpt', 'strategy', 'no plan', 'ai search', 'direction'],
+    keywords: ['recruitment', 'staffing', 'uitzendbureau', 'detachering', 'personeel', 'hr', 'talent', 'ai', 'llm', 'chatgpt', 'strategy', 'ai search', 'production', 'logistics', 'engineering'],
     pdfFile: 'AI curiosity but no strategy - Wijzijntop- Success case.pdf',
   },
   {
@@ -450,7 +450,7 @@ export const useCases: UseCase[] = [
   {
     id: 'officebox',
     company: 'Officebox',
-    industry: 'IT / Managed Services',
+    industry: 'IT Services / MSP',
     painPattern: 'Efficiency gap',
     headline: 'Efficiency gap',
     outcome: 'Efficiency gains',
@@ -464,13 +464,13 @@ export const useCases: UseCase[] = [
       'We already do Google Ads, why also SEO',
     ],
     countries: ['Netherlands'],
-    keywords: ['efficiency', 'manual work', 'slow', 'time-consuming', 'office', 'supplies', 'b2b', 'product pages', 'catalog'],
+    keywords: ['efficiency', 'msp', 'managed services', 'ict', 'cloud', 'microsoft 365', 'office 365', 'non-profit', 'accountancy', 'it services'],
     pdfFile: 'Efficiency gap - Officebox -.pdf',
   },
   {
     id: 'implicit',
     company: 'IMPLI-CIT',
-    industry: 'IT / Software',
+    industry: 'IT Services / MSP',
     painPattern: 'Efficiency gap',
     headline: 'Efficiency gap and new customers',
     outcome: 'Efficiency + new customers',
@@ -484,7 +484,7 @@ export const useCases: UseCase[] = [
       'Our sector is too technical or complex for AI content',
     ],
     countries: ['Netherlands'],
-    keywords: ['efficiency', 'new customers', 'growth', 'manual', 'leads', 'it', 'software', 'tech'],
+    keywords: ['efficiency', 'new customers', 'growth', 'manual', 'leads', 'msp', 'managed services', 'it services', 'onsite support', 'datacenter', 'wifi', 'field engineer'],
     pdfFile: 'Efficiency gap and new customers - IMPLI-CIT - Success case.pdf',
   },
 
