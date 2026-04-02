@@ -287,7 +287,7 @@ function renderTierFilters(data) {
   el.querySelectorAll('.tier-chip').forEach(btn => {
     btn.addEventListener('click', () => {
       activeTier = activeTier === btn.dataset.tier ? null : btn.dataset.tier;
-      activePain = null; activeIndustry = null; activeObjection = null; activeTier = null;
+      activePain = null; activeIndustry = null; activeObjection = null;
       updateAll();
     });
   });
