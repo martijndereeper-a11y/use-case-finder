@@ -6,6 +6,7 @@
 <title>WP SEO AI — Use Case Finder</title>
 <style>
 :root{--bg:#0f1117;--bg2:#1a1d27;--bg3:#242836;--border:#2e3348;--text:#e4e6f0;--text2:#8b8fa3;--purple:#a855f7;--purple2:#7c3aed;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--blue:#3b82f6}
+[data-theme="light"]{--bg:#F5F7FB;--bg2:#FFFFFF;--bg3:#E9EEFA;--border:#DDE2F0;--text:#080D1A;--text2:#5A6070;--purple:#a855f7;--purple2:#7c3aed;--green:#059669;--red:#DC2626;--orange:#D97706;--blue:#2563EB}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 
@@ -13,7 +14,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
 .topbar .logo{color:var(--purple);font-weight:800;font-size:18px}
 .topbar h1{font-size:15px;font-weight:500;color:var(--text2)}
-.topbar .nav-link{margin-left:auto;font-size:13px;color:var(--text2);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:6px;transition:all .15s}
+.topbar .spacer{flex:1}
+.topbar .nav-link{font-size:13px;color:var(--text2);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:6px;transition:all .15s}
 .topbar .nav-link:hover{border-color:var(--purple);color:var(--text)}
 
 /* Layout */
@@ -113,6 +115,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .empty h3{font-size:18px;color:var(--text);margin-bottom:8px}
 .empty p{font-size:14px;max-width:400px;margin:0 auto}
 
+/* Theme toggle */
+.theme-toggle{background:none;border:1px solid var(--border);color:var(--text2);padding:6px 10px;border-radius:6px;cursor:pointer;transition:all .15s;display:flex;align-items:center}
+.theme-toggle:hover{border-color:var(--purple);color:var(--text)}
+.theme-toggle svg{width:16px;height:16px}
+
+/* Light mode overrides */
+[data-theme="light"] .chip .count{background:rgba(0,0,0,.06)}
+[data-theme="light"] .chip.active .count{background:rgba(255,255,255,.25)}
+[data-theme="light"] .obj-tile .obj-count{background:rgba(0,0,0,.06)}
+[data-theme="light"] .obj-tile.active .obj-count{background:rgba(255,255,255,.25)}
+[data-theme="light"] .active-filter{background:rgba(124,58,237,.06);border-color:rgba(124,58,237,.15)}
+[data-theme="light"] .case-result{background:rgba(5,150,105,.06)}
+[data-theme="light"] .case-tag.pain{background:rgba(168,85,247,.08);color:var(--purple)}
+[data-theme="light"] .case-tag.outcome{background:rgba(5,150,105,.08);color:var(--green)}
+[data-theme="light"] .case-tag.objection{background:rgba(217,119,6,.06);color:var(--orange)}
+[data-theme="light"] .meta-pill.ind{background:rgba(37,99,235,.08);color:var(--blue)}
+[data-theme="light"] .meta-pill.btype{background:rgba(168,85,247,.08);color:var(--purple)}
+[data-theme="light"] .meta-pill.mpos{background:rgba(217,119,6,.08);color:var(--orange)}
+[data-theme="light"] .meta-pill.trust{background:rgba(220,38,38,.08);color:var(--red)}
+[data-theme="light"] .meta-pill.country{background:rgba(5,150,105,.08);color:var(--green)}
+[data-theme="light"] .meta-pill.tier{background:var(--bg3);color:var(--text2)}
+[data-theme="light"] .topbar{box-shadow:0 1px 3px rgba(0,0,0,.06)}
+[data-theme="light"] .case-card{box-shadow:0 1px 4px rgba(0,0,0,.04)}
+[data-theme="light"] .case-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+[data-theme="light"] .stat{box-shadow:0 1px 4px rgba(0,0,0,.04)}
+[data-theme="light"] .pdf-btn.view{background:var(--bg3)}
+
 
 </style>
 </head>
@@ -121,6 +150,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="topbar">
   <span class="logo">WP SEO AI</span>
   <h1>Use Case Finder</h1>
+  <div class="spacer"></div>
+  <button class="theme-toggle" id="themeToggle" title="Switch theme"><svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="moon-icon" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
   <a href="admin" class="nav-link">Admin</a>
 </div>
 
@@ -429,6 +460,31 @@ function setupToggle(headerId, bodyId) {
 setupToggle('filterToggle', 'filterBody');
 setupToggle('objToggle', 'objBody');
 setupToggle('tierToggle', 'tierBody');
+
+// ─── Theme toggle ────────────────────────────────────────────────────────────
+(function() {
+  const toggle = document.getElementById('themeToggle');
+  const sun = toggle.querySelector('.sun-icon');
+  const moon = toggle.querySelector('.moon-icon');
+  const saved = localStorage.getItem('uc-theme');
+  if (saved === 'light') applyTheme('light');
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    localStorage.setItem('uc-theme', theme);
+    sun.style.display = theme === 'light' ? 'none' : '';
+    moon.style.display = theme === 'light' ? '' : 'none';
+  }
+
+  toggle.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    applyTheme(isLight ? 'dark' : 'light');
+  });
+})();
 
 init();
 </script>
