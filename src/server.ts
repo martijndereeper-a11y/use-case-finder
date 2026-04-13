@@ -119,7 +119,7 @@ app.post('/api/admin/analyze-pdf', async (c) => {
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    const pdfParse = (await import('pdf-parse')).default;
+    const pdfParse = (await import('pdf-parse/lib/pdf-parse.js')).default;
     const pdfData = await pdfParse(buffer);
     const text = (pdfData.text || '').slice(0, 6000);
 

@@ -251,8 +251,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { file } = await parseMultipart(req);
       if (!file) return res.status(400).json({ error: 'No PDF file provided' });
 
-      // Parse PDF text (pdf-parse v1)
-      const pdfParse = (await import('pdf-parse')).default;
+      // Parse PDF text (pdf-parse v1 — import lib directly to skip test file)
+      const pdfParse = (await import('pdf-parse/lib/pdf-parse.js')).default;
       const pdfData = await pdfParse(file.buffer);
       const text = (pdfData.text || '').slice(0, 6000);
 
