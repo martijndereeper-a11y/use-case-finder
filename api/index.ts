@@ -102,21 +102,31 @@ async function writeToGitHub(path: string, content: string, message: string): Pr
 }
 
 /** Upload a PDF to the GitHub repo */
-async function uploadPdfToGitHub(filename: string, buffer: Buffer): Promise<boolean> {
-  if (!GH_TOKEN) return false;
-  const path = `use-cases/${filename}`;
-  const sha = await getFileSha(path);
-  const body: Record<string, string> = {
-    message: `Add PDF: ${filename}`,
-    content: buffer.toString('base64'),
-  };
-  if (sha) body.sha = sha;
-  const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
-    method: 'PUT',
-    headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  return res.ok;
+async function uploadPdfToGitHub(filename: string, buffer: Buffer): Promise<{ ok: boolean; error?: string }> {
+  if (!GH_TOKEN) return { ok: false, error: 'No GITHUB_TOKEN' };
+  try {
+    const path = `use-cases/${filename}`;
+    const sha = await getFileSha(path);
+    const body: Record<string, string> = {
+      message: `Add PDF: ${filename}`,
+      content: buffer.toString('base64'),
+    };
+    if (sha) body.sha = sha;
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const errBody = await res.text();
+      console.error(`PDF upload failed (${res.status}):`, errBody.slice(0, 300));
+      return { ok: false, error: `GitHub API ${res.status}` };
+    }
+    return { ok: true };
+  } catch (err: any) {
+    console.error('PDF upload error:', err.message);
+    return { ok: false, error: err.message };
+  }
 }
 
 async function loadAllCases(): Promise<UseCase[]> {
@@ -459,12 +469,16 @@ Return ONLY valid JSON, no markdown fences:
       };
 
       // Upload PDF to GitHub repo + save case metadata
-      const [pdfOk, caseOk] = await Promise.all([
+      const [pdfResult, caseOk] = await Promise.all([
         uploadPdfToGitHub(pdfFileName, file.buffer),
         saveCase(useCase),
       ]);
       if (!caseOk) return res.status(500).json({ error: 'Failed to save case to GitHub. Check GITHUB_TOKEN.' });
-      return res.json({ ok: true, id: useCase.id, case: useCase, pdfUploaded: pdfOk });
+      if (!pdfResult.ok) {
+        // Case saved but PDF failed — return success with warning
+        return res.json({ ok: true, id: useCase.id, case: useCase, pdfUploaded: false, pdfError: pdfResult.error });
+      }
+      return res.json({ ok: true, id: useCase.id, case: useCase, pdfUploaded: true });
     }
 
     // ── Health ──

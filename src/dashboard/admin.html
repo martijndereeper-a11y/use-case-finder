@@ -594,8 +594,9 @@ document.getElementById('caseForm').addEventListener('submit', async (e) => {
     const data = await res.json();
     if (data.error) { status.textContent = data.error; status.className = 'submit-status err'; btn.disabled = false; return; }
 
-    status.textContent = `Saved "${data.case.company}" — it's now live in the finder.`;
-    status.className = 'submit-status ok';
+    const pdfWarning = data.pdfUploaded === false ? ` (PDF upload failed: ${data.pdfError || 'unknown'} — upload manually to GitHub)` : '';
+    status.textContent = `Saved "${data.case.company}" — it's now live in the finder.${pdfWarning}`;
+    status.className = data.pdfUploaded === false ? 'submit-status err' : 'submit-status ok';
     btn.disabled = false;
 
     // Reset form
