@@ -46,6 +46,8 @@ interface UseCase {
 // ─── Data loading ────────────────────────────────────────────────────────────
 
 const ROOT = process.cwd();
+// Vercel filesystem is read-only except /tmp
+const ADDED_CASES_FILE = join('/tmp', 'added-cases.json');
 
 function loadSeedCases(): UseCase[] {
   try {
@@ -57,10 +59,12 @@ function loadSeedCases(): UseCase[] {
 }
 
 function loadAddedCases(): UseCase[] {
-  const file = join(ROOT, 'data', 'added-cases.json');
-  try {
-    if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf-8'));
-  } catch {}
+  // Try /tmp first (Vercel runtime), then data/ (local dev fallback)
+  for (const p of [ADDED_CASES_FILE, join(ROOT, 'data', 'added-cases.json')]) {
+    try {
+      if (existsSync(p)) return JSON.parse(readFileSync(p, 'utf-8'));
+    } catch {}
+  }
   return [];
 }
 
@@ -72,22 +76,17 @@ function loadAllCases(): UseCase[] {
 }
 
 function saveCase(uc: UseCase): void {
-  const dir = join(ROOT, 'data');
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-  const file = join(dir, 'added-cases.json');
   const added = loadAddedCases();
   const idx = added.findIndex(c => c.id === uc.id);
   if (idx >= 0) added[idx] = uc; else added.push(uc);
-  writeFileSync(file, JSON.stringify(added, null, 2), 'utf-8');
+  writeFileSync(ADDED_CASES_FILE, JSON.stringify(added, null, 2), 'utf-8');
 }
 
 function deleteCase(id: string): boolean {
   const added = loadAddedCases();
   const filtered = added.filter(c => c.id !== id);
   if (filtered.length === added.length) return false;
-  const dir = join(ROOT, 'data');
-  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, 'added-cases.json'), JSON.stringify(filtered, null, 2), 'utf-8');
+  writeFileSync(ADDED_CASES_FILE, JSON.stringify(filtered, null, 2), 'utf-8');
   return true;
 }
 
@@ -373,10 +372,9 @@ Return ONLY valid JSON, no markdown fences:
       if (!company) return res.status(400).json({ error: 'Company name is required' });
       if (!file) return res.status(400).json({ error: 'PDF file is required' });
 
-      // Save PDF
-      const pdfDir = join(ROOT, 'use-cases');
-      if (!existsSync(pdfDir)) mkdirSync(pdfDir, { recursive: true });
-      writeFileSync(join(pdfDir, file.name), file.buffer);
+      // On Vercel the filesystem is read-only — PDF must be committed to
+      // the GitHub repo separately. We just store the filename reference.
+      const pdfFileName = file.name;
 
       // Parse objections
       const objRaw = fields.objections || '';
@@ -406,7 +404,7 @@ Return ONLY valid JSON, no markdown fences:
         objections,
         countries,
         keywords,
-        pdfFile: file.name,
+        pdfFile: pdfFileName,
         clickTier: 'Starting near zero (0-100)',
       };
 
