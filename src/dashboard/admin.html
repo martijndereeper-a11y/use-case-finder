@@ -504,15 +504,24 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
     const bar = document.getElementById('analyzeBar');
     const hasFields = Object.keys(ex).length > 0 && !ex._error;
     const objCount = data.suggestedObjections.length;
+    const siteFetched = data.websiteFetched;
     if (hasFields) {
-      bar.querySelector('.ab-text').textContent = `Auto-filled from PDF. ${objCount} objection${objCount !== 1 ? 's' : ''} detected. Review and adjust before saving.`;
+      const parts = ['Auto-filled all fields from PDF' + (siteFetched ? ' + website' : '')];
+      if (objCount > 0) parts.push(`${objCount} objection${objCount !== 1 ? 's' : ''} detected`);
+      parts.push('Review and adjust before saving');
+      bar.querySelector('.ab-text').textContent = parts.join('. ') + '.';
+      bar.style.borderColor = 'rgba(16,185,129,.3)';
+      bar.style.background = 'rgba(16,185,129,.06)';
+      bar.querySelector('.ab-text').style.color = 'var(--green)';
     } else {
+      const reason = ex._error || 'Unknown error';
+      console.warn('AI extraction failed:', reason);
       bar.querySelector('.ab-text').textContent = objCount > 0
-        ? `Found ${objCount} matching objection${objCount > 1 ? 's' : ''} — fill in other fields manually.`
-        : 'Could not extract details — fill in the fields manually.';
+        ? `AI extraction failed (${reason.slice(0, 60)}). Found ${objCount} objection${objCount > 1 ? 's' : ''} — fill other fields manually.`
+        : `AI extraction failed (${reason.slice(0, 60)}). Fill in the fields manually.`;
     }
   } catch (err) {
-    alert('Failed to analyze PDF.');
+    alert('Failed to analyze PDF: ' + (err.message || err));
   } finally {
     btn.disabled = false;
     btn.textContent = 'Scan with AI';

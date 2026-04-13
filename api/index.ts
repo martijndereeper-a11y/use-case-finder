@@ -289,22 +289,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // Keyword-based objection detection
       const suggestedObjections = detectObjections(pdfText);
 
-      // Claude AI extraction — PDF + website context
+      // Claude AI extraction — PDF + website context, with retry
       let extracted: Record<string, any> = {};
+      const models = ['claude-sonnet-4-20250514', 'claude-haiku-4-5-20251001'];
       try {
         const { default: Anthropic } = await import('@anthropic-ai/sdk');
         const anthropic = new Anthropic();
 
         const websiteSection = siteText
           ? `\n\nWEBSITE CONTENT (from ${domain}):\n${siteText}`
-          : '\n\n(Website could not be fetched — extract what you can from the PDF only.)';
+          : domain
+            ? `\n\n(Website ${domain} could not be fetched — extract what you can from the PDF. The domain itself may hint at what the company does.)`
+            : '\n\n(No website provided — extract what you can from the PDF only.)';
 
-        const msg = await anthropic.messages.create({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1500,
-          messages: [{
-            role: 'user',
-            content: `You are analyzing a WP SEO AI customer success case. Extract structured data by combining the PDF content with the customer's website to create rich, accurate descriptions.
+        const prompt = `You are analyzing a WP SEO AI customer success case. Extract structured data by combining the PDF content with the customer's website to create rich, accurate descriptions.
 
 PDF TEXT (success case slides):
 ${pdfText}
@@ -331,13 +329,30 @@ Return ONLY valid JSON, no markdown fences:
   "countries": ["country name(s) where company operates"],
   "keywords": ["8-12 lowercase search keywords covering industry, challenge, solution, and company type"],
   "painPattern": "best matching from: No time / capacity for SEO, Underperforming agency / high SEO cost, AI / LLM search opportunity, Relied on single channel, Lack of control / visibility, Going international / scaling, Efficiency gap, Limited marketing capacity, Other"
-}`,
-          }],
-        });
-        const responseText = msg.content[0].type === 'text' ? msg.content[0].text : '';
-        // Strip markdown fences if present
-        const jsonStr = responseText.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
-        extracted = JSON.parse(jsonStr);
+}`;
+
+        // Try primary model, fall back to secondary on overload
+        let lastError = '';
+        for (const model of models) {
+          try {
+            const msg = await anthropic.messages.create({
+              model,
+              max_tokens: 1500,
+              messages: [{ role: 'user', content: prompt }],
+            });
+            const responseText = msg.content[0].type === 'text' ? msg.content[0].text : '';
+            const jsonStr = responseText.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
+            extracted = JSON.parse(jsonStr);
+            break; // success
+          } catch (modelErr: any) {
+            lastError = modelErr.message || String(modelErr);
+            console.warn(`Model ${model} failed: ${lastError}`);
+            continue; // try next model
+          }
+        }
+        if (Object.keys(extracted).length === 0) {
+          extracted = { _error: lastError || 'All models failed' };
+        }
       } catch (aiErr: any) {
         console.error('AI extraction failed:', aiErr.message);
         extracted = { _error: aiErr.message };
