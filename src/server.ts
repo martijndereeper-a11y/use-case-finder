@@ -226,6 +226,7 @@ app.post('/api/admin/cases', async (c) => {
       countries,
       keywords,
       pdfFile: pdfFileName,
+      clickTier: 'Starting near zero (0-100)' as UseCase['clickTier'],
     };
 
     saveCase(useCase);
