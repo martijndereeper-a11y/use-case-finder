@@ -1,1 +1,41 @@
-[]
+[
+  {
+    "id": "pnl-circulair-funderen",
+    "company": "PNL Circulair Funderen",
+    "domain": "https://pnl.nl",
+    "industry": "Construction / Foundation Engineering",
+    "painPattern": "Limited marketing capacity",
+    "headline": "How PNL grew organic clicks 266% in 6 months by publishing 30 AI-optimized blog posts monthly",
+    "outcome": "+266% organic clicks in 6 months",
+    "result": "PNL increased monthly organic clicks from 433 to 1,150 (+266%) and ranking keywords from 913 to 3,708 (+406%) within six months, with 2,158 clicks directly attributed to WP SEO AI content.",
+    "summary": "PNL is a B2B foundation engineering specialist offering screw pile solutions as an eco-friendly alternative to traditional concrete foundations. The company faced stagnant organic traffic despite quality products and technical expertise, lacking the internal SEO capacity to capture high-intent B2B traffic during the awareness phase of the buyer's journey. By partnering with WP SEO AI to publish 30 targeted blog posts monthly, PNL achieved a 266% increase in organic clicks and positioned itself as a topical authority—with content now cited by Google AI Overview and ChatGPT.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": true,
+    "objections": [
+      "B2B sector, nobody searches for our services",
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "b2b organic traffic growth",
+      "ai-generated content strategy",
+      "niche industry seo",
+      "scalable content creation",
+      "foundation engineering seo",
+      "construction marketing automation",
+      "awareness stage content strategy",
+      "keyword ranking expansion",
+      "manufacturing seo",
+      "limited internal resources seo",
+      "topical authority building",
+      "ai content optimization"
+    ],
+    "pdfFile": "Traffic drop panic - PNL - Success case.pdf",
+    "clickTier": "Starting near zero (0-100)"
+  }
+]
