@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "npx tsx src/dev.ts",
+    "build": "npx tsx scripts/build-static.ts",
     "build-static": "npx tsx scripts/build-static.ts"
   },
   "dependencies": {
