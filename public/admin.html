@@ -166,9 +166,14 @@ select{cursor:pointer}
 
   <form id="caseForm">
 
-    <!-- PDF Upload -->
+    <!-- PDF Upload + Domain -->
     <div class="form-section">
-      <h3>1. Upload slides</h3>
+      <h3>1. Upload slides &amp; customer website</h3>
+      <div class="field">
+        <label for="domain">Customer website *</label>
+        <input type="url" id="domain" name="domain" placeholder="e.g. https://schulte-energie.nl" required>
+        <div class="hint">Used to research the customer and generate a richer case description.</div>
+      </div>
       <div class="upload-zone" id="uploadZone">
         <div class="uz-icon">PDF</div>
         <div class="uz-text">Drop your PDF here or <strong>click to browse</strong></div>
@@ -176,8 +181,8 @@ select{cursor:pointer}
       <input type="file" id="pdfInput" accept=".pdf" hidden>
       <div id="fileInfo" style="display:none"></div>
       <div class="analyze-bar" id="analyzeBar">
-        <span class="ab-text">PDF uploaded — scan it for matching objections?</span>
-        <button type="button" class="analyze-btn" id="analyzeBtn">Scan PDF</button>
+        <span class="ab-text">PDF uploaded — scan it and auto-fill all fields?</span>
+        <button type="button" class="analyze-btn" id="analyzeBtn">Scan with AI</button>
       </div>
     </div>
 
@@ -453,15 +458,18 @@ function removePdf() {
   document.getElementById('analyzeBar').classList.remove('show');
 }
 
-// Analyze PDF — extract case details + objections
+// Analyze PDF — extract case details + objections + website research
 document.getElementById('analyzeBtn').addEventListener('click', async () => {
   if (!selectedPdf) return;
+  const domain = document.getElementById('domain').value.trim();
+  if (!domain) { alert('Enter the customer website first — it\'s needed for AI research.'); document.getElementById('domain').focus(); return; }
   const btn = document.getElementById('analyzeBtn');
   btn.disabled = true;
-  btn.textContent = 'Scanning with AI...';
+  btn.textContent = 'Researching website + scanning PDF...';
 
   const fd = new FormData();
   fd.append('pdf', selectedPdf);
+  fd.append('domain', domain);
 
   try {
     const res = await adminFetch(apiUrl('/api/admin/analyze-pdf'), { method: 'POST', body: fd });
@@ -506,7 +514,7 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
     alert('Failed to analyze PDF.');
   } finally {
     btn.disabled = false;
-    btn.textContent = 'Scan PDF';
+    btn.textContent = 'Scan with AI';
   }
 });
 
@@ -545,6 +553,7 @@ document.getElementById('caseForm').addEventListener('submit', async (e) => {
   status.textContent = 'Saving...';
 
   if (!selectedPdf) { status.textContent = 'Please upload a PDF first.'; status.className = 'submit-status err'; btn.disabled = false; return; }
+  if (!document.getElementById('domain').value.trim()) { status.textContent = 'Customer website is required.'; status.className = 'submit-status err'; btn.disabled = false; return; }
   if (!document.getElementById('company').value.trim()) { status.textContent = 'Company name is required.'; status.className = 'submit-status err'; btn.disabled = false; return; }
 
   // Gather selected objections
@@ -555,6 +564,7 @@ document.getElementById('caseForm').addEventListener('submit', async (e) => {
 
   const fd = new FormData();
   fd.append('pdf', selectedPdf);
+  fd.append('domain', document.getElementById('domain').value.trim());
   fd.append('company', document.getElementById('company').value.trim());
   fd.append('industry', document.getElementById('industry').value.trim() || 'General');
   fd.append('painPattern', document.getElementById('painPattern').value.trim() || 'Other');
@@ -630,6 +640,7 @@ function filterCasesList() {
     <div class="cl-card" data-id="${escapeHtml(c.id)}">
       <div class="cl-top">
         <span class="cl-name">${escapeHtml(c.company)}</span>
+        ${c.domain ? `<a href="${escapeHtml(c.domain)}" target="_blank" style="font-size:11px;color:var(--text2);text-decoration:none">${escapeHtml(c.domain.replace(/^https?:\\/\\//, '').replace(/\\/$/, ''))}</a>` : ''}
         <span class="cl-pill btype">${escapeHtml(c.businessType)}</span>
       </div>
       <div class="cl-meta">

@@ -26,6 +26,7 @@ type Objection = typeof OBJECTIONS[number];
 interface UseCase {
   id: string;
   company: string;
+  domain?: string;
   industry: string;
   painPattern: string;
   headline: string;
@@ -248,57 +249,106 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // ── Admin: POST /api/admin/analyze-pdf ──
     if (path === '/api/admin/analyze-pdf' && req.method === 'POST') {
-      const { file } = await parseMultipart(req);
+      const { fields, file } = await parseMultipart(req);
       if (!file) return res.status(400).json({ error: 'No PDF file provided' });
+      const domain = (fields.domain || '').trim();
 
       // Parse PDF text (pdf-parse v1 — import lib directly to skip test file)
       const pdfParse = (await import('pdf-parse/lib/pdf-parse.js')).default;
       const pdfData = await pdfParse(file.buffer);
-      const text = (pdfData.text || '').slice(0, 6000);
+      const pdfText = (pdfData.text || '').slice(0, 5000);
+
+      // Fetch website content for richer context
+      let siteText = '';
+      if (domain) {
+        try {
+          const url = domain.startsWith('http') ? domain : `https://${domain}`;
+          const siteRes = await fetch(url, {
+            headers: { 'User-Agent': 'Mozilla/5.0 (compatible; WPSEOAIBot/1.0)' },
+            signal: AbortSignal.timeout(8000),
+          });
+          if (siteRes.ok) {
+            const html = await siteRes.text();
+            // Strip HTML tags, scripts, styles — keep text
+            siteText = html
+              .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+              .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+              .replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, '')
+              .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, '')
+              .replace(/<[^>]+>/g, ' ')
+              .replace(/&[a-z]+;/gi, ' ')
+              .replace(/\s+/g, ' ')
+              .trim()
+              .slice(0, 3000);
+          }
+        } catch (fetchErr: any) {
+          console.warn('Website fetch failed:', fetchErr.message);
+        }
+      }
 
       // Keyword-based objection detection
-      const suggestedObjections = detectObjections(text);
+      const suggestedObjections = detectObjections(pdfText);
 
-      // Claude AI extraction
+      // Claude AI extraction — PDF + website context
       let extracted: Record<string, any> = {};
       try {
         const { default: Anthropic } = await import('@anthropic-ai/sdk');
         const anthropic = new Anthropic();
+
+        const websiteSection = siteText
+          ? `\n\nWEBSITE CONTENT (from ${domain}):\n${siteText}`
+          : '\n\n(Website could not be fetched — extract what you can from the PDF only.)';
+
         const msg = await anthropic.messages.create({
           model: 'claude-sonnet-4-20250514',
-          max_tokens: 1024,
+          max_tokens: 1500,
           messages: [{
             role: 'user',
-            content: `Extract structured data from this success case PDF text. Return ONLY valid JSON, no markdown.
+            content: `You are analyzing a WP SEO AI customer success case. Extract structured data by combining the PDF content with the customer's website to create rich, accurate descriptions.
 
-PDF text:
-${text}
+PDF TEXT (success case slides):
+${pdfText}
+${websiteSection}
 
-Return this exact JSON structure:
+Instructions:
+- Use the website to understand what the company does, their market, and their offering
+- Use the PDF to understand the SEO challenge, what WP SEO AI did, and the results
+- Write the summary from a third-person sales perspective: what the company does, what their challenge was, and what WP SEO AI achieved for them
+- The result should be specific and include numbers/metrics from the PDF where possible
+- Keywords should help sales reps find this case when preparing for similar prospects
+
+Return ONLY valid JSON, no markdown fences:
 {
   "company": "company name",
-  "industry": "industry in 2-4 words",
-  "headline": "one-line headline describing the case",
-  "outcome": "short outcome phrase",
-  "result": "1-2 sentence concrete result with numbers",
-  "summary": "2-3 sentence context about the company, challenge, and what was achieved",
+  "industry": "specific industry in 2-4 words, e.g. Energy / Installation",
+  "headline": "compelling one-line headline for this success story",
+  "outcome": "short outcome phrase, e.g. +253% organic traffic",
+  "result": "1-2 sentence concrete result with numbers from the PDF",
+  "summary": "2-3 sentence description: what the company does (from website), their SEO challenge, and what WP SEO AI achieved. Written for a sales rep who needs to quickly understand this case.",
   "businessType": "B2B or B2C or Mix",
   "marketPosition": "Niche or Mainstream",
-  "trustSensitive": true/false,
-  "countries": ["country name(s)"],
-  "keywords": ["5-8 lowercase search keywords"],
-  "painPattern": "best matching: No time / capacity for SEO, Underperforming agency / high SEO cost, AI / LLM search opportunity, Relied on single channel, Lack of control / visibility, Going international / scaling, Efficiency gap, Limited marketing capacity, Other"
+  "trustSensitive": true or false (medical, legal, finance = true),
+  "countries": ["country name(s) where company operates"],
+  "keywords": ["8-12 lowercase search keywords covering industry, challenge, solution, and company type"],
+  "painPattern": "best matching from: No time / capacity for SEO, Underperforming agency / high SEO cost, AI / LLM search opportunity, Relied on single channel, Lack of control / visibility, Going international / scaling, Efficiency gap, Limited marketing capacity, Other"
 }`,
           }],
         });
         const responseText = msg.content[0].type === 'text' ? msg.content[0].text : '';
-        extracted = JSON.parse(responseText);
+        // Strip markdown fences if present
+        const jsonStr = responseText.replace(/^```json?\s*/i, '').replace(/\s*```$/i, '').trim();
+        extracted = JSON.parse(jsonStr);
       } catch (aiErr: any) {
         console.error('AI extraction failed:', aiErr.message);
         extracted = { _error: aiErr.message };
       }
 
-      return res.json({ suggestedObjections, extracted, preview: text.slice(0, 500).trim() });
+      return res.json({
+        suggestedObjections,
+        extracted,
+        preview: pdfText.slice(0, 500).trim(),
+        websiteFetched: siteText.length > 0,
+      });
     }
 
     // ── Admin: POST /api/admin/cases ──
@@ -321,9 +371,14 @@ Return this exact JSON structure:
       const keywords = fields.keywords ? fields.keywords.split(',').map(k => k.trim().toLowerCase()).filter(Boolean) : [];
       const countries = fields.countries ? fields.countries.split(',').map(c => c.trim()).filter(Boolean) : [];
 
+      // Normalize domain
+      const rawDomain = (fields.domain || '').trim();
+      const domain = rawDomain ? (rawDomain.startsWith('http') ? rawDomain : `https://${rawDomain}`) : undefined;
+
       const useCase: UseCase = {
         id: generateId(company),
         company,
+        domain,
         industry: (fields.industry || 'General').trim(),
         painPattern: (fields.painPattern || 'Other').trim(),
         headline: (fields.headline || '').trim(),
