@@ -641,7 +641,7 @@ function filterCasesList() {
     <div class="cl-card" data-id="${escapeHtml(c.id)}">
       <div class="cl-top">
         <span class="cl-name">${escapeHtml(c.company)}</span>
-        ${c.domain ? `<a href="${escapeHtml(c.domain)}" target="_blank" style="font-size:11px;color:var(--text2);text-decoration:none">${escapeHtml(c.domain.replace(/^https?:\\/\\//, '').replace(/\\/$/, ''))}</a>` : ''}
+        ${c.domain ? `<a href="${escapeHtml(c.domain)}" target="_blank" style="font-size:11px;color:var(--text2);text-decoration:none">${escapeHtml(c.domain.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</a>` : ''}
         <span class="cl-pill btype">${escapeHtml(c.businessType)}</span>
       </div>
       <div class="cl-meta">
