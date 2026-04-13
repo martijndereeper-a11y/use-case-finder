@@ -335,8 +335,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     } else {
       err.textContent = 'Wrong password.';
     }
-  } catch {
-    err.textContent = 'Connection failed.';
+  } catch (ex) {
+    err.textContent = 'Connection failed: ' + (ex.message || ex);
+    console.error('Login error:', ex);
   }
   btn.disabled = false;
 });
