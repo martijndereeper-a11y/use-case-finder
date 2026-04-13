@@ -119,11 +119,9 @@ app.post('/api/admin/analyze-pdf', async (c) => {
 
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    const { PDFParse } = await import('pdf-parse');
-    const parser = new PDFParse(new Uint8Array(buffer)) as any;
-    await parser.load();
-    const textResult = await parser.getText();
-    const text = (textResult.pages || []).map((p: any) => p.text).join('\n').slice(0, 6000);
+    const pdfParse = (await import('pdf-parse')).default;
+    const pdfData = await pdfParse(buffer);
+    const text = (pdfData.text || '').slice(0, 6000);
 
     // Keyword-based objection detection (free, instant)
     const suggestedObjections = detectObjectionsFromText(text);

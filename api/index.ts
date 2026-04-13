@@ -251,12 +251,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { file } = await parseMultipart(req);
       if (!file) return res.status(400).json({ error: 'No PDF file provided' });
 
-      // Parse PDF text (pdf-parse v2 API)
-      const { PDFParse } = await import('pdf-parse');
-      const parser = new PDFParse(new Uint8Array(file.buffer));
-      await parser.load();
-      const textResult = await parser.getText();
-      const text = (textResult.pages || []).map((p: any) => p.text).join('\n').slice(0, 6000);
+      // Parse PDF text (pdf-parse v1)
+      const pdfParse = (await import('pdf-parse')).default;
+      const pdfData = await pdfParse(file.buffer);
+      const text = (pdfData.text || '').slice(0, 6000);
 
       // Keyword-based objection detection
       const suggestedObjections = detectObjections(text);
