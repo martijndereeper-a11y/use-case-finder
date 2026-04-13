@@ -3,7 +3,7 @@
  * Self-contained: no imports from src/ to avoid bundler issues.
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'wpseoai2026';
@@ -46,8 +46,8 @@ interface UseCase {
 // ─── Data loading ────────────────────────────────────────────────────────────
 
 const ROOT = process.cwd();
-// Vercel filesystem is read-only except /tmp
-const ADDED_CASES_FILE = join('/tmp', 'added-cases.json');
+const GH_REPO = 'martijndereeper-a11y/use-case-finder';
+const GH_TOKEN = process.env.GITHUB_TOKEN || '';
 
 function loadSeedCases(): UseCase[] {
   try {
@@ -58,36 +58,86 @@ function loadSeedCases(): UseCase[] {
   }
 }
 
-function loadAddedCases(): UseCase[] {
-  // Try /tmp first (Vercel runtime), then data/ (local dev fallback)
-  for (const p of [ADDED_CASES_FILE, join(ROOT, 'data', 'added-cases.json')]) {
-    try {
-      if (existsSync(p)) return JSON.parse(readFileSync(p, 'utf-8'));
-    } catch {}
-  }
-  return [];
+/** Load admin-added cases from GitHub repo (data/added-cases.json) */
+async function loadAddedCasesFromGitHub(): Promise<UseCase[]> {
+  if (!GH_TOKEN) return [];
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/data/added-cases.json`, {
+      headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json' },
+    });
+    if (!res.ok) return []; // file doesn't exist yet
+    const data = await res.json() as { content: string };
+    return JSON.parse(Buffer.from(data.content, 'base64').toString('utf-8'));
+  } catch { return []; }
 }
 
-function loadAllCases(): UseCase[] {
+/** Get the SHA of a file in the repo (needed for updates) */
+async function getFileSha(path: string): Promise<string | null> {
+  if (!GH_TOKEN) return null;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+      headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json' },
+    });
+    if (!res.ok) return null;
+    const data = await res.json() as { sha: string };
+    return data.sha;
+  } catch { return null; }
+}
+
+/** Write a file to the GitHub repo */
+async function writeToGitHub(path: string, content: string, message: string): Promise<boolean> {
+  if (!GH_TOKEN) return false;
+  const sha = await getFileSha(path);
+  const body: Record<string, string> = {
+    message,
+    content: Buffer.from(content).toString('base64'),
+  };
+  if (sha) body.sha = sha;
+  const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return res.ok;
+}
+
+/** Upload a PDF to the GitHub repo */
+async function uploadPdfToGitHub(filename: string, buffer: Buffer): Promise<boolean> {
+  if (!GH_TOKEN) return false;
+  const path = `use-cases/${filename}`;
+  const sha = await getFileSha(path);
+  const body: Record<string, string> = {
+    message: `Add PDF: ${filename}`,
+    content: buffer.toString('base64'),
+  };
+  if (sha) body.sha = sha;
+  const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return res.ok;
+}
+
+async function loadAllCases(): Promise<UseCase[]> {
   const seed = loadSeedCases();
-  const added = loadAddedCases();
+  const added = await loadAddedCasesFromGitHub();
   const ids = new Set(added.map(c => c.id));
   return [...seed.filter(c => !ids.has(c.id)), ...added];
 }
 
-function saveCase(uc: UseCase): void {
-  const added = loadAddedCases();
+async function saveCase(uc: UseCase): Promise<boolean> {
+  const added = await loadAddedCasesFromGitHub();
   const idx = added.findIndex(c => c.id === uc.id);
   if (idx >= 0) added[idx] = uc; else added.push(uc);
-  writeFileSync(ADDED_CASES_FILE, JSON.stringify(added, null, 2), 'utf-8');
+  return writeToGitHub('data/added-cases.json', JSON.stringify(added, null, 2), `Add case: ${uc.company}`);
 }
 
-function deleteCase(id: string): boolean {
-  const added = loadAddedCases();
+async function deleteCase(id: string): Promise<boolean> {
+  const added = await loadAddedCasesFromGitHub();
   const filtered = added.filter(c => c.id !== id);
   if (filtered.length === added.length) return false;
-  writeFileSync(ADDED_CASES_FILE, JSON.stringify(filtered, null, 2), 'utf-8');
-  return true;
+  return writeToGitHub('data/added-cases.json', JSON.stringify(filtered, null, 2), `Remove case: ${id}`);
 }
 
 function generateId(company: string): string {
@@ -186,7 +236,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     // ── Public: GET /api/use-cases ──
     if (path === '/api/use-cases' && req.method === 'GET') {
-      const cases = loadAllCases();
+      const cases = await loadAllCases();
       const painPatterns = [...new Set(cases.map(c => c.painPattern))];
       const industries = [...new Set(cases.map(c => c.industry))];
       const objectionCounts = OBJECTIONS.map(obj => ({
@@ -199,7 +249,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // ── Public: GET /api/use-cases/search ──
     if (path === '/api/use-cases/search' && req.method === 'GET') {
       const q = (typeof req.query.q === 'string' ? req.query.q : '').toLowerCase().trim();
-      const cases = loadAllCases();
+      const cases = await loadAllCases();
       if (!q) return res.json({ results: cases });
 
       const terms = q.split(/\s+/);
@@ -234,14 +284,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // ── Admin: GET /api/admin/cases ──
     if (path === '/api/admin/cases' && req.method === 'GET') {
-      return res.json({ cases: loadAllCases() });
+      return res.json({ cases: await loadAllCases() });
     }
 
     // ── Admin: DELETE /api/admin/cases/:id ──
     const deleteMatch = path.match(/^\/api\/admin\/cases\/(.+)$/);
     if (deleteMatch && req.method === 'DELETE') {
       const id = decodeURIComponent(deleteMatch[1]);
-      const ok = deleteCase(id);
+      const ok = await deleteCase(id);
       if (!ok) return res.status(404).json({ error: 'Case not found or is a seed case' });
       return res.json({ ok: true });
     }
@@ -408,8 +458,13 @@ Return ONLY valid JSON, no markdown fences:
         clickTier: 'Starting near zero (0-100)',
       };
 
-      saveCase(useCase);
-      return res.json({ ok: true, id: useCase.id, case: useCase });
+      // Upload PDF to GitHub repo + save case metadata
+      const [pdfOk, caseOk] = await Promise.all([
+        uploadPdfToGitHub(pdfFileName, file.buffer),
+        saveCase(useCase),
+      ]);
+      if (!caseOk) return res.status(500).json({ error: 'Failed to save case to GitHub. Check GITHUB_TOKEN.' });
+      return res.json({ ok: true, id: useCase.id, case: useCase, pdfUploaded: pdfOk });
     }
 
     // ── Health ──
