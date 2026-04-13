@@ -14,7 +14,8 @@ import type { UseCase, Objection } from './data';
 import { config } from 'dotenv';
 config();
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+let __dirname: string;
+try { __dirname = dirname(fileURLToPath(import.meta.url)); } catch { __dirname = process.cwd(); }
 const ROOT = process.env.VERCEL ? process.cwd() : join(__dirname, '..');
 const app = new Hono();
 

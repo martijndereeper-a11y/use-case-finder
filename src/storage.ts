@@ -8,7 +8,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { useCases as seedCases, type UseCase, OBJECTIONS, type Objection } from './data';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+let __dirname: string;
+try { __dirname = dirname(fileURLToPath(import.meta.url)); } catch { __dirname = process.cwd(); }
 const ROOT = process.env.VERCEL ? process.cwd() : join(__dirname, '..');
 const DATA_DIR = join(ROOT, 'data');
 const CASES_FILE = join(DATA_DIR, 'use-cases.json');

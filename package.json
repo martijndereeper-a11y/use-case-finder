@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "WP SEO AI — Use Case Finder for deal makers",
   "private": true,
-    "engines": {
+  "type": "module",
+  "engines": {
     "node": ">=20.0.0"
   },
   "scripts": {
