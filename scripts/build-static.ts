@@ -141,5 +141,10 @@ writeFileSync(join(OUT, 'index.html'), html);
 const adminHtml = readFileSync(join(ROOT, 'src', 'dashboard', 'admin.html'), 'utf-8');
 writeFileSync(join(OUT, 'admin.html'), adminHtml);
 
+// Copy industries page as-is (it talks to the serverless function)
+const industriesHtml = readFileSync(join(ROOT, 'src', 'dashboard', 'industries.html'), 'utf-8');
+writeFileSync(join(OUT, 'industries.html'), industriesHtml);
+
 console.log(`Built public/index.html (${(html.length/1024).toFixed(0)} KB, ${data.cases.length} cases embedded)`);
 console.log(`Built public/admin.html`);
+console.log(`Built public/industries.html`);

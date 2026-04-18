@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WP SEO AI — Customer Industries</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f042c;--bg2:#1a0e3a;--bg3:#260e49;--border:#3b1d6e;--text:#FFFFFF;--text2:#9CA3AF;--purple:#B748FF;--purple2:#7c3aed;--green:#10B981;--red:#EF4444;--orange:#F59E0B;--blue:#3B82F6;--purple-soft:#BEB5FF}
+[data-theme="light"]{--bg:#E9EEFA;--bg2:#FFFFFF;--bg3:#F5F7FB;--border:#D4DAE8;--text:#16151A;--text2:#5A6070;--purple:#B748FF;--purple2:#7c3aed;--green:#10B981;--red:#EF4444;--orange:#F59E0B;--blue:#3B82F6;--purple-soft:#7c3aed}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Archivo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse 80% 60% at 30% 20%,#1a0e3a 0%,#0f042c 100%) fixed}
+[data-theme="light"] body{background:#E9EEFA;background:radial-gradient(ellipse 80% 60% at 50% 0%,#FFFFFF 0%,#E9EEFA 100%) fixed}
+
+.topbar{background:var(--bg);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
+.topbar .logo{display:flex;align-items:center}
+.topbar .logo svg{height:22px;width:auto}
+.topbar h1{font-size:15px;font-weight:500;color:var(--text2)}
+.topbar .spacer{flex:1}
+.topbar .nav-link{font-size:13px;color:var(--text2);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:8px;font-weight:600;transition:all .15s;display:inline-block}
+.topbar .nav-link:hover{border-color:var(--purple);color:var(--text)}
+.topbar .nav-link.active{border-color:var(--purple);color:var(--purple)}
+[data-theme="light"] .topbar{background:var(--bg2);box-shadow:0 1px 4px rgba(0,0,0,.06)}
+
+.logo-dark{display:inline-flex}.logo-light{display:none}
+[data-theme="light"] .logo-dark{display:none}[data-theme="light"] .logo-light{display:inline-flex}
+
+.theme-toggle{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--text2);display:inline-flex;align-items:center}
+.theme-toggle svg{width:16px;height:16px}
+.theme-toggle:hover{border-color:var(--purple);color:var(--text)}
+
+.container{max-width:960px;margin:0 auto;padding:32px 24px;flex:1;width:100%}
+
+.hero{text-align:center;margin-bottom:24px}
+.hero h2{font-size:24px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.hero p{color:var(--text2);font-size:14px;line-height:1.6;max-width:640px;margin:0 auto}
+
+.disclaimer{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:12px 16px;margin-bottom:24px;font-size:12px;color:var(--text2);line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+.disclaimer svg{flex-shrink:0;margin-top:1px;color:var(--orange)}
+.disclaimer strong{color:var(--text)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.stat .val{font-size:24px;font-weight:800;color:var(--purple)}
+.stat .lbl{font-size:11px;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px}
+
+.search-wrap{position:relative;margin-bottom:20px}
+.search-wrap input{width:100%;padding:16px 20px 16px 52px;border-radius:12px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:15px;font-family:inherit;outline:none;transition:border .15s}
+.search-wrap input:focus{border-color:var(--purple)}
+.search-icon{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:var(--text2)}
+.search-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--purple);color:white;border:none;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.search-btn:hover{background:var(--purple2)}
+.search-btn:disabled{opacity:.5;cursor:not-allowed}
+
+.example-queries{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.example-queries .chip{background:var(--bg3);border:1px solid var(--border);padding:6px 12px;border-radius:9999px;font-size:12px;color:var(--text2);cursor:pointer;transition:all .15s}
+.example-queries .chip:hover{border-color:var(--purple);color:var(--text)}
+
+.interpretation{background:rgba(183,72,255,.06);border:1px solid rgba(183,72,255,.2);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:var(--text);display:none}
+.interpretation.show{display:block}
+.interpretation strong{color:var(--purple)}
+
+.results{display:flex;flex-direction:column;gap:12px}
+.industry-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all .15s}
+.industry-card:hover{border-color:var(--purple-soft)}
+.industry-card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px}
+.industry-card .name{font-size:17px;font-weight:700;color:var(--text)}
+.industry-card .relevance{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;flex-shrink:0}
+.industry-card .relevance.high{background:rgba(16,185,129,.15);color:var(--green)}
+.industry-card .relevance.medium{background:rgba(245,158,11,.15);color:var(--orange)}
+.industry-card .relevance.low{background:rgba(156,163,175,.15);color:var(--text2)}
+.industry-card .why{font-size:13px;color:var(--text2);margin-bottom:14px;font-style:italic}
+.industry-card .counts{display:flex;gap:16px;font-size:12px;color:var(--text2);margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.industry-card .counts .big{font-size:20px;font-weight:700;color:var(--purple);display:block}
+.industry-card .counts .label{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
+.industry-card .count-block{text-align:center;padding:4px 10px}
+.industry-card .samples-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;font-weight:600}
+.industry-card .sample{font-size:13px;color:var(--text);padding:6px 0;border-left:2px solid var(--purple-soft);padding-left:12px;margin-bottom:6px;line-height:1.5}
+.industry-card .sample:last-child{margin-bottom:0}
+
+.loading{text-align:center;padding:48px 20px;color:var(--text2)}
+.loading .spinner{display:inline-block;width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--purple);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.empty{text-align:center;padding:48px 20px;color:var(--text2);font-size:14px}
+
+.error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:14px 18px;color:var(--red);font-size:13px;margin-bottom:20px}
+
+.browse-section{margin-top:40px;padding-top:32px;border-top:1px solid var(--border)}
+.browse-section h3{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.browse-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.browse-chip{background:var(--bg2);border:1px solid var(--border);padding:10px 14px;border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;transition:all .15s;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.browse-chip:hover{border-color:var(--purple);background:var(--bg3)}
+.browse-chip .cnt{color:var(--text2);font-size:11px;font-weight:600}
+
+@media (max-width:600px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .industry-card .counts{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="logo logo-dark"><svg width="1338" height="204" viewBox="0 0 1338 204" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M55.9393 204L0 12H51.3402L80.3423 137.812H81.9379L115.07 12H156.93L190.062 138.094H191.658L220.754 12H272L216.155 204H171.384L136.751 87.5625H135.249L100.616 204H55.9393Z" fill="#B748FF"/><path d="M292 204V12H371.313C385.688 12 398.094 14.8125 408.531 20.4375C419.031 26 427.125 33.7812 432.813 43.7812C438.5 53.7188 442 65.3125 442 78.5C442 91.75 438.438 103.312 432.625 113.25C426.875 123.125 418.656 130.781 407.969 136.219C397.281 141.656 384.594 144.375 369.906 144.375H320.969V107.812H361.281C368.281 107.812 374.125 106.594 378.812 104.156C383.562 101.719 387.156 98.3125 389.594 93.9375C392.031 89.5 393.25 84.3437 393.25 78.4687C393.25 72.5312 392.031 67.4062 389.594 63.0938C387.156 58.7188 383.562 55.3438 378.812 52.9688C374.062 50.5938 368.219 49.4063 361.281 49.4063H338.406V204H292Z" fill="#B748FF"/><path d="M715.504 162.034V126.926H800.25V86.3314H715.504V53.9657H804.25V12H662.25V204H804.25V162.034H715.504Z" fill="white"/><path d="M1125.68 204H1070L1132.73 12H1203.27L1266 204H1210.32L1168.74 64.875H1167.26L1125.68 204ZM1115.29 128.25H1219.97V167.25H1115.29V128.25Z" fill="#B748FF"/><path d="M1338 12V204H1286V12H1338Z" fill="#B748FF"/></svg></span>
+  <h1>Customer Industries</h1>
+  <div class="spacer"></div>
+  <button class="theme-toggle" id="themeToggle" title="Switch theme"><svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="moon-icon" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+  <a href="/" class="nav-link">Use Cases</a>
+  <a href="/industries" class="nav-link active">Industries</a>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <h2>Does your prospect fit our customer base?</h2>
+    <p>Search free-text to see which industries we serve. Powered by AI matching across 2,490 verified customers — useful for cold outreach, demo prep, and credibility checks.</p>
+  </div>
+
+  <div class="disclaimer">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <div>
+      <strong>Data accuracy note:</strong> This database was built by AI — company industries were verified via automated web research on 2,490 customer records. A sample has been human-checked, but this is not 100% accurate. Use as directional input, not hard truth. Surface in conversations as "we have hundreds of customers in [X]" rather than quoting exact counts.
+    </div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="search-wrap">
+    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="search" placeholder="e.g. 'B2B SaaS for HR', 'roofing companies', 'solar installers', 'dental clinics in NL'..." autofocus>
+    <button class="search-btn" id="searchBtn" onclick="doSearch()">Search</button>
+  </div>
+
+  <div class="example-queries">
+    <span class="chip" onclick="runExample('companies like Fortum or Vattenfall')">companies like Fortum or Vattenfall</span>
+    <span class="chip" onclick="runExample('small construction firms')">small construction firms</span>
+    <span class="chip" onclick="runExample('B2B SaaS platforms')">B2B SaaS platforms</span>
+    <span class="chip" onclick="runExample('hospitality and hotels')">hospitality and hotels</span>
+    <span class="chip" onclick="runExample('industrial manufacturers')">industrial manufacturers</span>
+  </div>
+
+  <div class="interpretation" id="interpretation"></div>
+
+  <div id="results"></div>
+
+  <div class="browse-section" id="browseSection">
+    <h3>Browse all industries</h3>
+    <div class="browse-grid" id="browseGrid"></div>
+  </div>
+</div>
+
+<script>
+let INDUSTRIES_DATA = null;
+
+async function loadData() {
+  try {
+    const res = await fetch('/api/industries');
+    INDUSTRIES_DATA = await res.json();
+    renderStats();
+    renderBrowse();
+  } catch (e) {
+    document.getElementById('stats').innerHTML = '<div class="error">Failed to load data: ' + e.message + '</div>';
+  }
+}
+
+function renderStats() {
+  const d = INDUSTRIES_DATA;
+  const totalFI = d.industries.reduce((s, i) => s + i.finland, 0);
+  const totalIntl = d.industries.reduce((s, i) => s + i.international, 0);
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="val">${d.total_companies.toLocaleString()}</div><div class="lbl">Customers</div></div>
+    <div class="stat"><div class="val">${d.distinct_industries}</div><div class="lbl">Industries</div></div>
+    <div class="stat"><div class="val">${totalFI.toLocaleString()}</div><div class="lbl">Finland</div></div>
+    <div class="stat"><div class="val">${totalIntl.toLocaleString()}</div><div class="lbl">International</div></div>
+  `;
+}
+
+function renderBrowse() {
+  const chips = INDUSTRIES_DATA.industries
+    .sort((a, b) => b.total_companies - a.total_companies)
+    .map(i => `<div class="browse-chip" onclick="showIndustry('${i.industry.replace(/'/g, "\\'")}')">${i.industry}<span class="cnt">${i.total_companies}</span></div>`)
+    .join('');
+  document.getElementById('browseGrid').innerHTML = chips;
+}
+
+function showIndustry(name) {
+  const industry = INDUSTRIES_DATA.industries.find(i => i.industry === name);
+  if (!industry) return;
+  document.getElementById('search').value = name;
+  document.getElementById('interpretation').classList.remove('show');
+  renderResults([{
+    industry: industry.industry,
+    relevance: 'high',
+    why: 'Direct match from browse',
+    total_companies: industry.total_companies,
+    finland: industry.finland,
+    international: industry.international,
+    sample_descriptions: industry.sample_descriptions.slice(0, 5),
+  }]);
+  window.scrollTo({top: document.getElementById('search').offsetTop - 80, behavior: 'smooth'});
+}
+
+async function doSearch() {
+  const q = document.getElementById('search').value.trim();
+  if (!q) return;
+
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true;
+  btn.textContent = 'Searching...';
+  document.getElementById('results').innerHTML = '<div class="loading"><div class="spinner"></div><div>Matching with AI...</div></div>';
+  document.getElementById('interpretation').classList.remove('show');
+  document.getElementById('browseSection').style.display = 'none';
+
+  try {
+    const res = await fetch('/api/industries/search', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ query: q }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    if (data.interpretation) {
+      const el = document.getElementById('interpretation');
+      el.innerHTML = '<strong>Reading:</strong> ' + data.interpretation;
+      el.classList.add('show');
+    }
+
+    renderResults(data.matches || []);
+  } catch (e) {
+    document.getElementById('results').innerHTML = '<div class="error">Search failed: ' + e.message + '</div>';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Search';
+  }
+}
+
+function renderResults(matches) {
+  const wrap = document.getElementById('results');
+  if (!matches || matches.length === 0) {
+    wrap.innerHTML = '<div class="empty">No matching industries found. Try a different query.</div>';
+    return;
+  }
+  wrap.innerHTML = matches.map(m => `
+    <div class="industry-card">
+      <div class="top">
+        <div class="name">${m.industry}</div>
+        <div class="relevance ${m.relevance}">${m.relevance} match</div>
+      </div>
+      ${m.why ? `<div class="why">${m.why}</div>` : ''}
+      <div class="counts">
+        <div class="count-block"><span class="big">${m.total_companies}</span><div class="label">Customers</div></div>
+        <div class="count-block"><span class="big">${m.finland}</span><div class="label">Finland</div></div>
+        <div class="count-block"><span class="big">${m.international}</span><div class="label">International</div></div>
+      </div>
+      <div class="samples-label">Sample customers (anonymized)</div>
+      ${(m.sample_descriptions || []).map(s => `<div class="sample">${s}</div>`).join('')}
+    </div>
+  `).join('');
+}
+
+function runExample(q) {
+  document.getElementById('search').value = q;
+  doSearch();
+}
+
+document.getElementById('search').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// Theme toggle
+const themeBtn = document.getElementById('themeToggle');
+const sunIcon = themeBtn.querySelector('.sun-icon');
+const moonIcon = themeBtn.querySelector('.moon-icon');
+function applyTheme(t) {
+  if (t === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    sunIcon.style.display = 'none';
+    moonIcon.style.display = '';
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    sunIcon.style.display = '';
+    moonIcon.style.display = 'none';
+  }
+}
+applyTheme(localStorage.getItem('theme') || 'dark');
+themeBtn.onclick = () => {
+  const t = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  localStorage.setItem('theme', t);
+  applyTheme(t);
+};
+
+loadData();
+</script>
+</body>
+</html>

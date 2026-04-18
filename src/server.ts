@@ -249,6 +249,139 @@ app.delete('/api/admin/cases/:id', (c) => {
   return c.json({ ok: true });
 });
 
+// ─── Industry Search (for AEs) ───────────────────────────────────────────────
+
+let _industriesCache: any = null;
+function getIndustriesData() {
+  if (_industriesCache) return _industriesCache;
+  const path = join(__dirname, 'industries-data.json');
+  _industriesCache = JSON.parse(readFileSync(path, 'utf-8'));
+  return _industriesCache;
+}
+
+app.get('/api/industries', (c) => {
+  try {
+    const data = getIndustriesData();
+    return c.json({
+      generated: data.generated,
+      total_companies: data.total_companies,
+      distinct_industries: data.distinct_industries,
+      methodology: data.methodology,
+      industries: data.industries.map((i: any) => ({
+        industry: i.industry,
+        total_companies: i.total_companies,
+        finland: i.finland,
+        international: i.international,
+        sample_descriptions: i.sample_descriptions.slice(0, 5),
+      })),
+    });
+  } catch (err: any) {
+    return c.json({ error: err.message }, 500);
+  }
+});
+
+app.post('/api/industries/search', async (c) => {
+  try {
+    const { query } = await c.req.json() as { query: string };
+    if (!query || !query.trim()) {
+      return c.json({ error: 'Query is required' }, 400);
+    }
+
+    const data = getIndustriesData();
+    const industryList = data.industries.map((i: any) => ({
+      name: i.industry,
+      count: i.total_companies,
+      samples: i.sample_descriptions.slice(0, 8),
+    }));
+
+    const { default: Anthropic } = await import('@anthropic-ai/sdk');
+    const anthropic = new Anthropic();
+
+    const industriesCatalog = industryList
+      .map((i: any, idx: number) => `${idx + 1}. ${i.name} (${i.count} customers)
+   Examples: ${i.samples.slice(0, 3).join(' | ')}`)
+      .join('\n\n');
+
+    const staticBlock = `You are matching a sales rep's free-text search to our customer industry catalog.
+
+Catalog of customer industries (88 total):
+${industriesCatalog}
+
+Your task: match the sales rep's query to the most relevant industries from this catalog.
+
+Output format — return ONLY valid JSON (no markdown):
+{
+  "interpretation": "brief one-line read of what the rep is looking for",
+  "matches": [
+    {"industry": "exact industry name from catalog", "relevance": "high|medium|low", "why": "one-line reason this matches the query"}
+  ]
+}
+
+Rules:
+- Return 3-8 matches ordered by relevance
+- Use the EXACT industry name from the catalog (spelling must match)
+- "high" = direct match | "medium" = adjacent/overlapping | "low" = tangential but might be useful
+- Be liberal with matches — AEs often describe prospects vaguely
+- Include broad matches AND adjacent niches`;
+
+    const msg = await anthropic.messages.create({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1024,
+      messages: [{
+        role: 'user',
+        content: [
+          {
+            type: 'text',
+            text: staticBlock,
+            cache_control: { type: 'ephemeral' },
+          },
+          {
+            type: 'text',
+            text: `Sales rep's search query: "${query}"`,
+          },
+        ],
+      }],
+    });
+
+    const responseText = msg.content[0].type === 'text' ? msg.content[0].text : '{}';
+    let parsed: any;
+    try {
+      parsed = JSON.parse(responseText.trim().replace(/^```json\s*/, '').replace(/\s*```$/, ''));
+    } catch {
+      return c.json({ error: 'AI returned malformed JSON', raw: responseText.slice(0, 200) }, 502);
+    }
+
+    const byName = Object.fromEntries(data.industries.map((i: any) => [i.industry, i]));
+    const enriched = (parsed.matches || []).map((m: any) => {
+      const full = byName[m.industry];
+      if (!full) return null;
+      return {
+        industry: m.industry,
+        relevance: m.relevance,
+        why: m.why,
+        total_companies: full.total_companies,
+        finland: full.finland,
+        international: full.international,
+        sample_descriptions: full.sample_descriptions.slice(0, 5),
+      };
+    }).filter(Boolean);
+
+    return c.json({
+      query,
+      interpretation: parsed.interpretation || '',
+      matches: enriched,
+      usage: {
+        input_tokens: msg.usage?.input_tokens,
+        cache_creation_input_tokens: (msg.usage as any)?.cache_creation_input_tokens,
+        cache_read_input_tokens: (msg.usage as any)?.cache_read_input_tokens,
+        output_tokens: msg.usage?.output_tokens,
+      },
+    });
+  } catch (err: any) {
+    return c.json({ error: 'Search failed: ' + err.message }, 500);
+  }
+});
+
 // ─── Serve PDFs ──────────────────────────────────────────────────────────────
 
 app.get('/use-cases/pdf/:filename', (c) => {
@@ -275,6 +408,19 @@ app.get('/', (c) => {
 app.get('/admin', (c) => {
   const html = readFileSync(join(ROOT, 'src', 'dashboard', 'admin.html'), 'utf-8');
   return c.html(html);
+});
+
+app.get('/industries', (c) => {
+  const candidates = [
+    join(ROOT, 'src', 'dashboard', 'industries.html'),
+    join(__dirname, 'dashboard', 'industries.html'),
+  ];
+  for (const p of candidates) {
+    if (existsSync(p)) {
+      return c.html(readFileSync(p, 'utf-8'));
+    }
+  }
+  return c.text('industries.html not found', 404);
 });
 
 // ─── Export for Vercel ───────────────────────────────────────────────────────
