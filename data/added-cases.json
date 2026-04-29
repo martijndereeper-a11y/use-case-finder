@@ -107,5 +107,43 @@
     ],
     "pdfFile": "Imperial Valve (DGFG)- Success case.pdf",
     "clickTier": "Starting near zero (0-100)"
+  },
+  {
+    "id": "facet-trainingen",
+    "company": "Facet Trainingen",
+    "domain": "https://facettrainingen.nl/",
+    "industry": "Healthcare Training",
+    "painPattern": "Limited marketing capacity",
+    "headline": "Healthcare training company achieves 172% organic growth in 10 months",
+    "outcome": "+172% organic clicks",
+    "result": "Organic clicks grew from 149 to 405 monthly clicks (+171.8%) in 10 months, with WP SEO AI content generating 54% of organic traffic and €2,750 worth of traffic value.",
+    "summary": "Facet Trainingen provides specialized training for healthcare and special education professionals, focusing on aggression prevention and challenging behavior management. The owner-led company needed to grow beyond its existing network and attract new clients online while maintaining current relationships, but lacked the time and SEO capacity as a small operation with limited resources. WP SEO AI created a focused content strategy around aggression prevention and challenging behavior, delivering 130 targeted posts that helped them achieve #1 rankings for aggression prevention and gain visibility in Google AI Overviews.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": true,
+    "objections": [
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We get everything from word of mouth",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "healthcare training",
+      "special education",
+      "aggression prevention",
+      "challenging behavior",
+      "small business seo",
+      "training company",
+      "healthcare seo",
+      "professional development",
+      "owner-led business",
+      "dutch training",
+      "care sector",
+      "behavioral training"
+    ],
+    "pdfFile": "Efficiency Gap - Facet Trainingen - Success case.pdf",
+    "clickTier": "Starting near zero (0-100)"
   }
 ]
