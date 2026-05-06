@@ -145,5 +145,43 @@
     ],
     "pdfFile": "Efficiency Gap - Facet Trainingen - Success case.pdf",
     "clickTier": "Starting near zero (0-100)"
+  },
+  {
+    "id": "toonen-reizen",
+    "company": "Toonen Reizen",
+    "domain": "https://www.toonenreizen.nl/",
+    "industry": "Transportation / Tourism",
+    "painPattern": "AI / LLM search opportunity",
+    "headline": "Dutch Bus Rental Company Achieves 67% Organic Growth in 7 Months with AI-Powered SEO",
+    "outcome": "+67% organic traffic growth",
+    "result": "Toonen Reizen grew organic traffic from 870 to 1,453 monthly visitors in 7 months, achieved a +385% increase in top-10 keyword rankings with 2,390 new keywords, and generated 8 qualified leads in 3 months.",
+    "summary": "Toonen Reizen is a nearly 100-year-old Dutch touring bus rental company serving school trips, festivals, day trips and group transportation across the Netherlands from their Arnhem-Nijmegen base. They were curious about AI's potential but faced challenges gaining visibility in both local and national search results for touringcar rentals. WP SEO AI implemented a dual-focus content strategy with 20 AI-powered blogs per month, resulting in 67% organic growth, 385% more top-10 rankings, and measurable lead generation within 7 months.",
+    "businessType": "Mix",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "bus rental",
+      "touringcar",
+      "transportation",
+      "group travel",
+      "dutch tourism",
+      "local seo",
+      "ai powered content",
+      "organic traffic growth",
+      "school trips",
+      "festival transport",
+      "b2b transportation",
+      "content strategy",
+      "leads"
+    ],
+    "pdfFile": "Toonen Reizen - Success case.pdf",
+    "clickTier": "Starting near zero (0-100)"
   }
 ]
