@@ -183,5 +183,43 @@
     ],
     "pdfFile": "Toonen Reizen - Success case.pdf",
     "clickTier": "Starting near zero (0-100)"
+  },
+  {
+    "id": "tfx-suspension",
+    "company": "TFX Suspension",
+    "domain": "https://tfxsuspension.com/",
+    "industry": "Motorcycle / Suspension",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "Motorcycle suspension specialist grows from 893 to 3,743 monthly clicks in 6 months",
+    "outcome": "+319% organic traffic growth",
+    "result": "Monthly organic clicks increased from 893 to 3,743 (+319%) in 6 months, with WP SEO AI generating 64% of April traffic worth €3,073. Keyword visibility expanded from 1,478 to 22,059 keywords, with 15,701 ranking in top 3 positions.",
+    "summary": "TFX Suspension manufactures custom motorcycle suspension systems for adventure bikes, motorcycles, ATVs and quads, founded by motorcycle enthusiasts Hans-Dieter and Alex. The company had virtually no SEO presence, making them unreachable to new customers who didn't already know the brand. WP SEO AI implemented a targeted content strategy starting with broad motorcycle maintenance content to build awareness, then narrowing focus to suspension-specific advice and model-specific content, publishing 50 blogs per month with strong conversion elements.",
+    "businessType": "Mix",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Niche market, too specific for online marketing",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "motorcycle suspension",
+      "custom motorcycle parts",
+      "adventure bike",
+      "motorcycle maintenance",
+      "niche manufacturing",
+      "specialized automotive",
+      "motorcycle accessories",
+      "suspension systems",
+      "motorcycle enthusiasts",
+      "performance parts",
+      "motorcycle upgrades",
+      "powersports"
+    ],
+    "pdfFile": "TFX Suspension - Success case.pdf",
+    "clickTier": "Starting near zero (0-100)"
   }
 ]
