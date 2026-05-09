@@ -78,11 +78,16 @@ async function loadAddedCasesFromGitHub(): Promise<UseCase[]> {
   } catch { return []; }
 }
 
+/** Encode a repo path for the GitHub Contents API: encode each segment but keep the slashes. */
+function encodeRepoPath(path: string): string {
+  return path.split('/').map(encodeURIComponent).join('/');
+}
+
 /** Get the SHA of a file in the repo (needed for updates) */
 async function getFileSha(path: string): Promise<string | null> {
   if (!GH_TOKEN) return null;
   try {
-    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodeRepoPath(path)}`, {
       headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json' },
     });
     if (!res.ok) return null;
@@ -92,20 +97,30 @@ async function getFileSha(path: string): Promise<string | null> {
 }
 
 /** Write a file to the GitHub repo */
-async function writeToGitHub(path: string, content: string, message: string): Promise<boolean> {
-  if (!GH_TOKEN) return false;
-  const sha = await getFileSha(path);
-  const body: Record<string, string> = {
-    message,
-    content: Buffer.from(content).toString('base64'),
-  };
-  if (sha) body.sha = sha;
-  const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
-    method: 'PUT',
-    headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  return res.ok;
+async function writeToGitHub(path: string, content: string, message: string): Promise<{ ok: boolean; error?: string }> {
+  if (!GH_TOKEN) return { ok: false, error: 'No GITHUB_TOKEN' };
+  try {
+    const sha = await getFileSha(path);
+    const body: Record<string, string> = {
+      message,
+      content: Buffer.from(content).toString('base64'),
+    };
+    if (sha) body.sha = sha;
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodeRepoPath(path)}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const errBody = await res.text();
+      console.error(`writeToGitHub failed: path=${path} status=${res.status} body=${errBody.slice(0, 500)}`);
+      return { ok: false, error: `GitHub ${res.status}: ${errBody.slice(0, 200)}` };
+    }
+    return { ok: true };
+  } catch (err: any) {
+    console.error(`writeToGitHub error: path=${path} err=${err.message}`);
+    return { ok: false, error: err.message };
+  }
 }
 
 /** Upload a PDF to the GitHub repo */
@@ -119,19 +134,19 @@ async function uploadPdfToGitHub(filename: string, buffer: Buffer): Promise<{ ok
       content: buffer.toString('base64'),
     };
     if (sha) body.sha = sha;
-    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodeRepoPath(path)}`, {
       method: 'PUT',
       headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
     if (!res.ok) {
       const errBody = await res.text();
-      console.error(`PDF upload failed (${res.status}):`, errBody.slice(0, 300));
-      return { ok: false, error: `GitHub API ${res.status}` };
+      console.error(`PDF upload failed: filename="${filename}" size=${buffer.length}B status=${res.status} body=${errBody.slice(0, 500)}`);
+      return { ok: false, error: `GitHub ${res.status}: ${errBody.slice(0, 200)}` };
     }
     return { ok: true };
   } catch (err: any) {
-    console.error('PDF upload error:', err.message);
+    console.error(`PDF upload error: filename="${filename}" err=${err.message}`);
     return { ok: false, error: err.message };
   }
 }
@@ -143,17 +158,17 @@ async function loadAllCases(): Promise<UseCase[]> {
   return [...seed.filter(c => !ids.has(c.id)), ...added];
 }
 
-async function saveCase(uc: UseCase): Promise<boolean> {
+async function saveCase(uc: UseCase): Promise<{ ok: boolean; error?: string }> {
   const added = await loadAddedCasesFromGitHub();
   const idx = added.findIndex(c => c.id === uc.id);
   if (idx >= 0) added[idx] = uc; else added.push(uc);
   return writeToGitHub('data/added-cases.json', JSON.stringify(added, null, 2), `Add case: ${uc.company}`);
 }
 
-async function deleteCase(id: string): Promise<boolean> {
+async function deleteCase(id: string): Promise<{ ok: boolean; error?: string; notFound?: boolean }> {
   const added = await loadAddedCasesFromGitHub();
   const filtered = added.filter(c => c.id !== id);
-  if (filtered.length === added.length) return false;
+  if (filtered.length === added.length) return { ok: false, notFound: true };
   return writeToGitHub('data/added-cases.json', JSON.stringify(filtered, null, 2), `Remove case: ${id}`);
 }
 
@@ -308,8 +323,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const deleteMatch = path.match(/^\/api\/admin\/cases\/(.+)$/);
     if (deleteMatch && req.method === 'DELETE') {
       const id = decodeURIComponent(deleteMatch[1]);
-      const ok = await deleteCase(id);
-      if (!ok) return res.status(404).json({ error: 'Case not found or is a seed case' });
+      const result = await deleteCase(id);
+      if (result.notFound) return res.status(404).json({ error: 'Case not found or is a seed case' });
+      if (!result.ok) return res.status(500).json({ error: result.error || 'Delete failed' });
       return res.json({ ok: true });
     }
 
@@ -357,7 +373,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       // Claude AI extraction — PDF + website context, with retry
       let extracted: Record<string, any> = {};
-      const models = ['claude-sonnet-4-20250514', 'claude-haiku-4-5-20251001'];
+      const models = ['claude-sonnet-4-6', 'claude-haiku-4-5-20251001'];
       try {
         const { default: Anthropic } = await import('@anthropic-ai/sdk');
         const anthropic = new Anthropic();
@@ -475,17 +491,17 @@ Return ONLY valid JSON, no markdown fences:
         clickTier: 'Starting near zero (0-100)',
       };
 
-      // Upload PDF to GitHub repo + save case metadata
-      const [pdfResult, caseOk] = await Promise.all([
-        uploadPdfToGitHub(pdfFileName, file.buffer),
-        saveCase(useCase),
-      ]);
-      if (!caseOk) return res.status(500).json({ error: 'Failed to save case to GitHub. Check GITHUB_TOKEN.' });
+      // PDF first — if upload fails we don't want orphan metadata pointing at a missing PDF.
+      const pdfResult = await uploadPdfToGitHub(pdfFileName, file.buffer);
       if (!pdfResult.ok) {
-        // Case saved but PDF failed — return success with warning
-        return res.json({ ok: true, id: useCase.id, case: useCase, pdfUploaded: false, pdfError: pdfResult.error });
+        return res.status(502).json({ error: `PDF upload to GitHub failed: ${pdfResult.error}. Case was NOT saved.` });
       }
-      return res.json({ ok: true, id: useCase.id, case: useCase, pdfUploaded: true });
+
+      const caseResult = await saveCase(useCase);
+      if (!caseResult.ok) {
+        return res.status(502).json({ error: `PDF uploaded but saving case metadata failed: ${caseResult.error}. The PDF is on GitHub but the case will not appear in the finder until this is retried.` });
+      }
+      return res.json({ ok: true, id: useCase.id, case: useCase });
     }
 
     // ── Public: GET /api/industries ──
