@@ -219,5 +219,43 @@
     ],
     "pdfFile": "Toonen Reizen - Success case.pdf",
     "clickTier": "Starting near zero (0-100)"
+  },
+  {
+    "id": "maas-de-koning-lease",
+    "company": "Maas-De Koning Lease",
+    "domain": "https://www.maasdekoninglease.nl/",
+    "industry": "B2B Vehicle Leasing",
+    "painPattern": "Efficiency gap",
+    "headline": "From limited SEO capacity to +200% organic clicks in 6 months for a specialist B2B leasing company",
+    "outcome": "+200% organic clicks in 6 months",
+    "result": "Organic clicks grew from 670 to 2,031 per month (+200%) in six months, with WP SEO AI content generating 63.5% of all organic traffic and accumulating over 5,052 SEO AI clicks and 2.2 million impressions total.",
+    "summary": "Maas-De Koning Lease is a Dutch B2B leasing company offering full operational lease, shortlease, electric vehicle leasing, and fleet management solutions for businesses, ZZP-ers and fleet managers. With a lean internal team focused on daily operations, they struggled to scale SEO in a competitive market where reaching business decision-makers through organic search was resource-intensive. WP SEO AI implemented a phased content strategy targeting high-intent commercial leasing, tax, and EV fleet topics — managing research, writing, optimisation and publishing end-to-end — resulting in a 200% increase in organic clicks, a 55% AI visibility score, and citations in Google AI Overviews and ChatGPT within six months.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": true,
+    "objections": [
+      "B2B sector, nobody searches for our services",
+      "Our sector is too technical or complex for AI content",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "b2b leasing",
+      "fleet management",
+      "vehicle lease",
+      "electric vehicle fleet",
+      "zakelijk leasen",
+      "operational lease",
+      "zzp lease",
+      "seo for leasing",
+      "lean marketing team",
+      "high-intent b2b seo",
+      "ev fleet seo",
+      "dutch leasing company"
+    ],
+    "pdfFile": "Maas De Koning Lease - Success case.pdf",
+    "clickTier": "Starting near zero (0-100)"
   }
 ]
