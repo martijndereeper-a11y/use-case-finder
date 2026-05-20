@@ -183,5 +183,41 @@
     ],
     "pdfFile": "TFX Suspension - Success case.pdf",
     "clickTier": "Starting near zero (0-100)"
+  },
+  {
+    "id": "toonen-reizen",
+    "company": "Toonen Reizen",
+    "domain": "https://www.toonenreizen.nl/",
+    "industry": "Coach / Group Travel",
+    "painPattern": "AI / LLM search opportunity",
+    "headline": "From AI-Curiosity to 67% Organic Growth: How Toonen Reizen Dominated Group Transportation Search in 7 Months",
+    "outcome": "+67% organic click growth in 7 months",
+    "result": "Organic monthly clicks grew from 870 to 1,453 (+67%) in 7 months, with 1,846 total SEO AI-driven clicks, a +385% increase in top-10 keyword rankings (2,390 new keywords captured), and 8 qualified leads generated in just 3 months post-optimization.",
+    "summary": "Toonen Reizen is a century-old Dutch coach rental and travel company based in the Arnhem-Nijmegen region, offering group transportation for bus holidays, festivals, school trips, day trips, and multi-day tours across the Netherlands. Despite 100 years of experience, they lacked visibility in both local (Arnhem, Gelderland, Nijmegen) and national search results for touringcar rentals, with no clear path to proving AI-driven SEO could deliver real business impact. WP SEO AI implemented a dual-focus content strategy publishing 20 AI-powered blogs per month targeting high-intent keywords, resulting in 67% organic click growth, 385% more top-10 rankings, 8 direct lead conversions in 3 months, and citations in both Google AI Overviews and ChatGPT responses.",
+    "businessType": "Mix",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "coach rental",
+      "group transportation",
+      "touringcar",
+      "bus hire",
+      "local seo",
+      "ai content strategy",
+      "tourism",
+      "school trips",
+      "festival transport",
+      "blog publishing",
+      "llm visibility",
+      "awareness stage seo"
+    ],
+    "pdfFile": "Toonen Reizen - Success case.pdf",
+    "clickTier": "Starting near zero (0-100)"
   }
 ]
