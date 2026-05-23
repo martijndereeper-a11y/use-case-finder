@@ -43,6 +43,16 @@ body{font-family:'Archivo',sans-serif;background:var(--bg);color:var(--text);min
 .search-wrap input::placeholder{color:var(--text2)}
 .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text2);pointer-events:none}
 
+/* Language tabs */
+.lang-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto;padding-bottom:0}
+.lang-tab{font-family:'Archivo',sans-serif;padding:10px 16px;border:none;background:none;color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.lang-tab:hover{color:var(--text)}
+.lang-tab.active{color:var(--purple);border-bottom-color:var(--purple)}
+.lang-tab .lt-count{background:var(--bg3);padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700}
+.lang-tab.active .lt-count{background:rgba(183,72,255,.15);color:var(--purple)}
+
+.meta-pill.lang{background:var(--orange);color:white;text-transform:uppercase;font-weight:700;letter-spacing:.5px;font-size:10px}
+
 /* Filter sections — collapsible */
 .filter-section{margin-bottom:12px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 .filter-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none;transition:background .15s}
@@ -161,6 +171,8 @@ body{font-family:'Archivo',sans-serif;background:var(--bg);color:var(--text);min
     <p>Search by industry, pain point, or describe your prospect's situation to find the best matching use case.</p>
   </div>
 
+  <div class="lang-tabs" id="langTabs"></div>
+
   <div class="stats" id="stats"></div>
 
   <div class="search-wrap">
@@ -232,6 +244,13 @@ let activePain = null;
 let activeIndustry = null;
 let activeObjection = null;
 let activeTier = null;
+let activeLanguage = 'all'; // 'all' | 'nl' | 'de' | 'en'
+
+const LANGUAGE_LABELS = { nl: 'Dutch', de: 'German', en: 'English' };
+function caseLang(c) { return c.language || 'nl'; }
+function filterByLanguage(cases) {
+  return activeLanguage === 'all' ? cases : cases.filter(c => caseLang(c) === activeLanguage);
+}
 
 const svgPdf = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>';
 const svgDown = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
@@ -242,12 +261,37 @@ async function init() {
   const res = await fetch(apiUrl('/api/use-cases'));
   const data = await res.json();
   allCases = data.cases;
+  renderLangTabs();
   renderStats(data);
   renderFilters(data);
   renderObjections(data);
   renderTierFilters(data);
   renderQuickMatch();
-  renderResults(allCases);
+  renderResults(filterByLanguage(allCases));
+}
+
+function renderLangTabs() {
+  const el = document.getElementById('langTabs');
+  if (!el) return;
+  // Count cases per language
+  const counts = { all: allCases.length, nl: 0, de: 0, en: 0 };
+  allCases.forEach(c => { const l = caseLang(c); if (counts[l] !== undefined) counts[l]++; });
+  // Only show language tabs that have at least one case
+  const tabs = [['all', 'All']];
+  if (counts.nl > 0) tabs.push(['nl', 'Dutch']);
+  if (counts.de > 0) tabs.push(['de', 'German']);
+  if (counts.en > 0) tabs.push(['en', 'English']);
+  el.innerHTML = tabs.map(([key, label]) =>
+    `<button class="lang-tab${key === activeLanguage ? ' active' : ''}" data-lang="${key}">${label}<span class="lt-count">${counts[key]}</span></button>`
+  ).join('');
+  el.querySelectorAll('.lang-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeLanguage = btn.dataset.lang;
+      el.querySelectorAll('.lang-tab').forEach(b => b.classList.toggle('active', b.dataset.lang === activeLanguage));
+      // Re-run current filter/search through the language filter.
+      updateAll();
+    });
+  });
 }
 
 function renderStats(data) {
@@ -346,7 +390,7 @@ function updateAll() {
 
   document.getElementById('quickMatch').style.display = hasFilter ? 'none' : '';
 
-  let filtered = allCases;
+  let filtered = filterByLanguage(allCases);
   if (activePain) filtered = filtered.filter(c => c.painPattern === activePain);
   if (activeIndustry) filtered = filtered.filter(c => c.industry === activeIndustry);
   if (activeObjection) filtered = filtered.filter(c => c.objections.includes(activeObjection));
@@ -398,6 +442,7 @@ function renderResults(cases) {
         ${c.domain ? `<a class="case-domain" href="${escapeHtml(c.domain)}" target="_blank">${escapeHtml(c.domain.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</a>` : ''}
       </div>
       <div class="case-meta">
+        <span class="meta-pill lang" title="PDF language">${escapeHtml(caseLang(c))}</span>
         <span class="meta-pill ind">${escapeHtml(c.industry)}</span>
         <span class="meta-pill btype">${escapeHtml(c.businessType)}</span>
         <span class="meta-pill mpos">${escapeHtml(c.marketPosition)}</span>
@@ -421,11 +466,11 @@ function renderResults(cases) {
 }
 
 async function doSearch(query) {
-  if (!query) { renderResults(allCases); document.getElementById('quickMatch').style.display = ''; return; }
+  if (!query) { renderResults(filterByLanguage(allCases)); document.getElementById('quickMatch').style.display = ''; return; }
   document.getElementById('quickMatch').style.display = 'none';
   const res = await fetch(`${apiUrl('/api/use-cases/search')}?q=${encodeURIComponent(query)}`);
   const data = await res.json();
-  renderResults(data.results);
+  renderResults(filterByLanguage(data.results || []));
 }
 
 // Clear filter button

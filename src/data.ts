@@ -37,6 +37,10 @@ export type MarketPosition = 'Niche' | 'Mainstream';
 
 export type ClickTier = 'Starting near zero (0-100)' | 'Small base (100-500)' | 'Medium base (500-1,500)' | 'Established (1,500+)';
 
+export const LANGUAGES = ['nl', 'de', 'en'] as const;
+export type Language = typeof LANGUAGES[number];
+export const LANGUAGE_LABELS: Record<Language, string> = { nl: 'Dutch', de: 'German', en: 'English' };
+
 export interface UseCase {
   id: string;
   company: string;
@@ -54,6 +58,29 @@ export interface UseCase {
   countries: string[];
   keywords: string[];
   pdfFile: string;
+  referenceCustomerId?: string;
+  domain?: string;
+  language?: Language;
+}
+
+/**
+ * Reference Customer — internal CRM record layered on top of success cases.
+ * One reference customer can be linked to many success cases.
+ * Tracked manually by Customer Success: who owns the account, when they
+ * were last contacted, and how often we've reached out.
+ */
+export interface ReferenceCustomer {
+  id: string;
+  company: string;
+  contactName?: string;
+  contactEmail?: string;
+  successManager: string;
+  lastCalled?: string;
+  timesCalled: number;
+  status: 'active' | 'paused' | 'archived';
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const useCases: UseCase[] = [

@@ -23,6 +23,9 @@ const OBJECTIONS = [
 
 type Objection = typeof OBJECTIONS[number];
 
+const LANGUAGES = ['nl', 'de', 'en'] as const;
+type Language = typeof LANGUAGES[number];
+
 interface UseCase {
   id: string;
   company: string;
@@ -41,6 +44,32 @@ interface UseCase {
   countries: string[];
   keywords: string[];
   pdfFile: string;
+  referenceCustomerId?: string;
+  language?: Language;
+}
+
+function normalizeLanguage(raw: unknown): Language | undefined {
+  if (typeof raw !== 'string') return undefined;
+  const v = raw.trim().toLowerCase();
+  if (v === 'nl' || v === 'de' || v === 'en') return v;
+  if (v.startsWith('dutch') || v.startsWith('nederlands')) return 'nl';
+  if (v.startsWith('german') || v.startsWith('deutsch')) return 'de';
+  if (v.startsWith('english') || v.startsWith('engels')) return 'en';
+  return undefined;
+}
+
+interface ReferenceCustomer {
+  id: string;
+  company: string;
+  contactName?: string;
+  contactEmail?: string;
+  successManager: string;
+  lastCalled?: string;
+  timesCalled: number;
+  status: 'active' | 'paused' | 'archived';
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // ─── Data loading ────────────────────────────────────────────────────────────
@@ -161,7 +190,12 @@ async function loadAllCases(): Promise<UseCase[]> {
 async function saveCase(uc: UseCase): Promise<{ ok: boolean; error?: string }> {
   const added = await loadAddedCasesFromGitHub();
   const idx = added.findIndex(c => c.id === uc.id);
-  if (idx >= 0) added[idx] = uc; else added.push(uc);
+  if (idx >= 0) {
+    if (!uc.referenceCustomerId && added[idx].referenceCustomerId) {
+      uc.referenceCustomerId = added[idx].referenceCustomerId;
+    }
+    added[idx] = uc;
+  } else added.push(uc);
   return writeToGitHub('data/added-cases.json', JSON.stringify(added, null, 2), `Add case: ${uc.company}`);
 }
 
@@ -172,8 +206,62 @@ async function deleteCase(id: string): Promise<{ ok: boolean; error?: string; no
   return writeToGitHub('data/added-cases.json', JSON.stringify(filtered, null, 2), `Remove case: ${id}`);
 }
 
-function generateId(company: string): string {
+function slugifyCompany(company: string): string {
   return company.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+}
+
+/**
+ * Generate a unique case id, language-aware. Avoids collisions with existing
+ * seed and added cases. Pattern: `{slug}-{lang}`, with `-2`, `-3` … suffix on
+ * collision. Existing cases keep whatever id they have — never rename on edit.
+ */
+function generateUniqueId(company: string, language: Language | undefined, existingIds: Set<string>): string {
+  const slug = slugifyCompany(company);
+  const base = language ? `${slug}-${language}` : slug;
+  if (!existingIds.has(base)) return base;
+  let n = 2;
+  while (existingIds.has(`${base}-${n}`)) n++;
+  return `${base}-${n}`;
+}
+
+/** Deterministic PDF filename per case — replacements overwrite cleanly via GitHub's SHA-aware PUT. */
+function pdfFilenameForCase(caseId: string): string {
+  return `${caseId}.pdf`;
+}
+
+// ─── Reference Customers storage (GitHub-backed) ────────────────────────────
+
+async function loadReferenceCustomersFromGitHub(): Promise<ReferenceCustomer[]> {
+  if (!GH_TOKEN) return [];
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/data/reference-customers.json`, {
+      headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json' },
+    });
+    if (!res.ok) return [];
+    const data = await res.json() as { content: string };
+    return JSON.parse(Buffer.from(data.content, 'base64').toString('utf-8'));
+  } catch { return []; }
+}
+
+async function saveReferenceCustomersList(list: ReferenceCustomer[], message: string) {
+  return writeToGitHub('data/reference-customers.json', JSON.stringify(list, null, 2), message);
+}
+
+/** Link/unlink a case to a reference customer in added-cases.json (promotes seed cases when needed). */
+async function setCaseReferenceCustomer(caseId: string, refCustomerId: string | null): Promise<{ ok: boolean; error?: string; notFound?: boolean }> {
+  const added = await loadAddedCasesFromGitHub();
+  let target = added.find(c => c.id === caseId);
+
+  if (!target) {
+    const seed = loadSeedCases().find(c => c.id === caseId);
+    if (!seed) return { ok: false, notFound: true };
+    target = { ...seed };
+    added.push(target);
+  }
+  if (refCustomerId === null) delete target.referenceCustomerId;
+  else target.referenceCustomerId = refCustomerId;
+
+  return writeToGitHub('data/added-cases.json', JSON.stringify(added, null, 2), `Link case ${caseId} -> ${refCustomerId || 'none'}`);
 }
 
 // ─── Objection detection ─────────────────────────────────────────────────────
@@ -410,7 +498,8 @@ Return ONLY valid JSON, no markdown fences:
   "trustSensitive": true or false (medical, legal, finance = true),
   "countries": ["country name(s) where company operates"],
   "keywords": ["8-12 lowercase search keywords covering industry, challenge, solution, and company type"],
-  "painPattern": "best matching from: No time / capacity for SEO, Underperforming agency / high SEO cost, AI / LLM search opportunity, Relied on single channel, Lack of control / visibility, Going international / scaling, Efficiency gap, Limited marketing capacity, Other"
+  "painPattern": "best matching from: No time / capacity for SEO, Underperforming agency / high SEO cost, AI / LLM search opportunity, Relied on single channel, Lack of control / visibility, Going international / scaling, Efficiency gap, Limited marketing capacity, Other",
+  "language": "language of the PDF text — one of: nl (Dutch), de (German), en (English). Look at the actual words in the PDF, not the company location."
 }`;
 
         // Try primary model, fall back to secondary on overload
@@ -448,16 +537,12 @@ Return ONLY valid JSON, no markdown fences:
       });
     }
 
-    // ── Admin: POST /api/admin/cases ──
+    // ── Admin: POST /api/admin/cases (create new) ──
     if (path === '/api/admin/cases' && req.method === 'POST') {
       const { fields, file } = await parseMultipart(req);
       const company = (fields.company || '').trim();
       if (!company) return res.status(400).json({ error: 'Company name is required' });
       if (!file) return res.status(400).json({ error: 'PDF file is required' });
-
-      // On Vercel the filesystem is read-only — PDF must be committed to
-      // the GitHub repo separately. We just store the filename reference.
-      const pdfFileName = file.name;
 
       // Parse objections
       const objRaw = fields.objections || '';
@@ -471,8 +556,16 @@ Return ONLY valid JSON, no markdown fences:
       const rawDomain = (fields.domain || '').trim();
       const domain = rawDomain ? (rawDomain.startsWith('http') ? rawDomain : `https://${rawDomain}`) : undefined;
 
+      // Resolve language (default nl if missing)
+      const language = normalizeLanguage(fields.language) || 'nl';
+
+      // Generate id — language-aware, collision-safe across BOTH seed and added cases.
+      const existingIds = new Set((await loadAllCases()).map(c => c.id));
+      const id = generateUniqueId(company, language, existingIds);
+      const pdfFileName = pdfFilenameForCase(id);
+
       const useCase: UseCase = {
-        id: generateId(company),
+        id,
         company,
         domain,
         industry: (fields.industry || 'General').trim(),
@@ -489,6 +582,7 @@ Return ONLY valid JSON, no markdown fences:
         keywords,
         pdfFile: pdfFileName,
         clickTier: 'Starting near zero (0-100)',
+        language,
       };
 
       // PDF first — if upload fails we don't want orphan metadata pointing at a missing PDF.
@@ -502,6 +596,211 @@ Return ONLY valid JSON, no markdown fences:
         return res.status(502).json({ error: `PDF uploaded but saving case metadata failed: ${caseResult.error}. The PDF is on GitHub but the case will not appear in the finder until this is retried.` });
       }
       return res.json({ ok: true, id: useCase.id, case: useCase });
+    }
+
+    // ── Admin: PUT /api/admin/cases/:id (edit existing) ──
+    const editMatch = path.match(/^\/api\/admin\/cases\/([^/]+)$/);
+    if (editMatch && req.method === 'PUT') {
+      const id = decodeURIComponent(editMatch[1]);
+      const { fields, file } = await parseMultipart(req);
+
+      // Find the case — could be a seed case (promote on edit) or already in added.
+      const added = await loadAddedCasesFromGitHub();
+      const existingAdded = added.find(c => c.id === id);
+      const existingSeed = existingAdded ? null : loadSeedCases().find(c => c.id === id);
+      const existing = existingAdded || existingSeed;
+      if (!existing) return res.status(404).json({ error: 'Case not found' });
+
+      const company = (fields.company ?? existing.company).trim() || existing.company;
+
+      // Objections
+      const objRaw = fields.objections;
+      const objections = objRaw !== undefined
+        ? (objRaw ? objRaw.split('|||').filter(o => (OBJECTIONS as readonly string[]).includes(o)) : [])
+        : existing.objections;
+
+      // Keywords + countries: only overwrite when the field is present
+      const keywords = fields.keywords !== undefined
+        ? fields.keywords.split(',').map(k => k.trim().toLowerCase()).filter(Boolean)
+        : existing.keywords;
+      const countries = fields.countries !== undefined
+        ? fields.countries.split(',').map(c => c.trim()).filter(Boolean)
+        : existing.countries;
+
+      // Domain
+      let domain = existing.domain;
+      if (fields.domain !== undefined) {
+        const rawDomain = fields.domain.trim();
+        domain = rawDomain ? (rawDomain.startsWith('http') ? rawDomain : `https://${rawDomain}`) : undefined;
+      }
+
+      // Language (default to existing)
+      const language = normalizeLanguage(fields.language) || existing.language || 'nl';
+
+      // PDF: replace only if a new file was uploaded. Otherwise keep the existing pdfFile reference.
+      let pdfFileName = existing.pdfFile;
+      if (file) {
+        // Upload under deterministic filename for this case id. Overwrites existing if it's already named this way.
+        pdfFileName = pdfFilenameForCase(id);
+        const pdfResult = await uploadPdfToGitHub(pdfFileName, file.buffer);
+        if (!pdfResult.ok) {
+          return res.status(502).json({ error: `PDF upload failed: ${pdfResult.error}. Case was NOT updated.` });
+        }
+      }
+
+      const updated: UseCase = {
+        ...existing,
+        id, // never change
+        company,
+        domain,
+        industry: (fields.industry ?? existing.industry).trim() || existing.industry,
+        painPattern: (fields.painPattern ?? existing.painPattern).trim() || existing.painPattern,
+        headline: (fields.headline ?? existing.headline).trim(),
+        outcome: (fields.outcome ?? existing.outcome).trim(),
+        result: (fields.result ?? existing.result).trim(),
+        summary: (fields.summary ?? existing.summary).trim(),
+        businessType: fields.businessType || existing.businessType,
+        marketPosition: fields.marketPosition || existing.marketPosition,
+        trustSensitive: fields.trustSensitive !== undefined ? fields.trustSensitive === 'true' : existing.trustSensitive,
+        objections,
+        countries,
+        keywords,
+        pdfFile: pdfFileName,
+        language,
+        // referenceCustomerId preserved via spread above
+      };
+
+      const caseResult = await saveCase(updated);
+      if (!caseResult.ok) {
+        return res.status(502).json({ error: `Case metadata save failed: ${caseResult.error}. ${file ? 'PDF was uploaded but case did not update.' : ''}` });
+      }
+      return res.json({ ok: true, id: updated.id, case: updated });
+    }
+
+    // ── Admin: Reference Customers ──
+    if (path === '/api/admin/reference-customers' && req.method === 'GET') {
+      const [customers, cases] = await Promise.all([loadReferenceCustomersFromGitHub(), loadAllCases()]);
+      const withCases = customers.map(rc => ({
+        ...rc,
+        linkedCases: cases
+          .filter(uc => uc.referenceCustomerId === rc.id)
+          .map(uc => ({ id: uc.id, company: uc.company, industry: uc.industry, pdfFile: uc.pdfFile })),
+      }));
+      return res.json({ customers: withCases });
+    }
+
+    if (path === '/api/admin/reference-customers' && req.method === 'POST') {
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+      const body = JSON.parse(Buffer.concat(chunks).toString()) as Partial<ReferenceCustomer>;
+      const company = (body.company || '').trim();
+      if (!company) return res.status(400).json({ error: 'Company name is required' });
+
+      const now = new Date().toISOString();
+      const rc: ReferenceCustomer = {
+        id: slugifyCompany(company) + '-' + Math.random().toString(36).slice(2, 6),
+        company,
+        contactName: (body.contactName || '').trim() || undefined,
+        contactEmail: (body.contactEmail || '').trim() || undefined,
+        successManager: (body.successManager || '').trim(),
+        lastCalled: body.lastCalled || undefined,
+        timesCalled: typeof body.timesCalled === 'number' ? body.timesCalled : 0,
+        status: (body.status as ReferenceCustomer['status']) || 'active',
+        notes: (body.notes || '').trim() || undefined,
+        createdAt: now,
+        updatedAt: now,
+      };
+      const all = await loadReferenceCustomersFromGitHub();
+      all.push(rc);
+      const w = await saveReferenceCustomersList(all, `Add reference customer: ${company}`);
+      if (!w.ok) return res.status(502).json({ error: w.error || 'GitHub write failed' });
+      return res.json({ ok: true, customer: rc });
+    }
+
+    const rcIdMatch = path.match(/^\/api\/admin\/reference-customers\/([^/]+)$/);
+    if (rcIdMatch && req.method === 'GET') {
+      const id = decodeURIComponent(rcIdMatch[1]);
+      const rc = (await loadReferenceCustomersFromGitHub()).find(r => r.id === id);
+      if (!rc) return res.status(404).json({ error: 'Not found' });
+      const cases = (await loadAllCases()).filter(uc => uc.referenceCustomerId === id);
+      return res.json({ customer: rc, linkedCases: cases });
+    }
+
+    if (rcIdMatch && req.method === 'PUT') {
+      const id = decodeURIComponent(rcIdMatch[1]);
+      const all = await loadReferenceCustomersFromGitHub();
+      const idx = all.findIndex(r => r.id === id);
+      if (idx < 0) return res.status(404).json({ error: 'Not found' });
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+      const body = JSON.parse(Buffer.concat(chunks).toString()) as Partial<ReferenceCustomer>;
+      const existing = all[idx];
+      const updated: ReferenceCustomer = {
+        ...existing,
+        company: (body.company ?? existing.company).trim() || existing.company,
+        contactName: body.contactName !== undefined ? (body.contactName || '').trim() || undefined : existing.contactName,
+        contactEmail: body.contactEmail !== undefined ? (body.contactEmail || '').trim() || undefined : existing.contactEmail,
+        successManager: body.successManager !== undefined ? (body.successManager || '').trim() : existing.successManager,
+        lastCalled: body.lastCalled !== undefined ? (body.lastCalled || undefined) : existing.lastCalled,
+        timesCalled: typeof body.timesCalled === 'number' ? body.timesCalled : existing.timesCalled,
+        status: (body.status as ReferenceCustomer['status']) || existing.status,
+        notes: body.notes !== undefined ? (body.notes || '').trim() || undefined : existing.notes,
+        updatedAt: new Date().toISOString(),
+      };
+      all[idx] = updated;
+      const w = await saveReferenceCustomersList(all, `Update reference customer: ${updated.company}`);
+      if (!w.ok) return res.status(502).json({ error: w.error || 'GitHub write failed' });
+      return res.json({ ok: true, customer: updated });
+    }
+
+    if (rcIdMatch && req.method === 'DELETE') {
+      const id = decodeURIComponent(rcIdMatch[1]);
+      const all = await loadReferenceCustomersFromGitHub();
+      const filtered = all.filter(r => r.id !== id);
+      if (filtered.length === all.length) return res.status(404).json({ error: 'Not found' });
+      const w = await saveReferenceCustomersList(filtered, `Remove reference customer: ${id}`);
+      if (!w.ok) return res.status(502).json({ error: w.error || 'GitHub write failed' });
+
+      // Unlink any cases referencing this id
+      const added = await loadAddedCasesFromGitHub();
+      let touched = false;
+      for (const c of added) {
+        if (c.referenceCustomerId === id) { delete c.referenceCustomerId; touched = true; }
+      }
+      if (touched) await writeToGitHub('data/added-cases.json', JSON.stringify(added, null, 2), `Unlink cases from ${id}`);
+      return res.json({ ok: true });
+    }
+
+    const rcLogMatch = path.match(/^\/api\/admin\/reference-customers\/([^/]+)\/log-call$/);
+    if (rcLogMatch && req.method === 'POST') {
+      const id = decodeURIComponent(rcLogMatch[1]);
+      const all = await loadReferenceCustomersFromGitHub();
+      const idx = all.findIndex(r => r.id === id);
+      if (idx < 0) return res.status(404).json({ error: 'Not found' });
+      all[idx].timesCalled = (all[idx].timesCalled || 0) + 1;
+      all[idx].lastCalled = new Date().toISOString().slice(0, 10);
+      all[idx].updatedAt = new Date().toISOString();
+      const w = await saveReferenceCustomersList(all, `Log call: ${all[idx].company}`);
+      if (!w.ok) return res.status(502).json({ error: w.error || 'GitHub write failed' });
+      return res.json({ ok: true, customer: all[idx] });
+    }
+
+    const linkMatch = path.match(/^\/api\/admin\/cases\/([^/]+)\/reference-customer$/);
+    if (linkMatch && req.method === 'PUT') {
+      const caseId = decodeURIComponent(linkMatch[1]);
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+      const body = chunks.length ? JSON.parse(Buffer.concat(chunks).toString()) : {};
+      const target: string | null = body.referenceCustomerId || null;
+
+      if (target) {
+        const exists = (await loadReferenceCustomersFromGitHub()).some(r => r.id === target);
+        if (!exists) return res.status(404).json({ error: 'Reference customer not found' });
+      }
+      const result = await setCaseReferenceCustomer(caseId, target);
+      if (result.notFound) return res.status(404).json({ error: 'Case not found' });
+      if (!result.ok) return res.status(502).json({ error: result.error || 'GitHub write failed' });
+      return res.json({ ok: true, caseId, referenceCustomerId: target });
     }
 
     // ── Public: GET /api/industries ──
