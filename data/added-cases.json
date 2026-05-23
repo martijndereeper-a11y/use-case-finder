@@ -36,7 +36,8 @@
       "ai content optimization"
     ],
     "pdfFile": "Traffic drop panic - PNL - Success case.pdf",
-    "clickTier": "Starting near zero (0-100)"
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   },
   {
     "id": "proforg",
@@ -67,7 +68,8 @@
       "work permit"
     ],
     "pdfFile": "Generative Search First Movers - ProfOrg - Success case (ENGLISH).pdf",
-    "clickTier": "Starting near zero (0-100)"
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   },
   {
     "id": "dgf-group-bv",
@@ -106,7 +108,8 @@
       "content automation"
     ],
     "pdfFile": "Imperial Valve (DGFG)- Success case.pdf",
-    "clickTier": "Starting near zero (0-100)"
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   },
   {
     "id": "facet-trainingen",
@@ -144,7 +147,8 @@
       "behavioral training"
     ],
     "pdfFile": "Efficiency Gap - Facet Trainingen - Success case.pdf",
-    "clickTier": "Starting near zero (0-100)"
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   },
   {
     "id": "tfx-suspension",
@@ -182,7 +186,8 @@
       "powersports"
     ],
     "pdfFile": "TFX Suspension - Success case.pdf",
-    "clickTier": "Starting near zero (0-100)"
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   },
   {
     "id": "toonen-reizen",
@@ -218,7 +223,8 @@
       "awareness stage seo"
     ],
     "pdfFile": "Toonen Reizen - Success case.pdf",
-    "clickTier": "Starting near zero (0-100)"
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   },
   {
     "id": "maas-de-koning-lease",
@@ -256,7 +262,8 @@
       "dutch leasing company"
     ],
     "pdfFile": "Maas De Koning Lease - Success case.pdf",
-    "clickTier": "Starting near zero (0-100)"
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   },
   {
     "id": "kruijdenberg-centrum-voor-fysiotherapie",
@@ -294,6 +301,7 @@
       "no content capacity"
     ],
     "pdfFile": "Kruijdenberg - Success case.pdf",
-    "clickTier": "Starting near zero (0-100)"
+    "clickTier": "Starting near zero (0-100)",
+    "language": "nl"
   }
 ]

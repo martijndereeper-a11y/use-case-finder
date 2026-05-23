@@ -29,7 +29,8 @@
       "health",
       "wellness"
     ],
-    "pdfFile": "No capacity for SEO - Kinwell - Success case.pdf"
+    "pdfFile": "No capacity for SEO - Kinwell - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "roelands",
@@ -60,7 +61,8 @@
       "grower",
       "horticulture"
     ],
-    "pdfFile": "No time & capacity - Roelands Boomkwekerijen - Success case.pdf"
+    "pdfFile": "No time & capacity - Roelands Boomkwekerijen - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "mydearbeer",
@@ -92,7 +94,8 @@
       "ecommerce",
       "webshop"
     ],
-    "pdfFile": "Too little time for SEO  - My Dear Beer - Success case.pdf"
+    "pdfFile": "Too little time for SEO  - My Dear Beer - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "verdonk",
@@ -123,7 +126,8 @@
       "garage",
       "vehicles"
     ],
-    "pdfFile": "Too little time for SEO - Autobedrijven Verdonk - Success case.pdf"
+    "pdfFile": "Too little time for SEO - Autobedrijven Verdonk - Success case.pdf",
+    "language": "nl"
   },
   {
     "id": "searchx",
@@ -151,7 +155,8 @@
       "seo agency",
       "white label"
     ],
-    "pdfFile": "Too little time for SEO - SearchX - Success case.pdf"
+    "pdfFile": "Too little time for SEO - SearchX - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "berendijk",
@@ -181,7 +186,8 @@
       "contractor",
       "timber"
     ],
-    "pdfFile": "Too little time for SEO - Timmerbedrijf Berendijk - Success case.pdf"
+    "pdfFile": "Too little time for SEO - Timmerbedrijf Berendijk - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "eleven",
@@ -212,7 +218,8 @@
       "ai search",
       "in-house"
     ],
-    "pdfFile": "Underperforming Agency - AI Search - No Inhouse Marketing Team -ELEVEN - .pdf"
+    "pdfFile": "Underperforming Agency - AI Search - No Inhouse Marketing Team -ELEVEN - .pdf",
+    "language": "en"
   },
   {
     "id": "vleesandco",
@@ -241,7 +248,8 @@
       "meat",
       "wholesale"
     ],
-    "pdfFile": "Underperforming agency - Vlees & Co  - Success case .pdf"
+    "pdfFile": "Underperforming agency - Vlees & Co  - Success case .pdf",
+    "language": "en"
   },
   {
     "id": "broekman",
@@ -272,7 +280,8 @@
       "limited impact",
       "wasting money"
     ],
-    "pdfFile": "High SEO cost with limited impact - Broekman - Success case - Retail .pdf"
+    "pdfFile": "High SEO cost with limited impact - Broekman - Success case - Retail .pdf",
+    "language": "en"
   },
   {
     "id": "kruijdenberg",
@@ -305,7 +314,8 @@
       "industrial",
       "manufacturing"
     ],
-    "pdfFile": "Ai curiosity & LLM search advantage - Kruijdenberg - Success case.pdf"
+    "pdfFile": "Ai curiosity & LLM search advantage - Kruijdenberg - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "wijzijntop",
@@ -334,7 +344,8 @@
       "ai search",
       "direction"
     ],
-    "pdfFile": "AI curiosity but no strategy - Wijzijntop- Success case.pdf"
+    "pdfFile": "AI curiosity but no strategy - Wijzijntop- Success case.pdf",
+    "language": "en"
   },
   {
     "id": "catermonkey",
@@ -365,7 +376,8 @@
       "food",
       "events"
     ],
-    "pdfFile": "Insane lead flow from Chat-gpt & other LLM_s - Catermonkey - Success case.pdf"
+    "pdfFile": "Insane lead flow from Chat-gpt & other LLM_s - Catermonkey - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "vandenakker",
@@ -395,7 +407,8 @@
       "car",
       "dealer"
     ],
-    "pdfFile": "Relied on word of mouth - Autobedrijf Van den Akker - Success case.pdf"
+    "pdfFile": "Relied on word of mouth - Autobedrijf Van den Akker - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "schulte-wom",
@@ -430,7 +443,8 @@
       "heating",
       "renewable"
     ],
-    "pdfFile": "Relied on word of mouth - Schulte Energie & Techniek - Success case.pdf"
+    "pdfFile": "Relied on word of mouth - Schulte Energie & Techniek - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "ckactive",
@@ -463,7 +477,8 @@
       "sports",
       "fitness"
     ],
-    "pdfFile": "Relied heaviliy on SEA - CK Active - Success case.pdf"
+    "pdfFile": "Relied heaviliy on SEA - CK Active - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "sillegallery",
@@ -494,7 +509,8 @@
       "dashboard",
       "reporting"
     ],
-    "pdfFile": "Lack of Control Over SEO - Sille Gallery - Success case.pdf"
+    "pdfFile": "Lack of Control Over SEO - Sille Gallery - Success case.pdf",
+    "language": "nl"
   },
   {
     "id": "cooffice",
@@ -525,7 +541,8 @@
       "coworking",
       "flex"
     ],
-    "pdfFile": "Traffic drop during site transition - Co-Office - Success case.pdf"
+    "pdfFile": "Traffic drop during site transition - Co-Office - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "geldzo",
@@ -557,7 +574,8 @@
       "fintech",
       "scaling"
     ],
-    "pdfFile": "No time for manual work and going international - GeldZo - Success Case .pdf"
+    "pdfFile": "No time for manual work and going international - GeldZo - Success Case .pdf",
+    "language": "en"
   },
   {
     "id": "pbn",
@@ -588,7 +606,8 @@
       "scaling",
       "professional services"
     ],
-    "pdfFile": "No time for manual work and going international - PBN - Success Case .pdf"
+    "pdfFile": "No time for manual work and going international - PBN - Success Case .pdf",
+    "language": "en"
   },
   {
     "id": "officebox",
@@ -620,7 +639,8 @@
       "product pages",
       "catalog"
     ],
-    "pdfFile": "Efficiency gap - Officebox -.pdf"
+    "pdfFile": "Efficiency gap - Officebox -.pdf",
+    "language": "en"
   },
   {
     "id": "implicit",
@@ -651,7 +671,8 @@
       "software",
       "tech"
     ],
-    "pdfFile": "Efficiency gap and new customers - IMPLI-CIT - Success case.pdf"
+    "pdfFile": "Efficiency gap and new customers - IMPLI-CIT - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "dercsalotech",
@@ -684,7 +705,8 @@
       "b2b",
       "ai-ready"
     ],
-    "pdfFile": "From limited marketing capacity to AI-ready SEO - DERC Salotech - Success Case - .pdf"
+    "pdfFile": "From limited marketing capacity to AI-ready SEO - DERC Salotech - Success Case - .pdf",
+    "language": "en"
   },
   {
     "id": "schulte-scale",
@@ -721,7 +743,8 @@
       "heating",
       "renewable"
     ],
-    "pdfFile": "Schulte Energie & Techniek - Limited Capacity to Scale for AI .pdf"
+    "pdfFile": "Schulte Energie & Techniek - Limited Capacity to Scale for AI .pdf",
+    "language": "en"
   },
   {
     "id": "kwiz",
@@ -751,7 +774,8 @@
       "entertainment",
       "leisure"
     ],
-    "pdfFile": "New website & didnt like SEO copy writer - KWIZ Success Case - NL -  .pdf"
+    "pdfFile": "New website & didnt like SEO copy writer - KWIZ Success Case - NL -  .pdf",
+    "language": "en"
   },
   {
     "id": "ctalents",
@@ -781,7 +805,8 @@
       "hr",
       "talent"
     ],
-    "pdfFile": "Struggled to keep up with developments in search behaviour - CTalents - Success Case.pdf"
+    "pdfFile": "Struggled to keep up with developments in search behaviour - CTalents - Success Case.pdf",
+    "language": "en"
   },
   {
     "id": "ebikesde",
@@ -813,7 +838,8 @@
       "chatgpt",
       "consumer"
     ],
-    "pdfFile": "Efficiency Gap - e-bikes.de - Success case (ENGLISH).pdf"
+    "pdfFile": "Efficiency Gap - e-bikes.de - Success case (ENGLISH).pdf",
+    "language": "en"
   },
   {
     "id": "medici",
@@ -848,7 +874,8 @@
       "german",
       "germany"
     ],
-    "pdfFile": "SEA budget fixed with SEO Content - Medici ENG - Success case (ENGLISH) .pdf"
+    "pdfFile": "SEA budget fixed with SEO Content - Medici ENG - Success case (ENGLISH) .pdf",
+    "language": "en"
   },
   {
     "id": "adelt-ideen",
@@ -880,7 +907,8 @@
       "zero visibility",
       "inbound"
     ],
-    "pdfFile": "No organic inbound acquisition - adelt-ideen.de - GERMAN  (1).pdf"
+    "pdfFile": "No organic inbound acquisition - adelt-ideen.de - GERMAN  (1).pdf",
+    "language": "de"
   },
   {
     "id": "quest-search",
@@ -909,7 +937,8 @@
       "ai overviews",
       "content strategy"
     ],
-    "pdfFile": "Quest search - Success case.pdf"
+    "pdfFile": "Quest search - Success case.pdf",
+    "language": "en"
   },
   {
     "id": "greenstay",
@@ -940,7 +969,8 @@
       "conversion",
       "accommodation"
     ],
-    "pdfFile": "Greenstay - Success Case.pdf"
+    "pdfFile": "Greenstay - Success Case.pdf",
+    "language": "en"
   },
   {
     "id": "salon-klipsi",
@@ -971,7 +1001,8 @@
       "bookings",
       "personal care"
     ],
-    "pdfFile": "Salon Klipsi - Success Case.pdf"
+    "pdfFile": "Salon Klipsi - Success Case.pdf",
+    "language": "en"
   },
   {
     "id": "moneybee",
@@ -1003,7 +1034,8 @@
       "b2b",
       "roi"
     ],
-    "pdfFile": "Moneybee - Success Case.pdf"
+    "pdfFile": "Moneybee - Success Case.pdf",
+    "language": "en"
   },
   {
     "id": "pest1",
@@ -1034,7 +1066,8 @@
       "local",
       "exterminator"
     ],
-    "pdfFile": "Pest1 Success Case.pdf"
+    "pdfFile": "Pest1 Success Case.pdf",
+    "language": "en"
   },
   {
     "id": "aimo-park",
@@ -1067,6 +1100,7 @@
       "chatgpt",
       "featured snippets"
     ],
-    "pdfFile": "Aimo Park - Success Case.pdf"
+    "pdfFile": "Aimo Park - Success Case.pdf",
+    "language": "nl"
   }
 ]
