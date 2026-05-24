@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WP SEO AI — Reference Customers</title>
+<style>
+:root{--bg:#0f1117;--bg2:#1a1d27;--bg3:#242836;--border:#2e3348;--text:#e4e6f0;--text2:#8b8fa3;--purple:#a855f7;--purple2:#7c3aed;--green:#22c55e;--red:#ef4444;--orange:#f59e0b;--blue:#3b82f6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.topbar .logo{color:var(--purple);font-weight:800;font-size:18px}
+.topbar h1{font-size:15px;font-weight:500;color:var(--text2)}
+.topbar .nav-link{font-size:13px;color:var(--text2);text-decoration:none;padding:6px 14px;border:1px solid var(--border);border-radius:6px;transition:all .15s}
+.topbar .nav-link:hover{border-color:var(--purple);color:var(--text)}
+.topbar .nav-link.active{border-color:var(--purple);color:var(--purple)}
+.topbar .spacer{margin-left:auto}
+
+/* Login overlay */
+.login-overlay{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center}
+.login-overlay.hidden{display:none}
+.login-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px;width:360px;text-align:center}
+.login-box .logo{color:var(--purple);font-weight:800;font-size:22px;margin-bottom:4px}
+.login-box h2{font-size:18px;font-weight:600;margin-bottom:4px}
+.login-box p{color:var(--text2);font-size:13px;margin-bottom:20px}
+.login-box input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:15px;outline:none;text-align:center;margin-bottom:12px;transition:border-color .15s}
+.login-box input:focus{border-color:var(--purple)}
+.login-box .login-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--purple2);color:white;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s}
+.login-box .login-btn:hover{background:var(--purple)}
+.login-err{color:var(--red);font-size:13px;margin-top:8px;min-height:20px}
+
+.container{max-width:1100px;margin:0 auto;padding:28px 24px}
+
+/* Header row */
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;gap:16px;flex-wrap:wrap}
+.page-head h2{font-size:24px;font-weight:700}
+.page-head .subtitle{color:var(--text2);font-size:13px;margin-top:4px}
+.new-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;border:none;background:var(--purple2);color:white;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.new-btn:hover{background:var(--purple)}
+
+/* Stats strip */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat .lbl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.stat .val{font-size:22px;font-weight:700}
+.stat .val.warn{color:var(--orange)}
+.stat .val.ok{color:var(--green)}
+
+/* Toolbar */
+.toolbar{display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text2);pointer-events:none}
+.search-wrap input{width:100%;padding:10px 14px 10px 36px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;outline:none;transition:border-color .15s}
+.search-wrap input:focus{border-color:var(--purple)}
+.filter-select{padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:13px;outline:none;cursor:pointer}
+
+/* Table */
+.table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:12px 14px;background:var(--bg3);color:var(--text2);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .12s;cursor:pointer}
+tbody tr:hover{background:rgba(168,85,247,.04)}
+.cell-company{font-weight:600;color:var(--text)}
+.cell-sub{font-size:11px;color:var(--text2);margin-top:2px}
+
+.status-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.status-pill.active{background:rgba(34,197,94,.12);color:var(--green)}
+.status-pill.paused{background:rgba(245,158,11,.12);color:var(--orange)}
+.status-pill.archived{background:rgba(139,143,163,.12);color:var(--text2)}
+.status-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+
+.linked-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:6px;background:rgba(59,130,246,.1);color:var(--blue);font-size:11px;font-weight:600;margin:2px 4px 2px 0}
+.empty-pill{font-size:11px;color:var(--text2);font-style:italic}
+
+.recency-bar{display:inline-flex;align-items:center;gap:6px;font-size:12px}
+.recency-bar.recent{color:var(--green)}
+.recency-bar.warning{color:var(--orange)}
+.recency-bar.stale{color:var(--red)}
+.recency-bar.never{color:var(--text2)}
+
+.row-actions{display:flex;gap:6px;justify-content:flex-end}
+.row-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:all .12s;font-family:inherit}
+.row-btn:hover{border-color:var(--purple);color:var(--text)}
+.row-btn.primary{border-color:var(--purple);color:var(--purple)}
+.row-btn.primary:hover{background:var(--purple);color:white;border-color:var(--purple)}
+.row-btn.danger:hover{border-color:var(--red);color:var(--red)}
+
+.empty-state{padding:48px;text-align:center;color:var(--text2)}
+.empty-state .es-icon{font-size:34px;margin-bottom:12px;opacity:.4}
+.empty-state h3{font-size:15px;color:var(--text);margin-bottom:6px}
+.empty-state p{font-size:13px;margin-bottom:18px}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:400;display:flex;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border)}
+.modal-head h3{font-size:16px;font-weight:700}
+.modal-close{background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;padding:0;line-height:1}
+.modal-close:hover{color:var(--text)}
+.modal-body{padding:20px 22px}
+.modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;align-items:center}
+
+label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:5px}
+input[type=text],input[type=email],input[type=date],input[type=number],textarea,select{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:13px;outline:none;transition:border-color .15s;font-family:inherit}
+input:focus,textarea:focus,select:focus{border-color:var(--purple)}
+textarea{resize:vertical;min-height:60px}
+.field{margin-bottom:14px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hint{font-size:11px;color:var(--text2);margin-top:3px}
+
+.btn-primary{padding:9px 18px;border-radius:8px;border:none;background:var(--purple2);color:white;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-primary:hover{background:var(--purple)}
+.btn-primary:disabled{opacity:.5;cursor:default}
+.btn-secondary{padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:none;color:var(--text);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn-secondary:hover{border-color:var(--purple)}
+.modal-status{font-size:12px;color:var(--text2);margin-right:auto}
+.modal-status.err{color:var(--red)}
+.modal-status.ok{color:var(--green)}
+
+/* Detail panel inside modal */
+.detail-section{margin-bottom:18px}
+.detail-section h4{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--purple);margin-bottom:8px;font-weight:600}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detail-cell{background:var(--bg3);border-radius:8px;padding:10px 12px}
+.detail-cell .lbl{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px}
+.detail-cell .val{font-size:13px;font-weight:600;margin-top:3px}
+.linked-list{display:flex;flex-direction:column;gap:6px}
+.linked-row{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border-radius:8px}
+.linked-row .ln-name{flex:1;font-size:13px;font-weight:600}
+.linked-row .ln-ind{font-size:11px;color:var(--text2)}
+
+.log-call-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:7px;border:1px solid var(--green);background:rgba(34,197,94,.08);color:var(--green);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.log-call-btn:hover{background:var(--green);color:white}
+
+@media (max-width: 700px){
+  .stats{grid-template-columns:1fr 1fr}
+  .field-row{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  thead th.hide-mobile,tbody td.hide-mobile{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Login overlay -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="logo">WP SEO AI</div>
+    <h2>Admin access</h2>
+    <p>Enter the admin password to manage reference customers.</p>
+    <form id="loginForm">
+      <input type="password" id="loginPassword" placeholder="Password" autofocus>
+      <button type="submit" class="login-btn" id="loginBtn">Sign in</button>
+    </form>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<div class="topbar">
+  <span class="logo">WP SEO AI</span>
+  <h1>Admin</h1>
+  <a href="/admin" class="nav-link">Use cases</a>
+  <a href="/admin/reference-customers" class="nav-link active">Reference customers</a>
+  <a href="/industries" class="nav-link">Industries</a>
+  <span class="spacer"></span>
+  <a href="/" class="nav-link">Back to Finder</a>
+</div>
+
+<div class="container">
+  <div class="page-head">
+    <div>
+      <h2>Reference customers</h2>
+      <div class="subtitle">Track who's referenceable, who owns the relationship, and when they were last contacted.</div>
+    </div>
+    <button class="new-btn" id="newBtn">+ New reference customer</button>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><div class="lbl">Total</div><div class="val" id="statTotal">—</div></div>
+    <div class="stat"><div class="lbl">Active</div><div class="val ok" id="statActive">—</div></div>
+    <div class="stat"><div class="lbl">Need follow-up</div><div class="val warn" id="statStale">—</div></div>
+    <div class="stat"><div class="lbl">Linked cases</div><div class="val" id="statLinked">—</div></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search company, success manager, contact…">
+    </div>
+    <select class="filter-select" id="filterStatus">
+      <option value="">All statuses</option>
+      <option value="active">Active</option>
+      <option value="paused">Paused</option>
+      <option value="archived">Archived</option>
+    </select>
+    <select class="filter-select" id="filterManager">
+      <option value="">All success managers</option>
+    </select>
+    <select class="filter-select" id="filterRecency">
+      <option value="">All recency</option>
+      <option value="never">Never called</option>
+      <option value="stale">&gt; 90 days ago</option>
+      <option value="warning">30–90 days ago</option>
+      <option value="recent">&lt; 30 days ago</option>
+    </select>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tbl">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Success Manager</th>
+          <th>Last Called</th>
+          <th>Times Called</th>
+          <th class="hide-mobile">Linked cases</th>
+          <th>Status</th>
+          <th style="text-align:right">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tblBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Edit/Create modal -->
+<div class="modal-overlay hidden" id="editModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">New reference customer</h3>
+      <button class="modal-close" id="modalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="editForm">
+        <div class="field">
+          <label for="f-company">Company *</label>
+          <input type="text" id="f-company" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-manager">Success Manager *</label>
+            <input type="text" id="f-manager" placeholder="e.g. Sara van der Berg" required>
+          </div>
+          <div class="field">
+            <label for="f-status">Status</label>
+            <select id="f-status">
+              <option value="active">Active</option>
+              <option value="paused">Paused</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-contact-name">Contact name</label>
+            <input type="text" id="f-contact-name" placeholder="Optional">
+          </div>
+          <div class="field">
+            <label for="f-contact-email">Contact email</label>
+            <input type="email" id="f-contact-email" placeholder="Optional">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-last-called">Last Called</label>
+            <input type="date" id="f-last-called">
+          </div>
+          <div class="field">
+            <label for="f-times-called">Amount of Times Called</label>
+            <input type="number" id="f-times-called" min="0" value="0">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-notes">Notes</label>
+          <textarea id="f-notes" rows="3" placeholder="Internal context — willingness to do calls, preferred topics, do-not-contact periods, etc."></textarea>
+          <div class="hint">Free-form. Extra contact fields can be added later without breaking existing data.</div>
+        </div>
+
+        <!-- Linked cases (edit mode only) -->
+        <div class="detail-section" id="linkedSection" style="display:none">
+          <h4>Linked success cases</h4>
+          <div class="linked-list" id="linkedList"></div>
+          <div class="hint" style="margin-top:6px">Manage links from the case detail in <a href="/admin" style="color:var(--purple)">Use cases</a>.</div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <span class="modal-status" id="modalStatus"></span>
+      <button type="button" class="btn-secondary" id="deleteBtn" style="display:none">Delete</button>
+      <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+      <button type="button" class="btn-primary" id="saveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let adminToken = sessionStorage.getItem('adminToken') || '';
+let allCustomers = [];
+let editingId = null;
+
+function adminFetch(url, opts = {}) {
+  opts.headers = { ...(opts.headers || {}), 'Authorization': 'Bearer ' + adminToken };
+  return fetch(url, opts);
+}
+
+function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
+
+// ─── Login ───────────────────────────────────────────────────────────────────
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const pw = document.getElementById('loginPassword').value;
+  const err = document.getElementById('loginErr');
+  err.textContent = '';
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      adminToken = data.token;
+      sessionStorage.setItem('adminToken', adminToken);
+      document.getElementById('loginOverlay').classList.add('hidden');
+      init();
+    } else {
+      err.textContent = 'Wrong password.';
+    }
+  } catch (ex) {
+    err.textContent = 'Connection failed.';
+  }
+});
+
+async function checkAuth() {
+  if (!adminToken) return;
+  try {
+    const res = await adminFetch('/api/admin/reference-customers');
+    if (res.ok) {
+      document.getElementById('loginOverlay').classList.add('hidden');
+      init();
+      return;
+    }
+  } catch {}
+  adminToken = '';
+  sessionStorage.removeItem('adminToken');
+}
+checkAuth();
+
+// ─── Data loading ────────────────────────────────────────────────────────────
+async function init() {
+  await loadCustomers();
+}
+
+async function loadCustomers() {
+  const res = await adminFetch('/api/admin/reference-customers');
+  const data = await res.json();
+  allCustomers = data.customers || [];
+  populateManagerFilter();
+  render();
+}
+
+function populateManagerFilter() {
+  const sel = document.getElementById('filterManager');
+  const managers = [...new Set(allCustomers.map(c => c.successManager).filter(Boolean))].sort();
+  const current = sel.value;
+  sel.innerHTML = '<option value="">All success managers</option>' +
+    managers.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
+  if (managers.includes(current)) sel.value = current;
+}
+
+// ─── Recency helpers ────────────────────────────────────────────────────────
+function recencyBucket(lastCalled) {
+  if (!lastCalled) return 'never';
+  const days = (Date.now() - new Date(lastCalled).getTime()) / 86400000;
+  if (days > 90) return 'stale';
+  if (days > 30) return 'warning';
+  return 'recent';
+}
+function recencyLabel(lastCalled) {
+  if (!lastCalled) return 'Never called';
+  const days = Math.floor((Date.now() - new Date(lastCalled).getTime()) / 86400000);
+  if (days === 0) return 'Today';
+  if (days === 1) return 'Yesterday';
+  if (days < 30) return days + ' days ago';
+  if (days < 365) return Math.floor(days / 30) + ' mo ago';
+  return Math.floor(days / 365) + ' yr ago';
+}
+
+// ─── Render ─────────────────────────────────────────────────────────────────
+function render() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const fStatus = document.getElementById('filterStatus').value;
+  const fManager = document.getElementById('filterManager').value;
+  const fRecency = document.getElementById('filterRecency').value;
+
+  const filtered = allCustomers.filter(c => {
+    if (fStatus && c.status !== fStatus) return false;
+    if (fManager && c.successManager !== fManager) return false;
+    if (fRecency && recencyBucket(c.lastCalled) !== fRecency) return false;
+    if (q) {
+      const blob = [c.company, c.successManager, c.contactName, c.contactEmail, c.notes,
+        ...(c.linkedCases || []).map(lc => lc.company + ' ' + lc.industry)].filter(Boolean).join(' ').toLowerCase();
+      if (!blob.includes(q)) return false;
+    }
+    return true;
+  });
+
+  renderStats();
+
+  const body = document.getElementById('tblBody');
+  if (filtered.length === 0) {
+    body.innerHTML = `<tr><td colspan="7"><div class="empty-state">
+      <div class="es-icon">···</div>
+      <h3>${allCustomers.length === 0 ? 'No reference customers yet' : 'No matches'}</h3>
+      <p>${allCustomers.length === 0 ? 'Add a customer to start tracking calls and link them to success cases.' : 'Try a different search or filter.'}</p>
+      ${allCustomers.length === 0 ? '<button class="btn-primary" onclick="openCreate()">+ Add first customer</button>' : ''}
+    </div></td></tr>`;
+    return;
+  }
+
+  body.innerHTML = filtered.map(c => {
+    const bucket = recencyBucket(c.lastCalled);
+    const linked = c.linkedCases || [];
+    return `
+    <tr data-id="${escapeHtml(c.id)}" onclick="openEdit('${escapeHtml(c.id)}')">
+      <td>
+        <div class="cell-company">${escapeHtml(c.company)}</div>
+        ${c.contactName ? `<div class="cell-sub">${escapeHtml(c.contactName)}${c.contactEmail ? ' · ' + escapeHtml(c.contactEmail) : ''}</div>` : ''}
+      </td>
+      <td>${escapeHtml(c.successManager || '—')}</td>
+      <td><span class="recency-bar ${bucket}">${escapeHtml(recencyLabel(c.lastCalled))}</span>${c.lastCalled ? `<div class="cell-sub">${escapeHtml(c.lastCalled)}</div>` : ''}</td>
+      <td style="text-align:center;font-weight:600">${c.timesCalled || 0}</td>
+      <td class="hide-mobile">${linked.length === 0
+        ? '<span class="empty-pill">No cases linked</span>'
+        : linked.map(lc => `<span class="linked-pill" title="${escapeHtml(lc.industry || '')}">${escapeHtml(lc.company)}</span>`).join('')}</td>
+      <td><span class="status-pill ${escapeHtml(c.status || 'active')}">${escapeHtml(c.status || 'active')}</span></td>
+      <td><div class="row-actions" onclick="event.stopPropagation()">
+        <button class="row-btn primary" onclick="logCall('${escapeHtml(c.id)}')" title="Increment Times Called and set Last Called to today">+ Log call</button>
+        <button class="row-btn" onclick="openEdit('${escapeHtml(c.id)}')">Edit</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderStats() {
+  const total = allCustomers.length;
+  const active = allCustomers.filter(c => (c.status || 'active') === 'active').length;
+  const stale = allCustomers.filter(c => {
+    const b = recencyBucket(c.lastCalled);
+    return b === 'stale' || b === 'never';
+  }).length;
+  const linkedCount = allCustomers.reduce((sum, c) => sum + (c.linkedCases || []).length, 0);
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statActive').textContent = active;
+  document.getElementById('statStale').textContent = stale;
+  document.getElementById('statLinked').textContent = linkedCount;
+}
+
+document.getElementById('searchInput').addEventListener('input', render);
+document.getElementById('filterStatus').addEventListener('change', render);
+document.getElementById('filterManager').addEventListener('change', render);
+document.getElementById('filterRecency').addEventListener('change', render);
+
+// ─── Log call (quick action) ─────────────────────────────────────────────────
+async function logCall(id) {
+  const c = allCustomers.find(x => x.id === id);
+  if (!c) return;
+  if (!confirm('Log a call for ' + c.company + '?\nThis sets Last Called to today and increments Times Called.')) return;
+  try {
+    const res = await adminFetch(`/api/admin/reference-customers/${encodeURIComponent(id)}/log-call`, { method: 'POST' });
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+    // Refresh
+    await loadCustomers();
+  } catch (e) { alert('Failed to log call.'); }
+}
+
+// ─── Modal: create + edit ────────────────────────────────────────────────────
+const editModal = document.getElementById('editModal');
+
+function openCreate() {
+  editingId = null;
+  document.getElementById('modalTitle').textContent = 'New reference customer';
+  document.getElementById('deleteBtn').style.display = 'none';
+  document.getElementById('linkedSection').style.display = 'none';
+  document.getElementById('editForm').reset();
+  document.getElementById('f-times-called').value = '0';
+  document.getElementById('f-status').value = 'active';
+  document.getElementById('modalStatus').textContent = '';
+  document.getElementById('modalStatus').className = 'modal-status';
+  editModal.classList.remove('hidden');
+  setTimeout(() => document.getElementById('f-company').focus(), 50);
+}
+
+function openEdit(id) {
+  const c = allCustomers.find(x => x.id === id);
+  if (!c) return;
+  editingId = id;
+  document.getElementById('modalTitle').textContent = 'Edit ' + c.company;
+  document.getElementById('deleteBtn').style.display = '';
+  document.getElementById('f-company').value = c.company || '';
+  document.getElementById('f-manager').value = c.successManager || '';
+  document.getElementById('f-status').value = c.status || 'active';
+  document.getElementById('f-contact-name').value = c.contactName || '';
+  document.getElementById('f-contact-email').value = c.contactEmail || '';
+  document.getElementById('f-last-called').value = c.lastCalled || '';
+  document.getElementById('f-times-called').value = c.timesCalled || 0;
+  document.getElementById('f-notes').value = c.notes || '';
+  document.getElementById('modalStatus').textContent = '';
+  document.getElementById('modalStatus').className = 'modal-status';
+
+  // Linked cases panel
+  const linkedSection = document.getElementById('linkedSection');
+  const linkedList = document.getElementById('linkedList');
+  const linked = c.linkedCases || [];
+  if (linked.length === 0) {
+    linkedSection.style.display = '';
+    linkedList.innerHTML = '<div class="empty-pill" style="padding:10px;background:var(--bg3);border-radius:8px;display:block">No cases linked yet — open a case in the Use cases page to assign this customer.</div>';
+  } else {
+    linkedSection.style.display = '';
+    linkedList.innerHTML = linked.map(lc => `
+      <div class="linked-row">
+        <div>
+          <div class="ln-name">${escapeHtml(lc.company)}</div>
+          <div class="ln-ind">${escapeHtml(lc.industry || '')}</div>
+        </div>
+        <div style="flex:1"></div>
+        <a class="row-btn" href="/admin#case-${escapeHtml(lc.id)}">Open</a>
+      </div>
+    `).join('');
+  }
+
+  editModal.classList.remove('hidden');
+}
+
+document.getElementById('newBtn').addEventListener('click', openCreate);
+document.getElementById('modalClose').addEventListener('click', () => editModal.classList.add('hidden'));
+document.getElementById('cancelBtn').addEventListener('click', () => editModal.classList.add('hidden'));
+editModal.addEventListener('click', (e) => { if (e.target === editModal) editModal.classList.add('hidden'); });
+
+document.getElementById('saveBtn').addEventListener('click', async () => {
+  const status = document.getElementById('modalStatus');
+  const company = document.getElementById('f-company').value.trim();
+  if (!company) { status.textContent = 'Company is required.'; status.className = 'modal-status err'; return; }
+
+  const payload = {
+    company,
+    successManager: document.getElementById('f-manager').value.trim(),
+    status: document.getElementById('f-status').value,
+    contactName: document.getElementById('f-contact-name').value.trim(),
+    contactEmail: document.getElementById('f-contact-email').value.trim(),
+    lastCalled: document.getElementById('f-last-called').value || null,
+    timesCalled: parseInt(document.getElementById('f-times-called').value, 10) || 0,
+    notes: document.getElementById('f-notes').value.trim(),
+  };
+
+  status.textContent = 'Saving...';
+  status.className = 'modal-status';
+  document.getElementById('saveBtn').disabled = true;
+
+  try {
+    const url = editingId
+      ? `/api/admin/reference-customers/${encodeURIComponent(editingId)}`
+      : '/api/admin/reference-customers';
+    const res = await adminFetch(url, {
+      method: editingId ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    if (data.error) { status.textContent = data.error; status.className = 'modal-status err'; return; }
+    status.textContent = 'Saved.';
+    status.className = 'modal-status ok';
+    await loadCustomers();
+    setTimeout(() => editModal.classList.add('hidden'), 400);
+  } catch (e) {
+    status.textContent = 'Save failed.';
+    status.className = 'modal-status err';
+  } finally {
+    document.getElementById('saveBtn').disabled = false;
+  }
+});
+
+document.getElementById('deleteBtn').addEventListener('click', async () => {
+  if (!editingId) return;
+  const c = allCustomers.find(x => x.id === editingId);
+  if (!confirm('Delete ' + (c ? c.company : 'this customer') + '? This will also unlink them from any success cases.')) return;
+  try {
+    const res = await adminFetch(`/api/admin/reference-customers/${encodeURIComponent(editingId)}`, { method: 'DELETE' });
+    const data = await res.json();
+    if (data.error) { alert(data.error); return; }
+    editModal.classList.add('hidden');
+    await loadCustomers();
+  } catch { alert('Failed to delete.'); }
+});
+
+// Close on Esc
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !editModal.classList.contains('hidden')) editModal.classList.add('hidden');
+});
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { useCases as seedCases, OBJECTIONS, type UseCase } from '../src/data.ts';
+import { OBJECTIONS, type UseCase } from '../src/data.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -9,6 +9,12 @@ const OUT = join(ROOT, 'public');
 const PDF_BASE = 'https://raw.githubusercontent.com/martijndereeper-a11y/use-case-finder/main/use-cases';
 
 mkdirSync(OUT, { recursive: true });
+
+// Seed cases live in use-cases-data.json (the same file the runtime API reads
+// via loadSeedCases). Sourcing from JSON ensures language backfills, manual
+// edits, and any other patches show up in the static build without needing
+// to also be reflected in src/data.ts.
+const seedCases: UseCase[] = JSON.parse(readFileSync(join(ROOT, 'use-cases-data.json'), 'utf-8'));
 
 // Merge seed cases + admin-added cases
 let addedCases: UseCase[] = [];
@@ -145,6 +151,11 @@ writeFileSync(join(OUT, 'admin.html'), adminHtml);
 const industriesHtml = readFileSync(join(ROOT, 'src', 'dashboard', 'industries.html'), 'utf-8');
 writeFileSync(join(OUT, 'industries.html'), industriesHtml);
 
+// Copy reference customers admin page as-is (it talks to the serverless function)
+const refCustHtml = readFileSync(join(ROOT, 'src', 'dashboard', 'reference-customers.html'), 'utf-8');
+writeFileSync(join(OUT, 'reference-customers.html'), refCustHtml);
+
 console.log(`Built public/index.html (${(html.length/1024).toFixed(0)} KB, ${data.cases.length} cases embedded)`);
 console.log(`Built public/admin.html`);
 console.log(`Built public/industries.html`);
+console.log(`Built public/reference-customers.html`);
