@@ -25,6 +25,21 @@ const VALID = new Set(['nl', 'de', 'en']);
 
 interface AnyCase { id: string; company: string; pdfFile: string; language?: string }
 
+/**
+ * Sample the PDF text from beginning, middle, and end so we don't get fooled
+ * by a Dutch title page on an English case study (or vice versa).
+ */
+function sampleAcrossDocument(text: string): string {
+  const t = text.trim();
+  if (t.length <= 12000) return t;
+  const chunk = 4000;
+  const start = t.slice(0, chunk);
+  const midStart = Math.floor(t.length / 2) - chunk / 2;
+  const middle = t.slice(midStart, midStart + chunk);
+  const end = t.slice(-chunk);
+  return `${start}\n\n[...]\n\n${middle}\n\n[...]\n\n${end}`;
+}
+
 async function detectLanguageFromPdf(pdfFile: string, anthropic: Anthropic): Promise<string | null> {
   try {
     // pdf-parse v1 — import internal to skip its test file
@@ -34,15 +49,26 @@ async function detectLanguageFromPdf(pdfFile: string, anthropic: Anthropic): Pro
     if (!res.ok) { console.warn(`  ✗ HTTP ${res.status} for ${pdfFile}`); return null; }
     const buf = Buffer.from(await res.arrayBuffer());
     const parsed = await pdfParse(buf);
-    const sample = (parsed.text || '').slice(0, 2000).trim();
-    if (!sample) { console.warn(`  ✗ Empty PDF text for ${pdfFile}`); return null; }
+    const fullText = (parsed.text || '').trim();
+    if (!fullText) { console.warn(`  ✗ Empty PDF text for ${pdfFile}`); return null; }
+
+    const sample = sampleAcrossDocument(fullText);
 
     const msg = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 30,
       messages: [{
         role: 'user',
-        content: `Detect the language of this text. Reply with ONLY one of: nl, de, en (no punctuation, no explanation).\n\nText:\n${sample}`,
+        content: `You are classifying the dominant language of a customer case study PDF (sampled from beginning, middle, and end).
+
+The PDF may contain mixed languages — for example, a Dutch title slide, English body content, and a Dutch footer. Your job is to identify the language of the MAIN BODY content (paragraphs, descriptions, results, summaries) — not titles, brand names, footers, or boilerplate.
+
+If most of the actual prose is in one language and only short fragments (titles, labels, brand names) are in another, return the language of the prose.
+
+Return ONLY one of: nl (Dutch), de (German), en (English). No punctuation, no explanation.
+
+PDF text sample:
+${sample}`,
       }],
     });
     const txt = msg.content[0].type === 'text' ? msg.content[0].text.trim().toLowerCase() : '';
