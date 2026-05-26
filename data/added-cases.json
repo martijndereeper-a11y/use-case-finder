@@ -421,5 +421,35 @@
     ],
     "pdfFile": "SEA budget fixed with SEO Content - Medici GER - Success case (GERMAN).pdf",
     "language": "de"
+  },
+  {
+    "id": "searchx",
+    "company": "SearchX",
+    "industry": "Agency",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "Too little time for SEO",
+    "outcome": "Freed capacity",
+    "result": "Scaled SEO delivery for their clients without proportionally growing the team, improving margins per client.",
+    "summary": "SearchX is a Dutch SEO agency providing organic traffic growth through technical SEO, content strategy, and link building with a small team. They struggled to scale delivery across their client base without proportionally growing headcount. WP SEO AI became their white-label execution layer, letting them serve more clients with the same team size and improving margins per client.",
+    "businessType": "B2B",
+    "marketPosition": "Mainstream",
+    "trustSensitive": false,
+    "objections": [
+      "Our sector is too technical or complex for AI content"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "no time",
+      "capacity",
+      "agency",
+      "marketing agency",
+      "seo agency",
+      "white label"
+    ],
+    "pdfFile": "searchx.pdf",
+    "language": "en",
+    "domain": "https://searchxrecruitment.com/"
   }
 ]
