@@ -339,7 +339,8 @@
       "effizienz"
     ],
     "pdfFile": "Efficiency Gap - e-bikes.de - Success case (GERMAN).pdf",
-    "language": "de"
+    "language": "de",
+    "clickTier": "Starting near zero (0-100)"
   },
   {
     "id": "proforg-de",
@@ -420,7 +421,8 @@
       "gesundheit"
     ],
     "pdfFile": "SEA budget fixed with SEO Content - Medici GER - Success case (GERMAN).pdf",
-    "language": "de"
+    "language": "de",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "searchx",
@@ -450,6 +452,7 @@
     ],
     "pdfFile": "searchx.pdf",
     "language": "en",
-    "domain": "https://searchxrecruitment.com/"
+    "domain": "https://searchxrecruitment.com/",
+    "clickTier": "Established (1,500+)"
   }
 ]

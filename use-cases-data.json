@@ -30,7 +30,8 @@
       "wellness"
     ],
     "pdfFile": "No capacity for SEO - Kinwell - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "roelands",
@@ -62,7 +63,8 @@
       "horticulture"
     ],
     "pdfFile": "No time & capacity - Roelands Boomkwekerijen - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "mydearbeer",
@@ -95,7 +97,8 @@
       "webshop"
     ],
     "pdfFile": "Too little time for SEO  - My Dear Beer - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "verdonk",
@@ -127,7 +130,8 @@
       "vehicles"
     ],
     "pdfFile": "Too little time for SEO - Autobedrijven Verdonk - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "searchx",
@@ -156,7 +160,8 @@
       "white label"
     ],
     "pdfFile": "Too little time for SEO - SearchX - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Established (1,500+)"
   },
   {
     "id": "berendijk",
@@ -187,7 +192,8 @@
       "timber"
     ],
     "pdfFile": "Too little time for SEO - Timmerbedrijf Berendijk - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Starting near zero (0-100)"
   },
   {
     "id": "eleven",
@@ -219,7 +225,8 @@
       "in-house"
     ],
     "pdfFile": "Underperforming Agency - AI Search - No Inhouse Marketing Team -ELEVEN - .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "vleesandco",
@@ -249,7 +256,8 @@
       "wholesale"
     ],
     "pdfFile": "Underperforming agency - Vlees & Co  - Success case .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Established (1,500+)"
   },
   {
     "id": "broekman",
@@ -281,7 +289,8 @@
       "wasting money"
     ],
     "pdfFile": "High SEO cost with limited impact - Broekman - Success case - Retail .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Established (1,500+)"
   },
   {
     "id": "kruijdenberg",
@@ -315,7 +324,8 @@
       "manufacturing"
     ],
     "pdfFile": "Ai curiosity & LLM search advantage - Kruijdenberg - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "wijzijntop",
@@ -345,7 +355,8 @@
       "direction"
     ],
     "pdfFile": "AI curiosity but no strategy - Wijzijntop- Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Starting near zero (0-100)"
   },
   {
     "id": "catermonkey",
@@ -377,7 +388,8 @@
       "events"
     ],
     "pdfFile": "Insane lead flow from Chat-gpt & other LLM_s - Catermonkey - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "vandenakker",
@@ -408,7 +420,8 @@
       "dealer"
     ],
     "pdfFile": "Relied on word of mouth - Autobedrijf Van den Akker - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "schulte-wom",
@@ -444,7 +457,8 @@
       "renewable"
     ],
     "pdfFile": "Relied on word of mouth - Schulte Energie & Techniek - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "ckactive",
@@ -478,7 +492,8 @@
       "fitness"
     ],
     "pdfFile": "Relied heaviliy on SEA - CK Active - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "sillegallery",
@@ -510,7 +525,8 @@
       "reporting"
     ],
     "pdfFile": "Lack of Control Over SEO - Sille Gallery - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Established (1,500+)"
   },
   {
     "id": "cooffice",
@@ -542,7 +558,8 @@
       "flex"
     ],
     "pdfFile": "Traffic drop during site transition - Co-Office - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "geldzo",
@@ -575,7 +592,8 @@
       "scaling"
     ],
     "pdfFile": "No time for manual work and going international - GeldZo - Success Case .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "pbn",
@@ -607,7 +625,8 @@
       "professional services"
     ],
     "pdfFile": "No time for manual work and going international - PBN - Success Case .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "officebox",
@@ -640,7 +659,8 @@
       "catalog"
     ],
     "pdfFile": "Efficiency gap - Officebox -.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "implicit",
@@ -672,7 +692,8 @@
       "tech"
     ],
     "pdfFile": "Efficiency gap and new customers - IMPLI-CIT - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Starting near zero (0-100)"
   },
   {
     "id": "dercsalotech",
@@ -706,7 +727,8 @@
       "ai-ready"
     ],
     "pdfFile": "From limited marketing capacity to AI-ready SEO - DERC Salotech - Success Case - .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "schulte-scale",
@@ -744,7 +766,8 @@
       "renewable"
     ],
     "pdfFile": "Schulte Energie & Techniek - Limited Capacity to Scale for AI .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "kwiz",
@@ -775,7 +798,8 @@
       "leisure"
     ],
     "pdfFile": "New website & didnt like SEO copy writer - KWIZ Success Case - NL -  .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Starting near zero (0-100)"
   },
   {
     "id": "ctalents",
@@ -806,7 +830,8 @@
       "talent"
     ],
     "pdfFile": "Struggled to keep up with developments in search behaviour - CTalents - Success Case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "ebikesde",
@@ -839,7 +864,8 @@
       "consumer"
     ],
     "pdfFile": "Efficiency Gap - e-bikes.de - Success case (ENGLISH).pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Starting near zero (0-100)"
   },
   {
     "id": "medici",
@@ -875,7 +901,8 @@
       "germany"
     ],
     "pdfFile": "SEA budget fixed with SEO Content - Medici ENG - Success case (ENGLISH) .pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "adelt-ideen",
@@ -908,7 +935,8 @@
       "inbound"
     ],
     "pdfFile": "No organic inbound acquisition - adelt-ideen.de - GERMAN  (1).pdf",
-    "language": "de"
+    "language": "de",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "quest-search",
@@ -938,7 +966,8 @@
       "content strategy"
     ],
     "pdfFile": "Quest search - Success case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Starting near zero (0-100)"
   },
   {
     "id": "greenstay",
@@ -970,7 +999,8 @@
       "accommodation"
     ],
     "pdfFile": "Greenstay - Success Case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "salon-klipsi",
@@ -1002,7 +1032,8 @@
       "personal care"
     ],
     "pdfFile": "Salon Klipsi - Success Case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Established (1,500+)"
   },
   {
     "id": "moneybee",
@@ -1035,7 +1066,8 @@
       "roi"
     ],
     "pdfFile": "Moneybee - Success Case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Small base (100-500)"
   },
   {
     "id": "pest1",
@@ -1067,7 +1099,8 @@
       "exterminator"
     ],
     "pdfFile": "Pest1 Success Case.pdf",
-    "language": "en"
+    "language": "en",
+    "clickTier": "Medium base (500-1,500)"
   },
   {
     "id": "aimo-park",
@@ -1101,6 +1134,7 @@
       "featured snippets"
     ],
     "pdfFile": "Aimo Park - Success Case.pdf",
-    "language": "nl"
+    "language": "nl",
+    "clickTier": "Established (1,500+)"
   }
 ]
