@@ -454,5 +454,44 @@
     "language": "en",
     "domain": "https://searchxrecruitment.com/",
     "clickTier": "Established (1,500+)"
+  },
+  {
+    "id": "esve-groep-en",
+    "company": "ESVE Groep",
+    "domain": "https://www.esvegroep.nl/",
+    "industry": "HR & Payroll Services",
+    "painPattern": "Limited marketing capacity",
+    "headline": "From 3 years of traffic decline to +118% organic growth in 7 months",
+    "outcome": "+118% organic traffic in 7 months",
+    "result": "In 7 months, ESVE Groep grew organic clicks from 319 to 696 (+118%), increased total impressions by +485%, achieved +3000% growth in Top 1–3 Google rankings (from 421 to 12,911), and now generates 57% of all clicks through AI-powered content — with an estimated traffic value of €8,760/month.",
+    "summary": "ESVE Groep is a Dutch HR and payroll services provider specialising in NMBRS, AFAS, Loket, and YouForce, serving SME and healthcare organisations across Brabant and Limburg. Despite being active in a growing sector, their organic traffic had been declining for 3 years due to over-reliance on branded searches and limited internal capacity to execute SEO. WP SEO AI implemented an AI-driven content strategy targeting high-intent payroll and HR queries, building an entirely new non-brand discovery channel that now accounts for more than half of all clicks and nearly 9 in 10 impressions — while also earning mentions in Google AI Overviews and ChatGPT.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": true,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "payroll services",
+      "hr services",
+      "salarisadministratie",
+      "nmbrs",
+      "afas",
+      "loket",
+      "hr software",
+      "payroll outsourcing",
+      "organic traffic decline",
+      "non-brand seo",
+      "local b2b seo",
+      "small team seo"
+    ],
+    "pdfFile": "esve-groep-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
