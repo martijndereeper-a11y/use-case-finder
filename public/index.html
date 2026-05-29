@@ -464,12 +464,23 @@ function renderResults(cases) {
   }).join('');
 }
 
-async function doSearch(query) {
+function doSearch(query) {
   if (!query) { renderResults(filterByLanguage(allCases)); document.getElementById('quickMatch').style.display = ''; return; }
   document.getElementById('quickMatch').style.display = 'none';
-  const res = await fetch(`${apiUrl('/api/use-cases/search')}?q=${encodeURIComponent(query)}`);
-  const data = await res.json();
-  renderResults(filterByLanguage(data.results || []));
+  var synMap = window.__DATA__.synonymMap || {};
+  var nlDe = window.__DATA__.nlDeKeywords || {};
+  // Translate query terms using synonym map
+  var rawTerms = query.toLowerCase().split(/\s+/);
+  var terms = [];
+  rawTerms.forEach(function(t) { terms.push(t); if (synMap[t]) terms.push(synMap[t]); });
+  var scored = allCases.map(function(uc) {
+    var extra = (nlDe[uc.id] || []).join(' ').toLowerCase();
+    var s = [uc.company,uc.industry,uc.painPattern,uc.headline,uc.outcome,uc.result,uc.summary,uc.businessType,uc.marketPosition,...uc.keywords,...uc.objections,...(uc.countries||[]),extra].join(' ').toLowerCase();
+    var score = 0;
+    for (var i=0;i<terms.length;i++) { var t=terms[i]; if (s.includes(t)) score++; if (uc.keywords.some(function(k){return k.includes(t)})) score++; if (uc.company.toLowerCase().includes(t)) score+=2; if (uc.industry.toLowerCase().includes(t)) score+=2; }
+    return Object.assign({}, uc, {score:score});
+  });
+  renderResults(filterByLanguage(scored.filter(function(r){return r.score>0}).sort(function(a,b){return b.score-a.score})));
 }
 
 // Clear filter button

@@ -115,11 +115,16 @@ html = html.replace(
   `async function init() {\n  const data = window.__DATA__;`
 );
 
-// 3. Replace doSearch to be client-side
+// 3. Replace doSearch to be client-side.
+// The regex is intentionally loose: match from `async function doSearch`
+// through the first balanced closing brace at column 0. Anchoring on a
+// specific line of the body (like the old `renderResults(data.results)`)
+// has bit us when the source changes — keep this loose so future edits to
+// doSearch's body don't silently fall through to the (broken) fetch path.
 html = html.replace(
-  /async function doSearch[\s\S]*?renderResults\(data\.results\);\s*\}/,
+  /async function doSearch\(query\) \{[\s\S]*?\n\}/,
   `function doSearch(query) {
-  if (!query) { renderResults(allCases); document.getElementById('quickMatch').style.display = ''; return; }
+  if (!query) { renderResults(filterByLanguage(allCases)); document.getElementById('quickMatch').style.display = ''; return; }
   document.getElementById('quickMatch').style.display = 'none';
   var synMap = window.__DATA__.synonymMap || {};
   var nlDe = window.__DATA__.nlDeKeywords || {};
@@ -134,9 +139,12 @@ html = html.replace(
     for (var i=0;i<terms.length;i++) { var t=terms[i]; if (s.includes(t)) score++; if (uc.keywords.some(function(k){return k.includes(t)})) score++; if (uc.company.toLowerCase().includes(t)) score+=2; if (uc.industry.toLowerCase().includes(t)) score+=2; }
     return Object.assign({}, uc, {score:score});
   });
-  renderResults(scored.filter(function(r){return r.score>0}).sort(function(a,b){return b.score-a.score}));
+  renderResults(filterByLanguage(scored.filter(function(r){return r.score>0}).sort(function(a,b){return b.score-a.score})));
 }`
 );
+if (!/function doSearch\(query\) \{\s*if \(!query\) \{ renderResults\(filterByLanguage/.test(html)) {
+  throw new Error('build-static: doSearch replacement did not apply — regex no longer matches src/dashboard/index.html. Check the function shape before deploying.');
+}
 
 // 4. Clean up apiUrl (not needed for static, chat uses absolute /api/chat)
 html = html.replace(`function apiUrl(path) { return path; }\n`, '');
