@@ -493,5 +493,46 @@
     "pdfFile": "esve-groep-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "vief-leven-en",
+    "company": "Vief Leven",
+    "domain": "https://viefleven.nl/",
+    "industry": "Physiotherapy / Orthopedic Care",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "From 49 to 3,654 monthly SEO clicks: Vief Leven becomes regional orthopedic leader in 6 months",
+    "outcome": "+7,357% SEO AI clicks in 7 months",
+    "result": "SEO AI clicks grew from 49 in November to 3,654 in May (+7,357%), with 12,686 total SEO AI clicks generated, 60% of all organic traffic coming from AI-driven content by May, and €10,948 in estimated traffic value — lifting monthly organic clicks from 2,392 to 6,113.",
+    "summary": "Vief Leven is a specialized physiotherapy clinic in Tilburg (North Brabant, Netherlands) focused on treating knee and hip osteoarthritis and guiding patients through total knee and hip prosthesis rehabilitation. The clinic relied heavily on word-of-mouth and referrals but lacked a scalable SEO process to compete in the crowded healthcare market and reach patients across the full treatment journey. WP SEO AI implemented a two-phase content strategy — first building topical authority with informational long-tail keywords, then layering in local SEO by combining medical conditions with North Brabant locations — resulting in 14,471 keyword rankings, 549,819 impressions, and recognition as an authoritative source in Google's AI Overviews.",
+    "businessType": "B2C",
+    "marketPosition": "Niche",
+    "trustSensitive": true,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "Our customers are not online",
+      "We get everything from word of mouth",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "physiotherapy",
+      "orthopedic care",
+      "local seo healthcare",
+      "medical content strategy",
+      "knee hip osteoarthritis",
+      "long-tail informational content",
+      "ai content scaling",
+      "regional seo",
+      "patient journey seo",
+      "healthcare clinic",
+      "topical authority",
+      "google ai overview"
+    ],
+    "pdfFile": "vief-leven-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
