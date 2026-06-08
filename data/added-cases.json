@@ -534,5 +534,42 @@
     "pdfFile": "vief-leven-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "bosto-en",
+    "company": "Bosto",
+    "domain": "https://bosto.be/",
+    "industry": "Food / FMCG",
+    "painPattern": "Limited marketing capacity",
+    "headline": "Belgian food brand Bosto grew from 0 to 3,704 monthly SEO clicks in 6 months with bilingual AI content",
+    "outcome": "+311% click growth in 3 months",
+    "result": "Within 6 months, WP SEO AI generated 9,235 total clicks and 3,704 monthly clicks by May, with SEO AI content accounting for 32% of total organic traffic by April — a 311% click growth in just 3 months (Feb–Apr).",
+    "summary": "Bosto is a Belgian food brand specializing in rice, grains, and everyday cooking products, sold in supermarkets across Belgium. Despite wanting to invest in content marketing to build brand awareness and consideration among home cooks, they lacked the time and capacity to produce consistent, high-quality blog content in both Dutch and French. WP SEO AI developed a bilingual awareness-stage content strategy targeting searches around rice, quinoa, bulgur, and trending recipes like poke bowls, growing organic clicks from 0 to 3,704 per month and earning Google AI Overview citations — all while the broader industry declined after a Google algorithm update.",
+    "businessType": "B2C",
+    "marketPosition": "Mainstream",
+    "trustSensitive": false,
+    "objections": [
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Belgium"
+    ],
+    "keywords": [
+      "food brand",
+      "fmcg",
+      "bilingual seo",
+      "dutch french content",
+      "awareness content",
+      "recipe content",
+      "consumer goods",
+      "supermarket brand",
+      "content marketing",
+      "blog content",
+      "geo visibility",
+      "home cooking"
+    ],
+    "pdfFile": "bosto-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
