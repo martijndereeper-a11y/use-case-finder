@@ -571,5 +571,45 @@
     "pdfFile": "bosto-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "revalis-clinics-en",
+    "company": "Revalis Clinics",
+    "domain": "https://revalis.nl/",
+    "industry": "Healthcare / Medical Clinics",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "From 3,173 to 9,885 monthly clicks: how Revalis Clinics scaled specialist healthcare visibility with AI-driven content",
+    "outcome": "+212% organic traffic in 7 months",
+    "result": "In seven months, monthly organic clicks grew from 3,173 to 9,885 (+212%), SEO AI clicks surged from 17 to 7,799 (+45,776%), and by May, WP SEO AI content accounted for 78.9% of all organic clicks. Google impressions also grew from 122,262 to 591,700 per month (+384%), with total traffic value estimated at €25,397.",
+    "summary": "Revalis Clinics is a Dutch specialist healthcare center treating patients with persistent physical symptoms (ALK), including chronic pain, fatigue, and dizziness, through an integrated multidisciplinary approach. Their challenge was that a small-team focus on patient care left no capacity to create SEO content at scale, limiting their online visibility to a handful of traditional landing pages. WP SEO AI implemented a patient-focused content strategy targeting real search questions around chronic and unexplained symptoms, managing creation, publishing, and optimization entirely — enabling Revalis to grow authority in a complex healthcare niche while keeping all clinical resources focused on care.",
+    "businessType": "Mix",
+    "marketPosition": "Niche",
+    "trustSensitive": true,
+    "objections": [
+      "Niche market, too specific for online marketing",
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "healthcare seo",
+      "medical clinic",
+      "chronic pain",
+      "persistent symptoms",
+      "patient content",
+      "health content strategy",
+      "ai search visibility",
+      "top-of-funnel healthcare",
+      "small team seo",
+      "specialist clinic",
+      "dutch healthcare",
+      "e-e-a-t content"
+    ],
+    "pdfFile": "revalis-clinics-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
