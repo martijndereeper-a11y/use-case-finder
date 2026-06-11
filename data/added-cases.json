@@ -611,5 +611,44 @@
     "pdfFile": "revalis-clinics-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "de-woonzaken-en",
+    "company": "De Woonzaken",
+    "domain": "https://dewoonzaken.nl/",
+    "industry": "Interior / Home Furnishing",
+    "painPattern": "Efficiency gap",
+    "headline": "From local showroom to regional digital authority: 6x organic traffic in 11 months",
+    "outcome": "+495% organic traffic",
+    "result": "Organic clicks grew from 417 in July to 2,480 in May (+495%), adding 2,063 extra monthly clicks. SEO AI content generated 7,923 total clicks over the period and now accounts for 87% of all monthly organic traffic.",
+    "summary": "De Woonzaken is a Heemskerk-based interior specialist with a 1,000m² showroom offering flooring, window coverings, verandas, stair renovation, furniture, and full interior design across the Noord-Holland region. With a small team focused on showroom consultations and customer projects, they had no time or capacity to produce SEO content consistently despite strong offline expertise. WP SEO AI built a scalable, search-driven content strategy around interior products, home improvement questions, and regional topics — growing organic clicks by 495% in 11 months and earning visibility in Google AI Overviews and ChatGPT results.",
+    "businessType": "B2C",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Our customers are not online",
+      "We get everything from word of mouth",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "interior specialist",
+      "home furnishing",
+      "regional seo",
+      "local visibility",
+      "content strategy",
+      "flooring",
+      "window coverings",
+      "showroom",
+      "small team",
+      "limited capacity",
+      "ai overview",
+      "noord-holland"
+    ],
+    "pdfFile": "de-woonzaken-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
