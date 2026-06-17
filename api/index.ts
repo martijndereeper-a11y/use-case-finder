@@ -107,6 +107,19 @@ async function loadAddedCasesFromGitHub(): Promise<UseCase[]> {
   } catch { return []; }
 }
 
+/** Load tombstoned (removed) case IDs from GitHub repo (data/removed-cases.json) */
+async function loadRemovedIds(): Promise<string[]> {
+  if (!GH_TOKEN) return [];
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/data/removed-cases.json`, {
+      headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json' },
+    });
+    if (!res.ok) return []; // file doesn't exist yet
+    const data = await res.json() as { content: string };
+    return JSON.parse(Buffer.from(data.content, 'base64').toString('utf-8'));
+  } catch { return []; }
+}
+
 /** Encode a repo path for the GitHub Contents API: encode each segment but keep the slashes. */
 function encodeRepoPath(path: string): string {
   return path.split('/').map(encodeURIComponent).join('/');
@@ -183,8 +196,10 @@ async function uploadPdfToGitHub(filename: string, buffer: Buffer): Promise<{ ok
 async function loadAllCases(): Promise<UseCase[]> {
   const seed = loadSeedCases();
   const added = await loadAddedCasesFromGitHub();
+  const removed = new Set(await loadRemovedIds());
   const ids = new Set(added.map(c => c.id));
-  return [...seed.filter(c => !ids.has(c.id)), ...added];
+  const merged = [...seed.filter(c => !ids.has(c.id)), ...added];
+  return merged.filter(c => !removed.has(c.id));
 }
 
 async function saveCase(uc: UseCase): Promise<{ ok: boolean; error?: string }> {
@@ -196,14 +211,36 @@ async function saveCase(uc: UseCase): Promise<{ ok: boolean; error?: string }> {
     }
     added[idx] = uc;
   } else added.push(uc);
-  return writeToGitHub('data/added-cases.json', JSON.stringify(added, null, 2), `Add case: ${uc.company}`);
+  const result = await writeToGitHub('data/added-cases.json', JSON.stringify(added, null, 2), `Add case: ${uc.company}`);
+  // If this id was previously tombstoned (e.g. a churned customer that came back), revive it.
+  const removed = await loadRemovedIds();
+  if (removed.includes(uc.id)) {
+    await writeToGitHub('data/removed-cases.json', JSON.stringify(removed.filter(r => r !== uc.id), null, 2), `Revive case: ${uc.id}`);
+  }
+  return result;
 }
 
 async function deleteCase(id: string): Promise<{ ok: boolean; error?: string; notFound?: boolean }> {
+  // A case is either admin-added (in added-cases.json) or a seed case (use-cases-data.json).
   const added = await loadAddedCasesFromGitHub();
-  const filtered = added.filter(c => c.id !== id);
-  if (filtered.length === added.length) return { ok: false, notFound: true };
-  return writeToGitHub('data/added-cases.json', JSON.stringify(filtered, null, 2), `Remove case: ${id}`);
+  const inAdded = added.some(c => c.id === id);
+  if (inAdded) {
+    const filtered = added.filter(c => c.id !== id);
+    const result = await writeToGitHub('data/added-cases.json', JSON.stringify(filtered, null, 2), `Remove case: ${id}`);
+    if (!result.ok) return result;
+  }
+  // Seed cases can't be edited in place — tombstone the id so loadAllCases hides it.
+  const isSeed = loadSeedCases().some(c => c.id === id);
+  if (isSeed) {
+    const removed = await loadRemovedIds();
+    if (!removed.includes(id)) {
+      removed.push(id);
+      const result = await writeToGitHub('data/removed-cases.json', JSON.stringify(removed, null, 2), `Remove churned case: ${id}`);
+      if (!result.ok) return result;
+    }
+  }
+  if (!inAdded && !isSeed) return { ok: false, notFound: true };
+  return { ok: true };
 }
 
 function slugifyCompany(company: string): string {
