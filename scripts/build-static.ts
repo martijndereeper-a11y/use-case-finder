@@ -27,7 +27,22 @@ try {
 } catch {}
 
 const addedIds = new Set(addedCases.map(c => c.id));
-const allCases = [...seedCases.filter(c => !addedIds.has(c.id)), ...addedCases];
+let allCases = [...seedCases.filter(c => !addedIds.has(c.id)), ...addedCases];
+
+// Drop tombstoned (removed) cases so the static fallback matches the live API.
+let removedIds: string[] = [];
+const removedPath = join(ROOT, 'data', 'removed-cases.json');
+try {
+  if (existsSync(removedPath)) {
+    removedIds = JSON.parse(readFileSync(removedPath, 'utf-8'));
+  }
+} catch {}
+if (removedIds.length) {
+  const before = allCases.length;
+  const removedSet = new Set(removedIds);
+  allCases = allCases.filter(c => !removedSet.has(c.id));
+  console.log(`Dropped ${before - allCases.length} tombstoned cases`);
+}
 
 const painPatterns = [...new Set(allCases.map(c => c.painPattern))];
 const industries = [...new Set(allCases.map(c => c.industry))];
@@ -109,11 +124,32 @@ let html = readFileSync(join(ROOT, 'src', 'dashboard', 'index.html'), 'utf-8');
 // 1. Inject data before </head>
 html = html.replace('</head>', `<script>window.__DATA__=${JSON.stringify(data)};</script>\n</head>`);
 
-// 2. Replace init() to use embedded data instead of fetch
+// 2. Replace init() so it paints instantly from embedded data, then refreshes
+//    from the live API. This keeps first paint fast/offline-safe while making
+//    runtime admin add/remove changes show up without a rebuild+redeploy.
 html = html.replace(
-  /async function init\(\) \{[\s\S]*?const data = await res\.json\(\);/,
-  `async function init() {\n  const data = window.__DATA__;`
+  /async function init\(\) \{[\s\S]*?\n\}/,
+  `function applyData(data) {
+  allCases = data.cases;
+  renderLangTabs();
+  renderStats(data);
+  renderFilters(data);
+  renderObjections(data);
+  renderTierFilters(data);
+  renderQuickMatch();
+  renderResults(filterByLanguage(allCases));
+}
+async function init() {
+  applyData(window.__DATA__);
+  try {
+    const res = await fetch('/api/use-cases');
+    if (res.ok) applyData(await res.json());
+  } catch (e) { /* offline or API down — keep baked data */ }
+}`
 );
+if (!/function applyData\(data\) \{[\s\S]*?async function init\(\) \{\s*applyData\(window\.__DATA__\);/.test(html)) {
+  throw new Error('build-static: init replacement did not apply — regex no longer matches src/dashboard/index.html. Check the init() shape before deploying.');
+}
 
 // 3. Replace doSearch to be client-side.
 // The regex is intentionally loose: match from `async function doSearch`
