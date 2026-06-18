@@ -728,5 +728,44 @@
     "pdfFile": "energy-check-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "louwman-exclusive-en",
+    "company": "Louwman Exclusive",
+    "domain": "https://www.louwmanexclusive.com/",
+    "industry": "Luxury / Supercar Dealership",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "From 0 to 6,300+ organic clicks in 6 months with automated SEO content for a supercar dealer",
+    "outcome": "+66% traffic growth in 6 months",
+    "result": "WP SEO AI generated 6,300+ organic clicks within 6 months, driving a 66% total traffic growth. By January, 21% of all website traffic was coming directly from WP SEO AI-created content.",
+    "summary": "Louwman Exclusive is a Dutch luxury and supercar marketplace offering brands like McLaren, Morgan, Lamborghini, Bentley, and Automobili Pininfarina, targeting high-net-worth buyers and enthusiasts. They lacked internal capacity to execute a consistent, scalable SEO strategy to build brand awareness among future supercar buyers. WP SEO AI deployed 40 SEO-optimised blogs per month built around topical clusters and brand pages, resulting in 6,300+ new organic clicks, 66% traffic growth, and 21% of all traffic sourced from AI-driven content within just six months.",
+    "businessType": "B2C",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "luxury car dealer",
+      "supercar",
+      "automotive seo",
+      "content strategy",
+      "topical authority",
+      "ai-driven seo",
+      "blog automation",
+      "brand awareness",
+      "high-end automotive",
+      "no internal seo capacity",
+      "chatgpt visibility",
+      "google ai overview"
+    ],
+    "pdfFile": "louwman-exclusive-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
