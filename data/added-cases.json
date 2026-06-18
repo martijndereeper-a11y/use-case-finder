@@ -650,5 +650,44 @@
     "pdfFile": "de-woonzaken-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "taalklasse-en",
+    "company": "Taalklasse",
+    "domain": "https://www.taalklasse.nl/",
+    "industry": "EdTech / Primary Education",
+    "painPattern": "Limited marketing capacity",
+    "headline": "Dutch EdTech startup gains +753% click growth in 7 months by building topical authority in a competitive education market",
+    "outcome": "+753% organic click growth in 7 months",
+    "result": "Within 7 months, Taalklasse grew from 136 to 1,160 monthly organic visitors, with over 600 clicks per month attributable to WP SEO AI content alone, totaling 2,064 SEO AI clicks. They received their first inbound leads via both Google and ChatGPT citations.",
+    "summary": "Taalklasse is a Dutch publishing and EdTech company offering an integrated language and reading curriculum (Methode Nederlands) for primary schools, combining reading, writing, speaking, listening, vocabulary, and grammar — built around rich texts and developed with 50+ well-known Dutch children's authors. As a new entrant in the competitive B2B education market, they struggled to communicate the depth and scientific foundation of their product to decision-making teachers and school buyers. WP SEO AI developed a topical cluster strategy publishing 20 SEO-optimized blogs per month, growing organic traffic by 753% in 7 months and earning citations in both Google AI Overviews and ChatGPT results.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "B2B sector, nobody searches for our services",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "edtech",
+      "education startup",
+      "primary school",
+      "language curriculum",
+      "b2b education",
+      "content marketing",
+      "topical authority",
+      "competitive market",
+      "new entrant",
+      "chatgpt visibility",
+      "ai overview",
+      "dutch education"
+    ],
+    "pdfFile": "taalklasse-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
