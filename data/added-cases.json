@@ -689,5 +689,44 @@
     "pdfFile": "taalklasse-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "energy-check-en",
+    "company": "Energy-Check",
+    "domain": "https://www.energy-check.nl/",
+    "industry": "Energy Consultancy",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "From Hidden to Spotlight: Energy-Check Doubled Organic Traffic with 141% Growth Using WP SEO AI",
+    "outcome": "+141% organic traffic, 3,382 total SEO AI clicks",
+    "result": "WP SEO AI generated 3,382 clicks over 12 months, scaling from 1 to 693 monthly clicks, contributing 69% of all organic traffic in January and delivering €8,922 in traffic value.",
+    "summary": "Energy-Check is an independent energy consultancy based in the Netherlands that helps organizations take control of their energy costs through procurement advice, efficiency strategies, and subsidy guidance. They lacked the time and expertise to manage SEO manually, resulting in poor search visibility and inconsistent content output. After partnering with WP SEO AI in February 2025, they automated their SEO and content workflows, rapidly scaling to 346 monthly clicks within 6 months, appearing in Google AI Overviews, and growing organic clicks by 141% — turning search into a primary channel for new consulting clients.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": true,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "energy consultancy",
+      "energy procurement",
+      "b2b consulting",
+      "seo automation",
+      "organic traffic growth",
+      "energy efficiency",
+      "subsidies",
+      "no time for seo",
+      "small business seo",
+      "google ai overview",
+      "content automation",
+      "netherlands"
+    ],
+    "pdfFile": "energy-check-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
