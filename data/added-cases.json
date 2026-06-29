@@ -767,5 +767,44 @@
     "pdfFile": "louwman-exclusive-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "wattslimmer-en",
+    "company": "WattSlimmer",
+    "domain": "https://wattslimmer.nl/",
+    "industry": "Sustainability / Home Installation",
+    "painPattern": "Underperforming agency / high SEO cost",
+    "headline": "From SEO burnout to €80K in lead revenue: how WattSlimmer broke free from branded traffic dependency",
+    "outcome": "+2,769% organic traffic in 6 months",
+    "result": "Monthly organic clicks grew from 90 to 2,582 in six months (+2,769%), with AI-generated content driving 95% of all organic traffic by May 2026 and generating over €80,000 in directly traceable lead revenue.",
+    "summary": "WattSlimmer is a fast-growing Dutch sustainability installer offering solar panels, heat pumps, home batteries, EV chargers, air conditioning, and insulation to homeowners, businesses, and property developers. Despite a broad service offering, their organic visibility was nearly nonexistent — stuck at 40 visitors per month and almost entirely dependent on branded traffic — after wasting over €4,000/month on traditional SEO agencies with no measurable results. WP SEO AI deployed a content-driven strategy targeting high-intent sustainability keywords, publishing 240 AI-optimized articles over six months, growing monthly clicks from 90 to 2,582 and delivering €80,000 in verifiable lead revenue with zero heavy time investment from the WattSlimmer team.",
+    "businessType": "Mix",
+    "marketPosition": "Mainstream",
+    "trustSensitive": false,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "sustainability",
+      "solar panels",
+      "heat pump",
+      "home battery",
+      "green energy installer",
+      "underperforming agency",
+      "organic traffic growth",
+      "dutch market",
+      "high-intent content",
+      "lead generation",
+      "branded traffic dependency",
+      "ai content seo"
+    ],
+    "pdfFile": "wattslimmer-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
