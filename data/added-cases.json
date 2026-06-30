@@ -806,5 +806,47 @@
     "pdfFile": "wattslimmer-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "aexus-en",
+    "company": "Aexus",
+    "domain": "https://aexus.com/",
+    "industry": "Sales Outsourcing / Business Development",
+    "painPattern": "Efficiency gap",
+    "headline": "AI Content Became Aexus' Largest Organic Traffic Source in Less Than a Year",
+    "outcome": "+4,260 clicks in 8 months, 60.5% traffic share",
+    "result": "WP SEO AI generated 4,260 organic clicks across 175 published articles in 8 months, accounting for 60.5% of total organic traffic. Top 10 keyword rankings grew 355% (from 1,325 to 6,034 keywords), with peak monthly impressions reaching 466,048.",
+    "summary": "Aexus is an international sales outsourcing and business development agency helping innovative tech and software companies expand into Europe, the Americas, and Asia Pacific through expert sales, market penetration, and inbound marketing services. Despite having a strong commercial team, Aexus lacked the internal capacity to consistently produce high-quality SEO content at scale, limiting their organic visibility and inbound pipeline. WP SEO AI implemented an automated, scalable content strategy across sales outsourcing and business development topics, publishing 175 articles with minimal team effort — driving 979 SEO AI clicks per month, a 355% increase in Top 10 rankings, and a measurable rise in inbound opportunities and SQLs.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands",
+      "United Kingdom",
+      "Germany",
+      "United States"
+    ],
+    "keywords": [
+      "sales outsourcing",
+      "business development",
+      "tech companies",
+      "market expansion",
+      "international growth",
+      "b2b seo",
+      "inbound marketing",
+      "content at scale",
+      "ai content generation",
+      "topical authority",
+      "lead generation",
+      "organic traffic growth"
+    ],
+    "pdfFile": "aexus-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
