@@ -94,30 +94,47 @@ function loadIndustriesData(): any {
   return _industriesCache;
 }
 
-/** Load admin-added cases from GitHub repo (data/added-cases.json) */
+/** Read a committed JSON file from the deployed function bundle (no token needed). */
+function loadLocalJson<T>(relPath: string, fallback: T): T {
+  try {
+    const full = join(ROOT, relPath);
+    if (!existsSync(full)) return fallback;
+    return JSON.parse(readFileSync(full, 'utf-8')) as T;
+  } catch { return fallback; }
+}
+
+/**
+ * Load admin-added cases. The committed file (data/added-cases.json) is the
+ * base source and is always present in the deployed bundle — no token needed.
+ * When GITHUB_TOKEN is set we additionally try GitHub for cases added since the
+ * last deploy; on any failure we keep the committed base so the public finder
+ * never silently loses cases when the token is missing or expired.
+ */
 async function loadAddedCasesFromGitHub(): Promise<UseCase[]> {
-  if (!GH_TOKEN) return [];
+  const local = loadLocalJson<UseCase[]>('data/added-cases.json', []);
+  if (!GH_TOKEN) return local;
   try {
     const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/data/added-cases.json`, {
       headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json' },
     });
-    if (!res.ok) return []; // file doesn't exist yet
+    if (!res.ok) return local;
     const data = await res.json() as { content: string };
     return JSON.parse(Buffer.from(data.content, 'base64').toString('utf-8'));
-  } catch { return []; }
+  } catch { return local; }
 }
 
-/** Load tombstoned (removed) case IDs from GitHub repo (data/removed-cases.json) */
+/** Load tombstoned (removed) case IDs. Committed file is the base; GitHub is a freshness override. */
 async function loadRemovedIds(): Promise<string[]> {
-  if (!GH_TOKEN) return [];
+  const local = loadLocalJson<string[]>('data/removed-cases.json', []);
+  if (!GH_TOKEN) return local;
   try {
     const res = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/data/removed-cases.json`, {
       headers: { Authorization: `token ${GH_TOKEN}`, Accept: 'application/vnd.github.v3+json' },
     });
-    if (!res.ok) return []; // file doesn't exist yet
+    if (!res.ok) return local;
     const data = await res.json() as { content: string };
     return JSON.parse(Buffer.from(data.content, 'base64').toString('utf-8'));
-  } catch { return []; }
+  } catch { return local; }
 }
 
 /** Encode a repo path for the GitHub Contents API: encode each segment but keep the slashes. */
