@@ -887,5 +887,42 @@
     "pdfFile": "b-ro-albers-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "esselink-tuinen-en",
+    "company": "Esselink Tuinen",
+    "domain": "https://www.esselinktuinen.nl/",
+    "industry": "Garden Design / Landscaping",
+    "painPattern": "Efficiency gap",
+    "headline": "From 92 to 670 monthly clicks: how a Dutch landscaping company grew organic traffic 628% in 9 months with WP SEO AI",
+    "outcome": "+628% organic traffic in 9 months",
+    "result": "Organic monthly clicks grew from 92 to 670 (+628%) within 9 months, with SERP impressions rising from 15,436 to 92,660. The site now ranks for 5,169 keywords with 77% on page 1 of Google, and WP SEO AI accounts for 80%+ of click share for 4 consecutive months, totalling 2,545 SEO AI-driven clicks.",
+    "summary": "Esselink Tuinen is a professional garden design and landscaping company based in the Netherlands, offering residential and commercial services including garden design, construction, and maintenance. As a small hands-on team, digital marketing was consistently deprioritised, and a previous agency experience that failed to deliver left them cautious about investing again. WP SEO AI built a Dutch-language topical authority strategy around garden design, plant selection, and seasonal maintenance — handling all research, writing, and optimisation automatically — resulting in 628% organic growth, Google AI Overview citations, and ChatGPT mentions establishing them as a trusted industry authority.",
+    "businessType": "Mix",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "garden design",
+      "landscaping",
+      "hovenier",
+      "tuinontwerp",
+      "small team seo",
+      "dutch language seo",
+      "topical authority",
+      "blog content strategy",
+      "local seo",
+      "agency disappointment",
+      "ai content",
+      "seasonal content"
+    ],
+    "pdfFile": "esselink-tuinen-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
