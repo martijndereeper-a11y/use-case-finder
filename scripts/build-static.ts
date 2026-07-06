@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, cpSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { OBJECTIONS, type UseCase } from '../src/data.ts';
@@ -198,6 +198,15 @@ writeFileSync(join(OUT, 'industries.html'), industriesHtml);
 // Copy reference customers admin page as-is (it talks to the serverless function)
 const refCustHtml = readFileSync(join(ROOT, 'src', 'dashboard', 'reference-customers.html'), 'utf-8');
 writeFileSync(join(OUT, 'reference-customers.html'), refCustHtml);
+
+// Bundle case PDFs into the static output so they are served same-origin
+// (/use-cases/<file>). Frontend used to link raw.githubusercontent.com, which
+// IP-rate-limits unauthenticated traffic and started returning 429.
+const pdfSrc = join(ROOT, 'use-cases');
+if (existsSync(pdfSrc)) {
+  cpSync(pdfSrc, join(OUT, 'use-cases'), { recursive: true });
+  console.log(`Copied use-cases/ -> public/use-cases/`);
+}
 
 console.log(`Built public/index.html (${(html.length/1024).toFixed(0)} KB, ${data.cases.length} cases embedded)`);
 console.log(`Built public/admin.html`);

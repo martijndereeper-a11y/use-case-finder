@@ -431,7 +431,9 @@ function renderResults(cases) {
     header.textContent = `All ${cases.length} success cases`;
   }
 
-  const GH_RAW = 'https://raw.githubusercontent.com/martijndereeper-a11y/use-case-finder/main/use-cases';
+  // Serve PDFs from our own origin (bundled into public/use-cases by build-static)
+  // instead of raw.githubusercontent.com, which IP-rate-limits and returned 429.
+  const GH_RAW = `${location.origin}/use-cases`;
   el.innerHTML = cases.map(c => {
     const pdfRaw = `${GH_RAW}/${encodeURIComponent(c.pdfFile)}`;
     const pdfView = `https://docs.google.com/viewer?url=${encodeURIComponent(pdfRaw)}&embedded=true`;
