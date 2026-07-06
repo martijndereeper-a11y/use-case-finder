@@ -848,5 +848,44 @@
     "pdfFile": "aexus-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "b-ro-albers-en",
+    "company": "Büro Albers",
+    "domain": "https://buero-albers.de/",
+    "industry": "Office Supplies / B2B Retail",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "From Zero Blog to 52.7% AI-Driven Traffic in 8 Months",
+    "outcome": "+1,362% AI traffic growth, +89% total clicks",
+    "result": "In 8 months, total monthly clicks grew from 559 to 1,248 (+89%), AI-generated traffic surged +1,362% to account for 52.7% of all traffic, and identified B2B company visitors more than doubled from ~30 to 65–70 per week.",
+    "summary": "Büro Albers is a regional office supplier based in the Emsland region of Germany, offering office furniture, office supplies, school equipment, media technology, and business technology to companies, schools, and public institutions across two locations in Meppen and Papenburg. Despite being one of roughly seven major competitors in their market, they had no blog and no structured SEO strategy, leaving them invisible for high-intent, non-branded product searches — content creation was costly and delivered little measurable return. WP SEO AI built a data-driven content engine from scratch, clustering SEO-optimized articles around core revenue segments with strategic internal linking, transforming the website into a scalable organic growth channel that now contributes over half of all monthly traffic and is even cited in Google AI Overviews.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "B2B sector, nobody searches for our services",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Germany"
+    ],
+    "keywords": [
+      "office supplies",
+      "office furniture",
+      "regional supplier",
+      "b2b ecommerce",
+      "no blog",
+      "content from scratch",
+      "ai-driven traffic",
+      "german market",
+      "school equipment",
+      "media technology",
+      "seo content engine",
+      "regional seo"
+    ],
+    "pdfFile": "b-ro-albers-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
