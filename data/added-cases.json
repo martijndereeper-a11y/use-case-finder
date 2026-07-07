@@ -924,5 +924,50 @@
     "pdfFile": "esselink-tuinen-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "waitro-en",
+    "company": "WAITRO",
+    "domain": "https://waitro.org/",
+    "industry": "NGO / Research Networks",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "Global research NGO grows organic traffic by 316% in 6 months without adding headcount",
+    "outcome": "+316% organic clicks in 6 months",
+    "result": "Total organic clicks grew from 499 in January to 2,076 in June (+316% in 6 months), with WP SEO AI content driving 73% of all clicks in June and SEO AI click growth reaching +1,536%. The traffic generated is valued at €13,715.",
+    "summary": "WAITRO is a global NGO founded in 1970 that connects 180+ research and technology organizations across 80+ countries, fostering international innovation collaboration and sustainable development. With a lean team laser-focused on its core mission, WAITRO had no capacity to build an in-house SEO operation without significant added headcount or budget. WP SEO AI built a content strategy from scratch, publishing 40 AI-optimized articles per month targeting high-value RTO topics, resulting in top-3 Google rankings, Google AI Overview citations, and compounding organic traffic growth — all without diverting the existing team.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We get everything from word of mouth",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Global",
+      "Germany",
+      "Netherlands",
+      "Colombia",
+      "China",
+      "Turkey"
+    ],
+    "keywords": [
+      "ngo",
+      "research organization",
+      "international organization",
+      "mission-driven",
+      "lean team",
+      "no seo capacity",
+      "content strategy",
+      "ai overview",
+      "google ai overview",
+      "scalable content",
+      "rto",
+      "technology network"
+    ],
+    "pdfFile": "waitro-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
