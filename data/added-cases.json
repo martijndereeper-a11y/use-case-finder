@@ -969,5 +969,40 @@
     "pdfFile": "waitro-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "adelt-ideen",
+    "company": "IP Adelt",
+    "industry": "B2B / Visual Displays",
+    "painPattern": "Lack of control / visibility",
+    "headline": "No organic inbound acquisition — zero visibility to +470% growth",
+    "outcome": "+470% organic growth in 6 months",
+    "result": "+470% organic growth in 6 months (195 to 1,111 monthly clicks). 46.2% of clicks from AI content. Traffic worth €6,616. Featured in Google AI Overviews.",
+    "summary": "IP Adelt is a German B2B manufacturer of custom promotional materials including sample cases, gift boxes, and display systems, based in Bielefeld with over 60 years of history and fully German-made sustainable production. They had zero organic acquisition and most product pages were not live. WP SEO AI built their organic channel from scratch, achieving +470% growth in 6 months.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Niche market, too specific for online marketing",
+      "B2B sector, nobody searches for our services",
+      "Our customers are not online"
+    ],
+    "countries": [
+      "Germany"
+    ],
+    "keywords": [
+      "visual displays",
+      "product presentation",
+      "b2b",
+      "german",
+      "germany",
+      "no organic",
+      "zero visibility",
+      "inbound"
+    ],
+    "pdfFile": "adelt-ideen.pdf",
+    "language": "de",
+    "clickTier": "Small base (100-500)",
+    "domain": "https://adelt-ideen.de/"
   }
 ]
