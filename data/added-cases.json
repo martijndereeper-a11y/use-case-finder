@@ -1004,5 +1004,46 @@
     "language": "de",
     "clickTier": "Small base (100-500)",
     "domain": "https://adelt-ideen.de/"
+  },
+  {
+    "id": "maessen-tent-supply-en",
+    "company": "Maessen Tent Supply",
+    "domain": "https://www.maessen-ts.nl/",
+    "industry": "Temporary Tent Structures / B2B Rental",
+    "painPattern": "Underperforming agency / high SEO cost",
+    "headline": "From zero organic presence to a €37K ChatGPT-generated deal in year two",
+    "outcome": "+514% organic clicks & €37K ChatGPT lead",
+    "result": "Monthly organic clicks grew from 28 in April to 172 in June (+514%), with WP SEO AI content driving 83% of all clicks. A lead generated via ChatGPT converted into a €37,000 customer deal for a temporary automotive showroom structure.",
+    "summary": "Maessen Tent Supply (est. 1998) is a Dutch B2B specialist in temporary tent structures for storage, industrial use, temporary housing, showrooms, and emergency shelter — serving municipalities and businesses at scale (100–10,000 m²). After launching a new website with virtually no organic footprint and failing to see results from a traditional SEO agency, they needed a smarter approach in a narrow niche with thin search volume. WP SEO AI identified a high-intent topic cluster around tent permits and temporary infrastructure compliance, rapidly built topical authority, grew organic clicks by 514% within months, and helped Maessen get cited by both Google AI Overviews and ChatGPT — directly generating a €37,000 closed deal.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Niche market, too specific for online marketing",
+      "B2B sector, nobody searches for our services",
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "temporary tent structures",
+      "b2b tent rental",
+      "tent permits seo",
+      "niche b2b seo",
+      "geo generative engine optimization",
+      "chatgpt lead generation",
+      "new domain seo growth",
+      "temporary industrial storage",
+      "underperforming seo agency",
+      "ai overview citation",
+      "low search volume niche",
+      "permit compliance content"
+    ],
+    "pdfFile": "maessen-tent-supply-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
