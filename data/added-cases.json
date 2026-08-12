@@ -1008,5 +1008,46 @@
     "pdfFile": "maessen-tent-supply-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "van-den-boer-roggen-financieel-advies-vd-en",
+    "company": "Van den Boer & Roggen Financieel Advies (VDBR)",
+    "domain": "http://vdbr.nl/",
+    "industry": "Financial Advisory / Mortgages",
+    "painPattern": "Underperforming agency / high SEO cost",
+    "headline": "Dutch mortgage advisor doubles search visibility and drives 66% of clicks via AI-powered content in 10 months",
+    "outcome": "+103% click growth in 10 months",
+    "result": "Monthly organic clicks grew from 389 to 791 (+103%), ranked keywords increased from 1,803 to 4,772 within 9 months, search impressions doubled, and WP SEO AI content now drives 66% of all organic clicks — accumulating 1,655 total SEO AI clicks and 236,993 impressions. VDBR is now cited by both Google AI Overviews and ChatGPT as an authoritative source.",
+    "summary": "Van den Boer & Roggen is an independent Dutch financial advisory firm with offices in Eindhoven and Weert, specialising in mortgages, life insurance, and damage insurance — offering personalised, fee-based advice without commission since 2008. Their previous SEO partner was delivering declining results, directly threatening their lead generation pipeline alongside their referral network. WP SEO AI built a topical cluster strategy around VDBR's core service pillars using 'People Also Asked' data and AI-generated long-tail content, growing ranked keywords by 165%, doubling impressions, and achieving recognition in AI answer engines like ChatGPT and Google AI Overviews.",
+    "businessType": "B2C",
+    "marketPosition": "Niche",
+    "trustSensitive": true,
+    "objections": [
+      "Niche market, too specific for online marketing",
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We get everything from word of mouth",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "mortgage advisor",
+      "financial advisory",
+      "underperforming seo agency",
+      "topical clusters",
+      "ai content",
+      "llm visibility",
+      "chatgpt citations",
+      "long-tail content",
+      "local financial services",
+      "seo for finance",
+      "ai overview",
+      "keyword growth"
+    ],
+    "pdfFile": "van-den-boer-roggen-financieel-advies-vd-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
