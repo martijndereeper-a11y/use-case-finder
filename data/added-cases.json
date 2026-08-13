@@ -1049,5 +1049,44 @@
     "pdfFile": "van-den-boer-roggen-financieel-advies-vd-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "dutch-on-track-en",
+    "company": "Dutch on Track",
+    "domain": "https://dutchontrack.nl/",
+    "industry": "Language Education / Expat Services",
+    "painPattern": "Limited marketing capacity",
+    "headline": "From near-zero visibility to +1,706% organic growth in 8 months for a Dutch language school",
+    "outcome": "+1,706% organic traffic in 8 months",
+    "result": "Total monthly clicks grew from 48 to 867 (+1,706%) in 8 months, with 91.4% of all July clicks driven by WP SEO AI content. The site now ranks for 2,700+ keywords, the majority in positions 1–10.",
+    "summary": "Dutch on Track is a certified Dutch language school for English-speaking expats in Eindhoven, Tilburg, and Helmond, offering in-person and online courses from A0 to B1. With a small team focused on teaching, SEO was consistently deprioritised and the school had almost no search visibility. WP SEO AI built an audience-first content strategy around expat life topics — publishing 138 articles in 7 months — driving monthly clicks from 48 to 867, establishing topical authority across 2,700+ ranking keywords, and securing citations in Google AI Overviews and ChatGPT.",
+    "businessType": "B2C",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Niche market, too specific for online marketing",
+      "Our sector is too technical or complex for AI content",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "language school",
+      "expat services",
+      "dutch language",
+      "education",
+      "small team seo",
+      "ai search visibility",
+      "content strategy",
+      "topical authority",
+      "google aio",
+      "organic growth",
+      "english-speaking market",
+      "integration courses"
+    ],
+    "pdfFile": "dutch-on-track-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
