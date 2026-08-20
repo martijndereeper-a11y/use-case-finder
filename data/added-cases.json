@@ -1088,5 +1088,44 @@
     "pdfFile": "dutch-on-track-en.pdf",
     "clickTier": "Starting near zero (0-100)",
     "language": "en"
+  },
+  {
+    "id": "heeren-makelaars-en",
+    "company": "Heeren Makelaars",
+    "domain": "https://heerenmakelaars.nl/",
+    "industry": "Real Estate / Brokerage",
+    "painPattern": "AI / LLM search opportunity",
+    "headline": "Amsterdam Real Estate Agency Grows Organic Traffic 447% in 10 Months with AI-Ready Content Strategy",
+    "outcome": "+447% organic traffic in 10 months",
+    "result": "Monthly organic clicks grew from 1,359 to 7,439 (+447%) in under a year, with WP SEO AI content accounting for 71% of all organic traffic and generating 36,920 of the website's 56,356 total clicks, valued at €28,531 in traffic worth.",
+    "summary": "Heeren Makelaars is a full-service Amsterdam real estate agency founded in 2004, specializing in buying, selling, renting, and new development projects in one of the Netherlands' most competitive housing markets. After launching a new website, they experienced a traffic drop and needed a scalable way to build topical authority beyond their existing commercial landing pages. WP SEO AI published 241 long-tail articles covering the full buyer and seller journey, strengthening internal linking and securing visibility in both Google Search and AI-powered results like ChatGPT and Google AI Overviews — growing monthly clicks from 1,359 to 7,439 in just 10 months.",
+    "businessType": "B2C",
+    "marketPosition": "Mainstream",
+    "trustSensitive": true,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "Trust-sensitive sector where mistakes are not allowed",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "real estate",
+      "makelaars",
+      "amsterdam",
+      "housing market",
+      "new website traffic drop",
+      "topical authority",
+      "ai overviews",
+      "long-tail content",
+      "buyer seller journey",
+      "local seo",
+      "property agency",
+      "chatgpt visibility"
+    ],
+    "pdfFile": "heeren-makelaars-en.pdf",
+    "clickTier": "Starting near zero (0-100)",
+    "language": "en"
   }
 ]
