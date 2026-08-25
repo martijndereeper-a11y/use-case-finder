@@ -1,6 +1,9 @@
 node_modules/
 dist/
-.env
-*.env
 .vercel
-.env*.local
+
+# Env files. `*.env` only matched files ENDING in .env, so .env.prod and
+# .env.vercel — which hold the GitHub, Anthropic and Supabase keys — were
+# staged by `git add -A`. `.env*` covers every variant.
+.env*
+!.env.example

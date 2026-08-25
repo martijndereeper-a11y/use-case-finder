@@ -10,7 +10,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { OBJECTIONS, OBJECTIONS_NL, painPatterns as seedPainPatterns } from './data';
 import { loadAllCases, saveCase, deleteCase, generateId, pdfDir, detectObjectionsFromText } from './storage';
-import type { UseCase, Objection } from './data';
+import type { UseCase, ClickTier, Objection } from './data';
 import { config } from 'dotenv';
 config();
 
@@ -20,6 +20,20 @@ const ROOT = process.env.VERCEL ? process.cwd() : join(__dirname, '..');
 const app = new Hono();
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'wpseoai2026';
+
+const CLICK_TIERS: ClickTier[] = [
+  'Starting near zero (0-100)',
+  'Small base (100-500)',
+  'Medium base (500-1,500)',
+  'Established (1,500+)',
+];
+
+/** Only accept a tier we recognise; anything else stays undefined rather than guessed. */
+function normalizeClickTier(v: string | null | undefined): ClickTier | undefined {
+  if (!v) return undefined;
+  const t = v.trim() as ClickTier;
+  return CLICK_TIERS.includes(t) ? t : undefined;
+}
 
 app.use('*', cors());
 
@@ -225,7 +239,7 @@ app.post('/api/admin/cases', async (c) => {
       countries,
       keywords,
       pdfFile: pdfFileName,
-      clickTier: 'Starting near zero (0-100)' as UseCase['clickTier'],
+      clickTier: normalizeClickTier(formData.get('clickTier') as string | null),
     };
 
     saveCase(useCase);

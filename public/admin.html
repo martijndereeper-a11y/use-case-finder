@@ -249,6 +249,19 @@ select{cursor:pointer}
       </div>
       <div class="field-row">
         <div class="field">
+          <label for="clickTier">Starting click range</label>
+          <select id="clickTier" name="clickTier">
+            <option value="">Unknown / not set</option>
+            <option value="Starting near zero (0-100)">Starting near zero (0-100)</option>
+            <option value="Small base (100-500)">Small base (100-500)</option>
+            <option value="Medium base (500-1,500)">Medium base (500-1,500)</option>
+            <option value="Established (1,500+)">Established (1,500+)</option>
+          </select>
+          <div class="hint">Monthly organic clicks at the START of the engagement, from the PDF. Leave unset if unknown — a wrong tier is worse than none.</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
           <label for="countries">Country / countries</label>
           <input type="text" id="countries" name="countries" placeholder="e.g. Netherlands, Germany">
           <div class="hint">Comma-separated. E.g. "Finland" or "Netherlands, International"</div>
@@ -525,6 +538,7 @@ document.getElementById('analyzeBtn').addEventListener('click', async () => {
     if (ex.summary) document.getElementById('summary').value = ex.summary;
     if (ex.businessType) document.getElementById('businessType').value = ex.businessType;
     if (ex.marketPosition) document.getElementById('marketPosition').value = ex.marketPosition;
+    if (ex.clickTier) document.getElementById('clickTier').value = ex.clickTier;
     if (ex.trustSensitive) document.getElementById('trustSensitive').checked = ex.trustSensitive;
     if (Array.isArray(ex.countries)) document.getElementById('countries').value = ex.countries.join(', ');
     if (ex.language && LANGUAGE_LABELS[ex.language]) document.getElementById('language').value = ex.language;
@@ -625,6 +639,7 @@ document.getElementById('caseForm').addEventListener('submit', async (e) => {
   fd.append('painPattern', document.getElementById('painPattern').value.trim() || 'Other');
   fd.append('businessType', document.getElementById('businessType').value);
   fd.append('marketPosition', document.getElementById('marketPosition').value);
+  fd.append('clickTier', document.getElementById('clickTier').value);
   fd.append('trustSensitive', document.getElementById('trustSensitive').checked ? 'true' : 'false');
   fd.append('headline', document.getElementById('headline').value.trim());
   fd.append('outcome', document.getElementById('outcome').value.trim());
@@ -682,6 +697,7 @@ function enterEditMode(c) {
   document.getElementById('painPattern').value = c.painPattern || '';
   document.getElementById('businessType').value = c.businessType || 'B2B';
   document.getElementById('marketPosition').value = c.marketPosition || 'Mainstream';
+  document.getElementById('clickTier').value = c.clickTier || '';
   document.getElementById('trustSensitive').checked = !!c.trustSensitive;
   document.getElementById('headline').value = c.headline || '';
   document.getElementById('outcome').value = c.outcome || '';

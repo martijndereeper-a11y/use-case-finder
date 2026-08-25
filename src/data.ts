@@ -54,7 +54,8 @@ export interface UseCase {
   marketPosition: MarketPosition;
   trustSensitive: boolean;
   objections: Objection[];
-  clickTier: ClickTier;
+  /** Starting monthly organic clicks, read from the case PDF. Optional: unknown beats invented. */
+  clickTier?: ClickTier;
   countries: string[];
   keywords: string[];
   pdfFile: string;

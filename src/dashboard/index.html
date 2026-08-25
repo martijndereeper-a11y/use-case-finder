@@ -405,9 +405,11 @@ function renderQuickMatch() {
   ).join('');
   grid.querySelectorAll('.quick-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.getElementById('search').value = btn.dataset.query;
       activePain = null; activeIndustry = null; activeObjection = null; activeTier = null;
       updateAll();
+      // updateAll() blanks the search box — restore the query after it so the input
+      // reflects the results actually being shown (and renderResults sees a query).
+      document.getElementById('search').value = btn.dataset.query;
       doSearch(btn.dataset.query);
     });
   });
@@ -424,7 +426,7 @@ function renderResults(cases) {
   }
 
   const q = document.getElementById('search').value.trim();
-  const hasFilter = activePain || activeIndustry || activeObjection;
+  const hasFilter = activePain || activeIndustry || activeObjection || activeTier;
   if (q || hasFilter) {
     header.textContent = `${cases.length} matching case${cases.length === 1 ? '' : 's'}`;
   } else {
@@ -489,6 +491,7 @@ document.getElementById('search').addEventListener('input', (e) => {
   document.querySelectorAll('.pain-chip').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.ind-chip').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.obj-tile').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tier-chip').forEach(b => b.classList.remove('active'));
   document.getElementById('activeFilter').classList.remove('show');
   document.getElementById('quickMatch').style.display = 'none';
   clearTimeout(timer);

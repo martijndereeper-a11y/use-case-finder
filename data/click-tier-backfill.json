@@ -1,0 +1,217 @@
+{
+  "_readme": "Correct clickTier per case, read out of each case's own PDF. Needed because POST /api/admin/cases hardcoded 'Starting near zero (0-100)' until that bug was fixed in api/index.ts. Apply with scripts/backfill-click-tiers.ts (node) or scripts/backfill-click-tiers.py (no node required).",
+  "_confidence": {
+    "stated": "the PDF states the starting monthly organic clicks outright",
+    "inferred": "the PDF never states it; derived from the chart axis and the stated growth percentages - confirm before trusting"
+  },
+  "cases": [
+    {
+      "id": "pnl-circulair-funderen",
+      "company": "PNL Circulair Funderen",
+      "startingClicks": 433,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "organic clicks across the entire domain grew from 433 to 1150 within 6 months"
+    },
+    {
+      "id": "proforg",
+      "company": "ProfOrg",
+      "startingClicks": 200,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "Organic traffic built from 200 to 4,389 monthly clicks within 6 months"
+    },
+    {
+      "id": "proforg-de",
+      "company": "ProfOrg",
+      "startingClicks": 200,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "von 200 auf 4.389 monatliche Klicks"
+    },
+    {
+      "id": "dgf-group-bv",
+      "company": "DGF Group BV",
+      "startingClicks": 179,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "From 179 to 480 monthly clicks (total organic; the 1->328 figure is SEO AI clicks only)"
+    },
+    {
+      "id": "facet-trainingen",
+      "company": "Facet Trainingen",
+      "startingClicks": 149,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "organic clicks grew from 149 in June to 405 in March (+171.8%)"
+    },
+    {
+      "id": "tfx-suspension",
+      "company": "TFX Suspension",
+      "startingClicks": 893,
+      "clickTier": "Medium base (500-1,500)",
+      "confidence": "stated",
+      "evidence": "monthly organic clicks rose from 893 to 3,743 (+319%)"
+    },
+    {
+      "id": "maas-de-koning-lease",
+      "company": "Maas-De Koning Lease",
+      "startingClicks": 670,
+      "clickTier": "Medium base (500-1,500)",
+      "confidence": "stated",
+      "evidence": "organic clicks grew from 670 to 2,031 per month (+200%)"
+    },
+    {
+      "id": "kruijdenberg-centrum-voor-fysiotherapie",
+      "company": "Kruijdenberg Centrum voor Fysiotherapie",
+      "startingClicks": 270,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "From 270 -> 1619 Monthly Clicks (the 667->4.164 figure is rankings, not clicks)"
+    },
+    {
+      "id": "esve-groep-en",
+      "company": "ESVE Groep",
+      "startingClicks": 319,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "+118% growth in organic clicks (319 -> 696)"
+    },
+    {
+      "id": "vief-leven-en",
+      "company": "Vief Leven",
+      "startingClicks": 2392,
+      "clickTier": "Established (1,500+)",
+      "confidence": "stated",
+      "evidence": "lift monthly organic traffic from 2,392 to 6,113 clicks"
+    },
+    {
+      "id": "revalis-clinics-en",
+      "company": "Revalis Clinics",
+      "startingClicks": 3173,
+      "clickTier": "Established (1,500+)",
+      "confidence": "stated",
+      "evidence": "Total organic clicks grew from 3,173 to 9,885 per month"
+    },
+    {
+      "id": "de-woonzaken-en",
+      "company": "De Woonzaken",
+      "startingClicks": 417,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "organic clicks grew from 417 in July to 2,480 in May (+495%)"
+    },
+    {
+      "id": "taalklasse-en",
+      "company": "Taalklasse",
+      "startingClicks": 136,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "organic traffic grew from 136 to 1160 monthly visitors"
+    },
+    {
+      "id": "wattslimmer-en",
+      "company": "WattSlimmer",
+      "startingClicks": 90,
+      "clickTier": "Starting near zero (0-100)",
+      "confidence": "stated",
+      "evidence": "organic clicks grew from 90 to 2,582 per month"
+    },
+    {
+      "id": "b-ro-albers-en",
+      "company": "Buro Albers",
+      "startingClicks": 559,
+      "clickTier": "Medium base (500-1,500)",
+      "confidence": "stated",
+      "evidence": "total clicks grew from 559 to 1,248 - an +89% increase"
+    },
+    {
+      "id": "esselink-tuinen-en",
+      "company": "Esselink Tuinen",
+      "startingClicks": 92,
+      "clickTier": "Starting near zero (0-100)",
+      "confidence": "stated",
+      "evidence": "organic traffic grew from 92 to 670 monthly visitors"
+    },
+    {
+      "id": "waitro-en",
+      "company": "WAITRO",
+      "startingClicks": 499,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "total organic clicks grew from 499 in January to 2,076 in June (+316%)"
+    },
+    {
+      "id": "maessen-tent-supply-en",
+      "company": "Maessen Tentsupply",
+      "startingClicks": 28,
+      "clickTier": "Starting near zero (0-100)",
+      "confidence": "stated",
+      "evidence": "organic clicks grew from 28 in April to 172 in June (+514%)"
+    },
+    {
+      "id": "van-den-boer-roggen-financieel-advies-vd-en",
+      "company": "Van den Boer & Roggen (VDBR)",
+      "startingClicks": 389,
+      "clickTier": "Small base (100-500)",
+      "confidence": "stated",
+      "evidence": "From 389 to 791 monthly clicks"
+    },
+    {
+      "id": "dutch-on-track-en",
+      "company": "Dutch on Track",
+      "startingClicks": 48,
+      "clickTier": "Starting near zero (0-100)",
+      "confidence": "stated",
+      "evidence": "total monthly clicks grew from 48 to 867 (+1706%)"
+    },
+    {
+      "id": "heeren-makelaars-en",
+      "company": "Heeren Makelaars",
+      "startingClicks": 1359,
+      "clickTier": "Medium base (500-1,500)",
+      "confidence": "stated",
+      "evidence": "monthly organic traffic grew from 1,359 to 7,439 clicks (+447%)"
+    },
+    {
+      "id": "bosto-en",
+      "company": "Bosto",
+      "startingClicks": 6000,
+      "clickTier": "Established (1,500+)",
+      "confidence": "inferred",
+      "evidence": "chart y-axis runs 6000-12000 monthly clicks; the 0->3,704 figure is SEO AI clicks only, which were 32% of total by April"
+    },
+    {
+      "id": "louwman-exclusive-en",
+      "company": "Louwman Exclusive",
+      "startingClicks": 5400,
+      "clickTier": "Established (1,500+)",
+      "confidence": "inferred",
+      "evidence": "chart y-axis runs 0-9000; +66% total traffic growth implies a base near 5,400; the 0->6,300 figure is SEO AI clicks only"
+    },
+    {
+      "id": "aexus-en",
+      "company": "Aexus",
+      "startingClicks": 395,
+      "clickTier": "Small base (100-500)",
+      "confidence": "inferred",
+      "evidence": "chart peaks near 1,000 monthly clicks; SEO AI = 979/month = 60.5% of total, implying ~395 non-AI base"
+    },
+    {
+      "id": "energy-check-en",
+      "company": "Energy-Check",
+      "startingClicks": 417,
+      "clickTier": "Small base (100-500)",
+      "confidence": "inferred",
+      "evidence": "AI clicks reach 693 = 69% of all clicks (total ~1,004); title states +141% total growth, implying a base near 417"
+    },
+    {
+      "id": "ebikesde-de",
+      "company": "ebikes.de",
+      "startingClicks": 10,
+      "clickTier": "Starting near zero (0-100)",
+      "confidence": "inferred",
+      "evidence": "mirrors the hand-curated English twin (id: ebikesde); PDF states AI clicks von 10 auf 2.432"
+    }
+  ]
+}

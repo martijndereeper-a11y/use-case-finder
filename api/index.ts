@@ -78,6 +78,21 @@ const ROOT = process.cwd();
 const GH_REPO = 'martijndereeper-a11y/use-case-finder';
 const GH_TOKEN = process.env.GITHUB_TOKEN || '';
 
+const CLICK_TIERS = [
+  'Starting near zero (0-100)',
+  'Small base (100-500)',
+  'Medium base (500-1,500)',
+  'Established (1,500+)',
+] as const;
+
+/** Only accept a click tier we recognise. Anything else (including '') becomes undefined,
+ *  so the case renders with no tier pill rather than a made-up one. */
+function normalizeClickTier(v: string | undefined): string | undefined {
+  if (!v) return undefined;
+  const t = v.trim();
+  return (CLICK_TIERS as readonly string[]).includes(t) ? t : undefined;
+}
+
 function loadSeedCases(): UseCase[] {
   try {
     const raw = readFileSync(join(ROOT, 'use-cases-data.json'), 'utf-8');
@@ -635,7 +650,7 @@ Return ONLY valid JSON, no markdown fences:
         countries,
         keywords,
         pdfFile: pdfFileName,
-        clickTier: 'Starting near zero (0-100)',
+        clickTier: normalizeClickTier(fields.clickTier),
         language,
       };
 
@@ -715,6 +730,7 @@ Return ONLY valid JSON, no markdown fences:
         summary: (fields.summary ?? existing.summary).trim(),
         businessType: fields.businessType || existing.businessType,
         marketPosition: fields.marketPosition || existing.marketPosition,
+        clickTier: fields.clickTier !== undefined ? normalizeClickTier(fields.clickTier) : existing.clickTier,
         trustSensitive: fields.trustSensitive !== undefined ? fields.trustSensitive === 'true' : existing.trustSensitive,
         objections,
         countries,
