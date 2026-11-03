@@ -1088,5 +1088,43 @@
     "pdfFile": "heeren-makelaars-en.pdf",
     "clickTier": "Medium base (500-1,500)",
     "language": "en"
+  },
+  {
+    "id": "female-ventures-en",
+    "company": "Female Ventures",
+    "domain": "https://femaleventures.nl/",
+    "industry": "Non-profit / Women's Careers",
+    "painPattern": "Limited marketing capacity",
+    "headline": "Dutch women's career non-profit grows organic clicks 60% in 12 months with WP SEO AI",
+    "outcome": "+60% organic traffic in 12 months",
+    "result": "Organic clicks grew from 537 to 861 per month (+60.3%) in one year. WP SEO AI content drove 2,295 clicks and 284,227 impressions, accounting for 52.5% of all clicks in September 2026, while mentorship matches rose 52.3% from 65 to 99 pairs.",
+    "summary": "Female Ventures is a Netherlands-based non-profit empowering women across all career stages through events, networking, and their Career Vitality Mentor Program, active in Amsterdam, Rotterdam, Utrecht, Eindhoven, and Delft/The Hague. Despite having a valuable offering, previous SEO efforts had failed to deliver meaningful visibility or traffic, leaving them without a clear strategy to reach women searching for career support. WP SEO AI implemented a content-driven strategy covering two major topics per month, building topical authority around female mentorship, networking and events in the Netherlands — resulting in 60% organic click growth, 1,273 event tickets sold in the first seven months of 2026, and Google AI Overviews citing Female Ventures for women's career mentoring in Amsterdam.",
+    "businessType": "B2C",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "We tried it before and it didn't work",
+      "We get everything from word of mouth",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Netherlands"
+    ],
+    "keywords": [
+      "non-profit seo",
+      "women empowerment",
+      "mentorship program",
+      "career networking",
+      "events organization",
+      "dutch non-profit",
+      "content strategy",
+      "topical authority",
+      "community organization",
+      "organic traffic growth",
+      "female leadership",
+      "ai overview visibility"
+    ],
+    "pdfFile": "female-ventures-en.pdf",
+    "language": "en"
   }
 ]
