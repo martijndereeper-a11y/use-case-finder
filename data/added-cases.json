@@ -1126,5 +1126,43 @@
     ],
     "pdfFile": "female-ventures-en.pdf",
     "language": "en"
+  },
+  {
+    "id": "maximum-image-en",
+    "company": "Maximum Image",
+    "domain": "https://www.maximumimage.eu",
+    "industry": "Branded Workwear / Merchandise",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "How AI Search Visibility Unlocked a €200,000 Enterprise Tender for a B2B Workwear Supplier",
+    "outcome": "+308% organic clicks, €200K contract",
+    "result": "Monthly organic clicks grew from 134 to 547 (+308%) within months of engaging WP SEO AI. AI-assisted supplier discovery led to a competitive tender and an approximately €200,000 contract win with a major retail buyer.",
+    "summary": "Maximum Image is a Belgian full-service supplier of branded workwear, corporate clothing, and promotional merchandise, serving B2B clients from SMEs to large enterprises. Despite understanding SEO's potential, the company struggled with inconsistent content production and limited internal capacity, making it hard to build authority in key B2B categories and reach enterprise buyers early in their research process. WP SEO AI built targeted content clusters around workwear, corporate clothing, and branded merchandise, combined with GEO-focused answer-first content and technical SEO improvements, resulting in 390 published articles, 810 top-ten keywords, 38.8% AI click share, and AI search visibility that directly opened the door to a €200,000 tender opportunity.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "B2B sector, nobody searches for our services",
+      "We get everything from word of mouth",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Belgium"
+    ],
+    "keywords": [
+      "branded workwear",
+      "corporate clothing",
+      "promotional merchandise",
+      "b2b seo",
+      "ai search visibility",
+      "geo seo",
+      "enterprise lead generation",
+      "content scaling",
+      "supplier discovery",
+      "ai overview",
+      "workwear supplier",
+      "content clusters"
+    ],
+    "pdfFile": "maximum-image-en.pdf",
+    "language": "en"
   }
 ]
