@@ -1202,5 +1202,42 @@
     ],
     "pdfFile": "ksv-koblenz-en.pdf",
     "language": "en"
+  },
+  {
+    "id": "ksv-koblenz-de",
+    "company": "KSV Koblenz",
+    "domain": "https://www.ksv-koblenz.de/",
+    "industry": "Electrical Engineering / Industrial Automation",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "KSV Koblenz grew organic clicks by +906% in 5 months with AI-powered technical content",
+    "outcome": "+906% organic clicks in 5 months",
+    "result": "Monthly organic clicks grew from 466 in April to 4,686 in September 2026 — a +906% increase. WP SEO AI articles accounted for 90.6% of all organic clicks in September, generating 9,469 total SEO-AI clicks across the period, with over 9,300 ranking keywords.",
+    "summary": "KSV Koblenzer Steuerungs- und Verteilungsbau GmbH is a German B2B specialist in electrical infrastructure, industrial automation, control cabinet construction, and energy systems, serving clients across manufacturing, banking, and public sectors. Despite deep technical expertise, the team lacked time to consistently produce SEO-optimized content, leading to years of declining organic visibility. WP SEO AI developed targeted topic clusters around their core specializations, published 292 SEO articles over 8 months, and scaled their content production — lifting monthly organic clicks from 466 to 4,686 and earning citations in Google AI Overviews for technical electrical queries.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Our sector is too technical or complex for AI content",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Germany"
+    ],
+    "keywords": [
+      "industrial automation",
+      "electrical engineering",
+      "schaltschrankbau",
+      "control systems",
+      "b2b technical seo",
+      "engineering company",
+      "manufacturing seo",
+      "niche technical content",
+      "ai content scaling",
+      "organic traffic growth",
+      "low internal capacity",
+      "google ai overviews"
+    ],
+    "pdfFile": "ksv-koblenz-de.pdf",
+    "language": "de"
   }
 ]
