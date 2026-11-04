@@ -1164,5 +1164,43 @@
     ],
     "pdfFile": "maximum-image-en.pdf",
     "language": "en"
+  },
+  {
+    "id": "ksv-koblenz-en",
+    "company": "KSV Koblenz",
+    "domain": "https://www.ksv-koblenz.de/",
+    "industry": "Electrical Engineering / Industrial Automation",
+    "painPattern": "No time / capacity for SEO",
+    "headline": "KSV Koblenz grows organic clicks by 906% in five months with AI-powered technical content",
+    "outcome": "+906% organic click growth",
+    "result": "Monthly organic clicks grew from 466 in April to 4,686 in September 2026, a 906% increase in five months. WP SEO AI articles generated 9,469 clicks across the period, accounting for 90.6% of all organic traffic in September, supported by 292 published SEO articles and over 9,300 ranking keywords.",
+    "summary": "KSV Koblenz (Koblenzer Steuerungs- und Verteilungsbau GmbH) is a German specialist in electrical infrastructure, industrial automation, control cabinet manufacturing, and energy systems, serving clients across industry and building automation. After years of declining organic visibility, their expert team lacked the time and capacity to convert deep technical knowledge into consistent search-optimised content. WP SEO AI built targeted content clusters across their core topics, publishing 292 technical SEO articles in eight months, which drove a 906% increase in monthly organic clicks and secured Google AI Overview citations for technical electrical queries.",
+    "businessType": "B2B",
+    "marketPosition": "Niche",
+    "trustSensitive": false,
+    "objections": [
+      "Niche market, too specific for online marketing",
+      "Our sector is too technical or complex for AI content",
+      "We already do Google Ads, why also SEO"
+    ],
+    "countries": [
+      "Germany"
+    ],
+    "keywords": [
+      "electrical engineering",
+      "industrial automation",
+      "control cabinet",
+      "technical seo",
+      "b2b seo",
+      "content scaling",
+      "organic traffic growth",
+      "niche technical content",
+      "ai content",
+      "declining organic traffic",
+      "manufacturing seo",
+      "energy technology"
+    ],
+    "pdfFile": "ksv-koblenz-en.pdf",
+    "language": "en"
   }
 ]
